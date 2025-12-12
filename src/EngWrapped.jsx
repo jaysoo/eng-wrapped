@@ -5,7 +5,8 @@ const teamColors = {
   infrastructure: '#22c55e',
   cli: '#3b82f6',
   cloud: '#a855f7',
-  redpanda: '#f97316'
+  redpanda: '#f97316',
+  docs: '#ec4899'
 };
 
 const commitData = [
@@ -39,7 +40,7 @@ const projectData = [
 ];
 
 const frameworkReleases = [
-  { name: 'Angular 21 (soon)', icon: '🅰️' },
+  { name: 'Angular 21', icon: '🅰️' },
   { name: 'Next 16', icon: '▲' },
   { name: 'Expo 54', icon: '📱' },
   { name: 'Nuxt 4', icon: '💚' },
@@ -57,7 +58,7 @@ const cloudHighlights = [
   { name: 'Artifact Downloads', icon: '📦' },
   { name: 'EU Pro Support', icon: '🇪🇺' },
   { name: 'CI Stability', icon: '🛡️' },
-  { name: 'A/B Testing', icon: '🧪' },
+  { name: 'PostHog Real-Time Monitoring', icon: '🧪' },
 ];
 
 const infraHighlights = [
@@ -559,6 +560,7 @@ export default function EngWrapped() {
   const targetSectionRef = React.useRef(0);
   const autoPlayRef = React.useRef(null);
   const audioRef = React.useRef(null);
+  const pendingPlayRef = React.useRef(false);
 
   // Start audio on first user interaction
   useEffect(() => {
@@ -586,7 +588,7 @@ export default function EngWrapped() {
     if (!audio) return;
     audio.muted = isMuted;
   }, [isMuted]);
-  const sectionCount = 26;
+  const sectionCount = 32;
 
   // Slide durations in ms
   const slideDurations = [
@@ -599,23 +601,29 @@ export default function EngWrapped() {
     3000,  // 6: Big Features Intro
     2300,  // 7: Self-Healing CI
     2300,  // 8: Terminal UI
-    2300,  // 9: .NET + Maven
-    2300,  // 10: AI Code Generation
-    2300,  // 11: CPU/Memory Tracking
-    2300,  // 12: Flaky Task Analytics
-    2300,  // 13: Onboarding Flow
-    2300,  // 14: Azure Single Tenant
-    2300,  // 15: Helm Chart
-    2300,  // 16: Observability
-    2600,  // 17: Framework Support
-    2600,  // 18: Orca Highlights
-    2600,  // 19: Infrastructure Highlights
-    2600,  // 20: RedPanda Highlights
-    3000,  // 21: Stats Intro
-    6000,  // 22: Projects Showcase (animated)
-    3000,  // 23: Projects Breakdown
-    4000,  // 24: Top Contributors Chart
-    3000,  // 25: Closing
+    2300,  // 9: Continuous Tasks
+    2300,  // 10: .NET + Maven
+    2300,  // 11: AI Code Generation
+    2300,  // 12: CPU/Memory Tracking
+    2300,  // 13: Flaky Task Analytics
+    2300,  // 14: Onboarding Flow
+    2300,  // 15: Azure Single Tenant
+    2300,  // 16: Helm Chart
+    2300,  // 17: Observability
+    2300,  // 18: Docker + Nx Release
+    2300,  // 19: GitHub Templates
+    2300,  // 20: Node 24
+    2300,  // 21: Nx & Ocean CI Stability
+    2300,  // 22: Docs Migration to Astro Starlight
+    2600,  // 23: Framework Support
+    2600,  // 24: Orca Highlights
+    2600,  // 25: Infrastructure Highlights
+    2600,  // 26: RedPanda Highlights
+    3000,  // 27: Stats Intro
+    6000,  // 28: Projects Showcase (animated)
+    3000,  // 29: Projects Breakdown
+    4000,  // 30: Top Contributors Chart
+    3000,  // 31: Closing
   ];
 
   // Progress bar - use ref to avoid re-renders during auto-play
@@ -631,6 +639,12 @@ export default function EngWrapped() {
     }));
     // Update hash URL
     window.history.replaceState(null, '', `#${activeSection}`);
+
+    // Handle pending play after loop-back scroll completes
+    if (pendingPlayRef.current && activeSection === 0) {
+      pendingPlayRef.current = false;
+      setIsPlaying(true);
+    }
   }, [activeSection]);
 
   // Shared scroll function used by manual navigation AND auto-play
@@ -708,7 +722,13 @@ export default function EngWrapped() {
     const handleKeyDown = (e) => {
       if (e.key === ' ') {
         e.preventDefault();
-        setIsPlaying(prev => !prev); // Toggle play/pause
+        // If on last section and not playing, loop back to beginning
+        if (!isPlaying && targetSectionRef.current >= sectionCount - 1) {
+          pendingPlayRef.current = true;
+          scrollToSection(0);
+        } else {
+          setIsPlaying(prev => !prev);
+        }
       } else if (['ArrowDown', 'ArrowRight', 'PageDown', 'j'].includes(e.key)) {
         e.preventDefault();
         setIsPlaying(false); // Pause auto-play on key press
@@ -724,6 +744,15 @@ export default function EngWrapped() {
       } else if (e.key === 'm' || e.key === 'M') {
         e.preventDefault();
         setIsMuted(prev => !prev);
+      } else if (e.key >= '1' && e.key <= '8') {
+        e.preventDefault();
+        setIsPlaying(false);
+        const targetSection = parseInt(e.key) - 1; // 1 -> 0, 2 -> 1, etc.
+        scrollToSection(targetSection, true);
+      } else if (e.key === '9') {
+        e.preventDefault();
+        setIsPlaying(false);
+        scrollToSection(sectionCount - 1, true); // Go to last section
       }
     };
 
@@ -732,11 +761,8 @@ export default function EngWrapped() {
     return () => {
       container.removeEventListener('wheel', handleWheel);
       window.removeEventListener('keydown', handleKeyDown);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
     };
-  }, [scrollToSection]);
+  }, [scrollToSection, isPlaying]);
 
   // Auto-play effect with progress bar
   useEffect(() => {
@@ -858,11 +884,11 @@ export default function EngWrapped() {
       </div>
 
       {/* Controls */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2">
+      <div className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center transition-all duration-500 ${activeSection === 0 ? 'gap-20' : 'gap-2'}`}>
         {/* Mute/Unmute button */}
         <button
           onClick={() => setIsMuted(!isMuted)}
-          className="flex items-center justify-center w-10 h-10 bg-zinc-800/80 hover:bg-zinc-700/80 backdrop-blur-sm rounded-full transition-all duration-300 border border-zinc-700"
+          className={`flex items-center justify-center w-10 h-10 bg-zinc-800/80 hover:bg-zinc-700/80 backdrop-blur-sm rounded-full transition-all duration-500 border border-zinc-700 ${activeSection === 0 ? 'scale-[2]' : 'scale-100'}`}
           title={isMuted ? 'Unmute' : 'Mute'}
         >
           {isMuted ? (
@@ -878,8 +904,16 @@ export default function EngWrapped() {
 
         {/* Play/Pause button */}
         <button
-          onClick={() => setIsPlaying(!isPlaying)}
-          className="flex items-center gap-2 px-4 py-2 bg-zinc-800/80 hover:bg-zinc-700/80 backdrop-blur-sm rounded-full transition-all duration-300 border border-zinc-700"
+          onClick={() => {
+            if (!isPlaying && activeSection >= sectionCount - 1) {
+              // If on last section and pressing play, loop back to first section
+              pendingPlayRef.current = true;
+              scrollToSection(0);
+            } else {
+              setIsPlaying(!isPlaying);
+            }
+          }}
+          className={`flex items-center gap-2 px-4 py-2 bg-zinc-800/80 hover:bg-zinc-700/80 backdrop-blur-sm rounded-full transition-all duration-500 border border-zinc-700 ${activeSection === 0 ? 'scale-[2]' : 'scale-100'} ${!isPlaying ? 'animate-pulse-glow' : ''}`}
         >
           {isPlaying ? (
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -922,25 +956,52 @@ export default function EngWrapped() {
       {/* Big Numbers */}
       <Section className="bg-zinc-950">
         <div className="grid grid-cols-3 gap-12 text-center max-w-4xl">
-          <div>
+          <div
+            className="transform"
+            style={{
+              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0s both, subtleFloat 3s ease-in-out 0.6s infinite' : 'none',
+            }}
+          >
             <p className="text-6xl font-black text-green-400">
               <AnimatedNumber value={7000} isActive={activeSection === 1} />+
             </p>
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">Commits</p>
           </div>
-          <div>
+          <div
+            className="transform"
+            style={{
+              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.15s both, subtleFloat 3s ease-in-out 0.75s infinite' : 'none',
+            }}
+          >
             <p className="text-6xl font-black text-blue-400">
               <AnimatedNumber value={80} isActive={activeSection === 1} />+
             </p>
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">Projects Shipped</p>
           </div>
-          <div>
+          <div
+            className="transform"
+            style={{
+              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.3s both, subtleFloat 3s ease-in-out 0.9s infinite' : 'none',
+            }}
+          >
             <p className="text-6xl font-black text-purple-400">
               4
             </p>
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">Teams</p>
           </div>
         </div>
+        <style>{`
+          @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3) translateY(50px); }
+            50% { transform: scale(1.05) translateY(-10px); }
+            70% { transform: scale(0.95) translateY(5px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+          }
+          @keyframes subtleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+          }
+        `}</style>
       </Section>
 
       {/* Team Shakeup Intro */}
@@ -1010,47 +1071,156 @@ export default function EngWrapped() {
       {/* RedPanda Team Formation */}
       <Section className="bg-zinc-950">
         <div className="text-center max-w-4xl">
-          <p className="text-zinc-400 text-sm uppercase tracking-wider mb-2">New in 2025</p>
-          <h2 className="text-4xl font-bold mb-8">
+          <p
+            className="text-zinc-400 text-sm uppercase tracking-wider mb-2"
+            style={{ animation: activeSection === 3 ? 'fadeInDown 0.5s ease-out both' : 'none' }}
+          >New in 2025</p>
+          <h2
+            className="text-4xl font-bold mb-8"
+            style={{ animation: activeSection === 3 ? 'fadeInDown 0.5s ease-out 0.1s both' : 'none' }}
+          >
             <span className="text-orange-400">🐼 RedPanda</span> Team Formed
           </h2>
-          <div className="flex items-center justify-center gap-12 mb-8">
-            <div className="text-center">
-              <p className="text-zinc-500 text-sm mb-3">From CLI</p>
-              <div className="flex gap-3">
-                <div className="bg-zinc-800 rounded-xl p-3 border border-blue-500/30">
-                  <img src="https://nx.dev/images/team/jonathan-cammisuli.avif" alt="Jon" className="w-12 h-12 rounded-full mb-2 mx-auto" />
-                  <p className="text-sm font-medium">Jon</p>
+          <div className="flex flex-col items-center gap-6 mb-8">
+            <div className="flex items-center justify-center gap-8">
+              <div
+                className="text-center flex-shrink-0"
+                style={{ animation: activeSection === 3 ? 'slideInLeft 0.6s ease-out 0.2s both' : 'none' }}
+              >
+                <p className="text-zinc-500 text-sm mb-3">From Nx CLI</p>
+                <div className="flex gap-3">
+                  <div
+                    className="bg-zinc-800 rounded-xl p-3 border border-blue-500/30"
+                    style={{ animation: activeSection === 3 ? 'personPop 0.4s ease-out 0.4s both' : 'none' }}
+                  >
+                    <img src="https://nx.dev/images/team/jonathan-cammisuli.avif" alt="Jon" className="w-12 h-12 rounded-full mb-2 mx-auto object-cover" />
+                    <p className="text-sm font-medium">Jon</p>
+                  </div>
+                  <div
+                    className="bg-zinc-800 rounded-xl p-3 border border-blue-500/30"
+                    style={{ animation: activeSection === 3 ? 'personPop 0.4s ease-out 0.5s both' : 'none' }}
+                  >
+                    <img src="https://nx.dev/images/team/james-henry.avif" alt="James" className="w-12 h-12 rounded-full mb-2 mx-auto object-cover" />
+                    <p className="text-sm font-medium">James</p>
+                  </div>
                 </div>
-                <div className="bg-zinc-800 rounded-xl p-3 border border-blue-500/30">
-                  <img src="https://nx.dev/images/team/james-henry.avif" alt="James" className="w-12 h-12 rounded-full mb-2 mx-auto" />
-                  <p className="text-sm font-medium">James</p>
+              </div>
+              <div
+                className="text-4xl text-orange-400 flex-shrink-0"
+                style={{ animation: activeSection === 3 ? 'arrowPulse 0.5s ease-out 0.6s both, arrowBounce 1s ease-in-out 1.1s infinite' : 'none' }}
+              >→</div>
+              <img
+                src="redpanda.png"
+                alt="RedPanda team"
+                className="w-72 rounded-xl shadow-2xl border border-orange-500/50 flex-shrink-0"
+                style={{ animation: activeSection === 3 ? 'centerPop 0.6s ease-out 0.3s both, glowPulse 2s ease-in-out 0.9s infinite' : 'none' }}
+              />
+              <div
+                className="text-4xl text-orange-400 flex-shrink-0"
+                style={{ animation: activeSection === 3 ? 'arrowPulse 0.5s ease-out 0.6s both, arrowBounce 1s ease-in-out 1.1s infinite' : 'none' }}
+              >←</div>
+              <div
+                className="text-center flex-shrink-0"
+                style={{ animation: activeSection === 3 ? 'slideInRight 0.6s ease-out 0.2s both' : 'none' }}
+              >
+                <p className="text-zinc-500 text-sm mb-3">From Nx Cloud</p>
+                <div className="flex gap-3">
+                  <div
+                    className="bg-zinc-800 rounded-xl p-3 border border-purple-500/30"
+                    style={{ animation: activeSection === 3 ? 'personPop 0.4s ease-out 0.4s both' : 'none' }}
+                  >
+                    <img src="https://nx.dev/images/team/altan-stalker.avif" alt="Altan" className="w-12 h-12 rounded-full mb-2 mx-auto object-cover" />
+                    <p className="text-sm font-medium">Altan</p>
+                  </div>
+                  <div
+                    className="bg-zinc-800 rounded-xl p-3 border border-purple-500/30"
+                    style={{ animation: activeSection === 3 ? 'personPop 0.4s ease-out 0.5s both' : 'none' }}
+                  >
+                    <img src="https://nx.dev/images/team/mark-lindsey.avif" alt="Mark" className="w-12 h-12 rounded-full mb-2 mx-auto object-cover" />
+                    <p className="text-sm font-medium">Mark</p>
+                  </div>
+                  <div
+                    className="bg-zinc-800 rounded-xl p-3 border border-purple-500/30"
+                    style={{ animation: activeSection === 3 ? 'personPop 0.4s ease-out 0.6s both' : 'none' }}
+                  >
+                    <img src="https://nx.dev/images/team/benjamin-cabanes.avif" alt="Ben" className="w-12 h-12 rounded-full mb-2 mx-auto object-cover" />
+                    <p className="text-sm font-medium">Ben</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="text-4xl text-orange-400">→</div>
-            <img
-              src="redpanda.png"
-              alt="RedPanda team"
-              className="w-64 rounded-xl shadow-2xl border border-orange-500/50"
-            />
-            <div className="text-4xl text-orange-400">←</div>
-            <div className="text-center">
-              <p className="text-zinc-500 text-sm mb-3">From Orca</p>
-              <div className="flex gap-3">
-                <div className="bg-zinc-800 rounded-xl p-3 border border-purple-500/30">
-                  <img src="https://nx.dev/images/team/altan-stalker.avif" alt="Altan" className="w-12 h-12 rounded-full mb-2 mx-auto" />
-                  <p className="text-sm font-medium">Altan</p>
-                </div>
-                <div className="bg-zinc-800 rounded-xl p-3 border border-purple-500/30">
-                  <img src="https://nx.dev/images/team/mark-lindsey.avif" alt="Mark" className="w-12 h-12 rounded-full mb-2 mx-auto" />
-                  <p className="text-sm font-medium">Mark</p>
-                </div>
+            <div
+              className="text-4xl text-orange-400"
+              style={{ animation: activeSection === 3 ? 'arrowPulse 0.5s ease-out 0.7s both, arrowBounceVertical 1s ease-in-out 1.2s infinite' : 'none' }}
+            >↑</div>
+            <div
+              className="text-center"
+              style={{ animation: activeSection === 3 ? 'slideInUp 0.6s ease-out 0.3s both' : 'none' }}
+            >
+              <div
+                className="bg-zinc-800 rounded-xl p-3 border border-orange-500/30"
+                style={{ animation: activeSection === 3 ? 'personPop 0.4s ease-out 0.8s both' : 'none' }}
+              >
+                <img src="https://nx.dev/images/team/victor-savkin.avif" alt="Victor" className="w-12 h-12 rounded-full mb-2 mx-auto" />
+                <p className="text-sm font-medium">Victor</p>
               </div>
+              <p className="text-zinc-500 text-sm mt-2">Leading the charge</p>
             </div>
           </div>
-          <p className="text-zinc-400">A new team focused on Self-Healing CI</p>
+          <p
+            className="text-zinc-400"
+            style={{ animation: activeSection === 3 ? 'fadeInUp 0.5s ease-out 0.9s both' : 'none' }}
+          >A new team focused on Self-Healing CI</p>
         </div>
+        <style>{`
+          @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes personPop {
+            0% { opacity: 0; transform: scale(0); }
+            70% { transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+          }
+          @keyframes centerPop {
+            0% { opacity: 0; transform: scale(0.5); }
+            70% { transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+          }
+          @keyframes arrowPulse {
+            0% { opacity: 0; transform: scale(0); }
+            50% { transform: scale(1.3); }
+            100% { opacity: 1; transform: scale(1); }
+          }
+          @keyframes arrowBounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+          }
+          @keyframes arrowBounceVertical {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+          }
+          @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(249, 115, 22, 0.6); }
+          }
+        `}</style>
       </Section>
 
       {/* Orca Introduction */}
@@ -1090,79 +1260,221 @@ export default function EngWrapped() {
 
       {/* Meet the Teams */}
       <Section className="bg-zinc-950">
-        <div className="max-w-4xl w-full">
-          <h2 className="text-3xl font-bold mb-6 text-center">Meet the Teams</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <TeamCard
-              name="Infrastructure"
-              lead="Steve Pentland"
-              color={teamColors.infrastructure}
-              delay={0}
-              wiggleDelay={0}
-              accomplishments={[
-                'Azure & GCP single-tenant hosting',
-                'Docker Layer Caching',
-                'Helm Chart v1 migration',
-                'Grafana observability stack',
-                'SOC2 compliance & DR exercises',
-                'MongoDB 7.0 upgrade',
-                '...'
-              ]}
-              members={['Patrick Mariglia', 'Szymon']}
-            />
-            <TeamCard
-              name="Nx CLI"
-              lead="Jason Jean"
-              color={teamColors.cli}
-              delay={0.15}
-              wiggleDelay={0.75}
-              accomplishments={[
-                'Terminal UI for task execution',
-                'Gradle, Maven, .NET plugins',
-                'Every major ecosystem release',
-                'AI/MCP code generation',
-                'Nx Console IDE extension',
-                'Pnpm catalog support',
-                '...'
-              ]}
-              members={['Colum Ferry', 'Leosvel Pérez', 'Jack Hsu', 'Max Kless', 'Craigory Coppola']}
-            />
-            <TeamCard
-              name="Orca"
-              lead="Nicole Oliver"
-              color={teamColors.cloud}
-              delay={0.3}
-              wiggleDelay={1.5}
-              accomplishments={[
-                'Streamlined onboarding flow',
-                'Agent resource usage tracking',
-                'Flaky task analytics',
-                'Enterprise usage UI',
-                'Graph UX improvements',
-                'Artifact downloads',
-                '...'
-              ]}
-              members={['Chau Tran', 'Louie Weng', 'Rares Matei', 'Dillon']}
-            />
-            <TeamCard
-              name="RedPanda"
-              lead="Victor Savkin"
-              color={teamColors.redpanda}
-              delay={0.45}
-              wiggleDelay={2.25}
-              accomplishments={[
-                'Self-Healing CI → Production',
-                'GitHub, GitLab, Azure DevOps',
-                'Time-to-Green analytics',
-                'Polygraph conformance',
-                'Enterprise customer rollouts',
-                'Flaky task auto-retry',
-                '...'
-              ]}
-              members={['Jon Cammisuli', 'James Henry', 'Altan Stalker', 'Mark Lindsey', 'Ben Cabanes']}
-            />
+        <div className="max-w-5xl w-full">
+          <h2
+            className="text-3xl font-bold mb-8 text-center"
+            style={{ animation: activeSection === 5 ? 'titleReveal 0.6s ease-out both' : 'none' }}
+          >Meet the Teams</h2>
+          <div className="grid grid-cols-2 gap-6">
+            {/* Infrastructure */}
+            <div
+              className="bg-zinc-900 rounded-2xl p-5 border-l-4 hover:scale-[1.02] transition-transform"
+              style={{
+                borderColor: teamColors.infrastructure,
+                animation: activeSection === 5 ? 'cardFlipIn 0.5s ease-out 0.1s both' : 'none',
+              }}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{
+                    backgroundColor: teamColors.infrastructure,
+                    animation: activeSection === 5 ? 'dotPing 0.4s ease-out 0.4s both' : 'none'
+                  }}
+                />
+                <h3 className="text-lg font-bold">Infrastructure</h3>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {[
+                  { name: 'Steve', photo: 'https://nx.dev/images/team/steve-pentland.avif' },
+                  { name: 'Patrick', photo: 'https://nx.dev/images/team/patrick-mariglia.avif' },
+                  { name: 'Szymon', photo: 'https://nx.dev/images/team/szymon-wojciechowski.avif' },
+                ].map((p, i) => (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center"
+                    style={{ animation: activeSection === 5 ? `photoPopIn 0.4s ease-out ${0.5 + i * 0.1}s both` : 'none' }}
+                  >
+                    <img src={p.photo} alt={p.name} className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-green-500 transition-colors" />
+                    <span className="text-xs text-zinc-400 mt-1">{p.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Nx CLI */}
+            <div
+              className="bg-zinc-900 rounded-2xl p-5 border-l-4 hover:scale-[1.02] transition-transform"
+              style={{
+                borderColor: teamColors.cli,
+                animation: activeSection === 5 ? 'cardFlipIn 0.5s ease-out 0.2s both' : 'none',
+              }}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{
+                    backgroundColor: teamColors.cli,
+                    animation: activeSection === 5 ? 'dotPing 0.4s ease-out 0.5s both' : 'none'
+                  }}
+                />
+                <h3 className="text-lg font-bold">Nx CLI</h3>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {[
+                  { name: 'Jason', photo: 'https://nx.dev/images/team/jason-jean.avif' },
+                  { name: 'Colum', photo: 'https://nx.dev/images/team/colum-ferry.avif' },
+                  { name: 'Leosvel', photo: 'https://nx.dev/images/team/leosvel-perez-espinosa.avif' },
+                  { name: 'Jack', photo: 'https://nx.dev/images/team/jack-hsu.avif' },
+                  { name: 'Max', photo: 'https://nx.dev/images/team/max-kless.avif' },
+                  { name: 'Craigory', photo: 'https://nx.dev/images/team/craigory-coppola.avif' },
+                ].map((p, i) => (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center"
+                    style={{ animation: activeSection === 5 ? `photoPopIn 0.4s ease-out ${0.6 + i * 0.08}s both` : 'none' }}
+                  >
+                    <img src={p.photo} alt={p.name} className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-blue-500 transition-colors" />
+                    <span className="text-xs text-zinc-400 mt-1">{p.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Orca */}
+            <div
+              className="bg-zinc-900 rounded-2xl p-5 border-l-4 hover:scale-[1.02] transition-transform"
+              style={{
+                borderColor: teamColors.cloud,
+                animation: activeSection === 5 ? 'cardFlipIn 0.5s ease-out 0.3s both' : 'none',
+              }}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{
+                    backgroundColor: teamColors.cloud,
+                    animation: activeSection === 5 ? 'dotPing 0.4s ease-out 0.6s both' : 'none'
+                  }}
+                />
+                <h3 className="text-lg font-bold">Orca</h3>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {[
+                  { name: 'Nicole', photo: 'https://nx.dev/images/team/nicole-oliver.avif' },
+                  { name: 'Chau', photo: 'https://nx.dev/images/team/chau-tran.avif' },
+                  { name: 'Louie', photo: 'https://nx.dev/images/team/louie-weng.avif' },
+                  { name: 'Rares', photo: 'https://nx.dev/images/team/rares-matei.avif' },
+                  { name: 'Dillon', photo: 'https://nx.dev/images/team/dillon-chanis.avif' },
+                ].map((p, i) => (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center"
+                    style={{ animation: activeSection === 5 ? `photoPopIn 0.4s ease-out ${0.7 + i * 0.08}s both` : 'none' }}
+                  >
+                    <img src={p.photo} alt={p.name} className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-purple-500 transition-colors" />
+                    <span className="text-xs text-zinc-400 mt-1">{p.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* RedPanda */}
+            <div
+              className="bg-zinc-900 rounded-2xl p-5 border-l-4 hover:scale-[1.02] transition-transform"
+              style={{
+                borderColor: teamColors.redpanda,
+                animation: activeSection === 5 ? 'cardFlipIn 0.5s ease-out 0.4s both' : 'none',
+              }}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{
+                    backgroundColor: teamColors.redpanda,
+                    animation: activeSection === 5 ? 'dotPing 0.4s ease-out 0.7s both' : 'none'
+                  }}
+                />
+                <h3 className="text-lg font-bold">RedPanda</h3>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                {[
+                  { name: 'Victor', photo: 'https://nx.dev/images/team/victor-savkin.avif' },
+                  { name: 'Jon', photo: 'https://nx.dev/images/team/jonathan-cammisuli.avif' },
+                  { name: 'James', photo: 'https://nx.dev/images/team/james-henry.avif' },
+                  { name: 'Altan', photo: 'https://nx.dev/images/team/altan-stalker.avif' },
+                  { name: 'Mark', photo: 'https://nx.dev/images/team/mark-lindsey.avif' },
+                  { name: 'Ben', photo: 'https://nx.dev/images/team/benjamin-cabanes.avif' },
+                ].map((p, i) => (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center"
+                    style={{ animation: activeSection === 5 ? `photoPopIn 0.4s ease-out ${0.8 + i * 0.08}s both` : 'none' }}
+                  >
+                    <img src={p.photo} alt={p.name} className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-orange-500 transition-colors" />
+                    <span className="text-xs text-zinc-400 mt-1">{p.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Documentation */}
+            <div
+              className="bg-zinc-900 rounded-2xl p-5 border-l-4 hover:scale-[1.02] transition-transform col-span-2 justify-self-center w-1/2"
+              style={{
+                borderColor: teamColors.docs,
+                animation: activeSection === 5 ? 'cardFlipIn 0.5s ease-out 2.2s both' : 'none',
+              }}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{
+                    backgroundColor: teamColors.docs,
+                    animation: activeSection === 5 ? 'dotPing 0.4s ease-out 2.5s both' : 'none'
+                  }}
+                />
+                <h3 className="text-lg font-bold">Documentation</h3>
+                <span className="text-xs text-zinc-500 bg-zinc-800 px-2 py-0.5 rounded-full">part-time</span>
+              </div>
+              <div className="flex flex-wrap gap-3 justify-center">
+                {[
+                  { name: 'Jack', photo: 'https://nx.dev/images/team/jack-hsu.avif' },
+                  { name: 'Caleb', photo: 'https://nx.dev/images/team/caleb-ukle.avif' },
+                ].map((p, i) => (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center"
+                    style={{ animation: activeSection === 5 ? `photoPopIn 0.4s ease-out ${2.6 + i * 0.1}s both` : 'none' }}
+                  >
+                    <img src={p.photo} alt={p.name} className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-pink-500 transition-colors" />
+                    <span className="text-xs text-zinc-400 mt-1">{p.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
+        <style>{`
+          @keyframes titleReveal {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes cardFlipIn {
+            0% { opacity: 0; transform: perspective(600px) rotateX(-15deg) translateY(30px); }
+            100% { opacity: 1; transform: perspective(600px) rotateX(0) translateY(0); }
+          }
+          @keyframes dotPing {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+          }
+          @keyframes photoPopIn {
+            0% { opacity: 0; transform: scale(0) rotate(-10deg); }
+            70% { transform: scale(1.15) rotate(5deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0); }
+          }
+        `}</style>
       </Section>
 
       {/* Big Features Intro */}
@@ -1181,8 +1493,15 @@ export default function EngWrapped() {
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.redpanda }} />
             <p className="text-zinc-300 uppercase tracking-wider text-sm">RedPanda</p>
           </div>
-          <h2 className="text-4xl font-bold mb-4">Self-Healing CI</h2>
-          <p className="text-zinc-400 text-lg mb-8">AI that fixes your failing CI automatically</p>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #f97316, #4ade80, #86efac, #f97316)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >AI-Powered Self-Healing CI</h2>
+          <p className="text-zinc-400 text-lg mb-8">Get to green faster with automatic fixes</p>
           <div className="flex justify-center mb-8">
             <img
               src="self-healing-ci.webp"
@@ -1201,6 +1520,7 @@ export default function EngWrapped() {
               <span className="text-purple-400 font-bold">Enterprise</span> customers live
             </div>
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Jon • James • Victor • Ben • Altan</p>
         </div>
       </Section>
 
@@ -1211,7 +1531,14 @@ export default function EngWrapped() {
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cli }} />
             <p className="text-zinc-300 uppercase tracking-wider text-sm">Nx CLI</p>
           </div>
-          <h2 className="text-4xl font-bold mb-4">Terminal UI</h2>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd, #3b82f6)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Terminal UI</h2>
           <p className="text-zinc-400 text-lg mb-8">A modern interface for running Nx tasks</p>
           <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 shadow-2xl">
             <div className="flex items-center gap-2 mb-4">
@@ -1264,6 +1591,62 @@ export default function EngWrapped() {
               <span className="text-purple-400 font-bold">Windows</span> support
             </div>
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Craigory • James • Leosvel • Jason</p>
+        </div>
+      </Section>
+
+      {/* Continuous Tasks - CLI/Cloud */}
+      <Section className="bg-zinc-950">
+        <div className="text-center max-w-5xl">
+          <div className="flex items-center justify-center gap-4 mb-2">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cli }} />
+              <p className="text-zinc-300 uppercase tracking-wider text-sm">Nx CLI</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
+              <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
+            </div>
+          </div>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #3b82f6, #a855f7, #c084fc, #3b82f6)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Continuous Tasks</h2>
+          <p className="text-zinc-400 text-lg mb-8">Chain tasks that depend on long-running processes</p>
+          <div className="flex justify-center gap-6 mb-6">
+            <img
+              src="https://img.youtube.com/vi/AD51BKJtDBk/maxresdefault.jpg"
+              alt="Continuous Tasks in Nx 21"
+              className="w-1/2 rounded-xl border border-zinc-800"
+            />
+            <div className="w-1/2 bg-zinc-900 rounded-xl p-5 border border-zinc-800 text-left font-mono text-sm">
+              <div className="text-zinc-500 mb-2">// e2e → frontend → backend</div>
+              <div className="text-zinc-300">{`"backend": { `}<span className="text-green-400">"continuous": true</span>{` },`}</div>
+              <div className="text-zinc-300 mt-2">{`"frontend": {`}</div>
+              <div className="text-zinc-300 pl-4"><span className="text-green-400">"continuous": true</span>,</div>
+              <div className="text-zinc-300 pl-4">{`"dependsOn": [`}<span className="text-cyan-400">"backend"</span>{`]`}</div>
+              <div className="text-zinc-300">{`},`}</div>
+              <div className="text-zinc-300 mt-2">{`"e2e": {`}</div>
+              <div className="text-zinc-300 pl-4">{`"dependsOn": [`}<span className="text-cyan-400">"frontend"</span>{`]`}</div>
+              <div className="text-zinc-300">{`}`}</div>
+            </div>
+          </div>
+          <div className="flex justify-center gap-8 text-sm">
+            <div className="text-zinc-400">
+              <span className="text-green-400 font-bold">Chains</span> of dependencies
+            </div>
+            <div className="text-zinc-400">
+              <span className="text-blue-400 font-bold">Waits</span> for ready signal
+            </div>
+            <div className="text-zinc-400">
+              <span className="text-purple-400 font-bold">Cleans up</span> on completion
+            </div>
+          </div>
+          <p className="text-zinc-500 text-sm mt-6">Jason • Altan • Leosvel • Craigory</p>
         </div>
       </Section>
 
@@ -1274,23 +1657,56 @@ export default function EngWrapped() {
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cli }} />
             <p className="text-zinc-300 uppercase tracking-wider text-sm">Nx CLI</p>
           </div>
-          <h2 className="text-4xl font-bold mb-4">New Ecosystems</h2>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd, #3b82f6)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >New Ecosystems</h2>
           <p className="text-zinc-400 text-lg mb-8">Nx now supports .NET and Maven monorepos</p>
           <div className="flex justify-center gap-8">
-            <div className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-52">
-              <img src="dotnet-logo.png" alt=".NET" className="h-16 mx-auto mb-4 object-contain" />
-              <h3 className="text-2xl font-bold mb-2">.NET Plugin</h3>
+            <div
+              className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-52"
+              style={{ animation: activeSection === 10 ? 'cardSlideUp 0.5s ease-out 0.1s both' : 'none' }}
+            >
+              <img
+                src="dotnet-logo.png"
+                alt=".NET"
+                className="h-16 mx-auto mb-4 object-contain"
+                style={{ animation: activeSection === 10 ? 'logoBounce 0.6s ease-out 0.3s both' : 'none' }}
+              />
               <p className="text-zinc-400">C#, F#, VB.NET projects</p>
               <p className="text-zinc-500 text-sm mt-2">Build, test, publish</p>
             </div>
-            <div className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-52">
-              <img src="maven-logo.png" alt="Maven" className="h-16 mx-auto mb-4 object-contain" />
-              <h3 className="text-2xl font-bold mb-2">Maven Support</h3>
+            <div
+              className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-52"
+              style={{ animation: activeSection === 10 ? 'cardSlideUp 0.5s ease-out 0.25s both' : 'none' }}
+            >
+              <img
+                src="maven-logo.png"
+                alt="Maven"
+                className="h-16 mx-auto mb-4 object-contain invert brightness-200"
+                style={{ animation: activeSection === 10 ? 'logoBounce 0.6s ease-out 0.45s both' : 'none' }}
+              />
               <p className="text-zinc-400">Java & Kotlin projects</p>
               <p className="text-zinc-500 text-sm mt-2">Gradle already supported</p>
             </div>
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Craigory • Jason • Louie • Max</p>
         </div>
+        <style>{`
+          @keyframes cardSlideUp {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes logoBounce {
+            0% { opacity: 0; transform: scale(0) rotate(-10deg); }
+            60% { transform: scale(1.2) rotate(5deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0); }
+          }
+        `}</style>
       </Section>
 
       {/* AI Code Generation - CLI */}
@@ -1300,67 +1716,160 @@ export default function EngWrapped() {
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cli }} />
             <p className="text-zinc-300 uppercase tracking-wider text-sm">Nx CLI</p>
           </div>
-          <h2 className="text-4xl font-bold mb-4">AI Code Generation</h2>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #3b82f6, #22d3ee, #67e8f9, #3b82f6)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >AI Code Generation</h2>
           <p className="text-zinc-400 text-lg mb-8">Enhance AI tools with workspace context</p>
-          <div className="bg-zinc-950 rounded-xl p-6 border border-zinc-800">
+          <div
+            className="bg-zinc-950 rounded-xl p-6 border border-zinc-800"
+            style={{ animation: activeSection === 11 ? 'terminalSlideIn 0.5s ease-out 0.1s both' : 'none' }}
+          >
             <div className="text-left font-mono text-sm space-y-3">
               <div className="text-zinc-500"># Configure AI agents to understand your workspace</div>
               <div className="flex items-center gap-2">
                 <span className="text-green-400">$</span>
-                <span className="text-zinc-300">npx nx configure-ai-agents</span>
+                <span
+                  className="text-zinc-300"
+                  style={{ animation: activeSection === 11 ? 'typeCommand 0.8s steps(24) 0.4s both' : 'none' }}
+                >npx nx configure-ai-agents</span>
               </div>
               <div className="text-zinc-400 pl-4 border-l-2 border-zinc-700 mt-2">
-                <div>Generating workspace context for AI tools...</div>
-                <div className="text-green-400">✓ Claude Code configured</div>
-                <div className="text-green-400">✓ Cursor configured</div>
-                <div className="text-green-400">✓ Copilot configured</div>
+                <div style={{ animation: activeSection === 11 ? 'outputFade 0.3s ease-out 0.9s both' : 'none' }}>Generating workspace context for AI tools...</div>
+                <div className="text-green-400" style={{ animation: activeSection === 11 ? 'checkPop 0.4s ease-out 1.2s both' : 'none' }}>✓ Claude Code configured</div>
+                <div className="text-green-400" style={{ animation: activeSection === 11 ? 'checkPop 0.4s ease-out 1.4s both' : 'none' }}>✓ Cursor configured</div>
+                <div className="text-green-400" style={{ animation: activeSection === 11 ? 'checkPop 0.4s ease-out 1.6s both' : 'none' }}>✓ Copilot configured</div>
               </div>
             </div>
           </div>
           <div className="flex justify-center gap-8 mt-6 text-sm">
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'badgeFade 0.4s ease-out 1.8s both' : 'none' }}>
               <span className="text-blue-400 font-bold">MCP</span> server support
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'badgeFade 0.4s ease-out 2.0s both' : 'none' }}>
               <span className="text-green-400 font-bold">Context</span> for AI assistants
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'badgeFade 0.4s ease-out 2.2s both' : 'none' }}>
               <span className="text-purple-400 font-bold">Smarter</span> code generation
             </div>
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Max</p>
         </div>
+        <style>{`
+          @keyframes terminalSlideIn {
+            0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+          }
+          @keyframes typeCommand {
+            0% { opacity: 0; }
+            1% { opacity: 1; }
+            100% { opacity: 1; }
+          }
+          @keyframes outputFade {
+            0% { opacity: 0; transform: translateX(-10px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes checkPop {
+            0% { opacity: 0; transform: scale(0.5); }
+            60% { transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+          }
+          @keyframes badgeFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
       </Section>
 
       {/* CPU/Memory Tracking - Orca */}
       <Section className="bg-zinc-900">
         <div className="text-center max-w-4xl">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
-            <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
+          <div className="flex items-center justify-center gap-4 mb-2">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
+              <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cli }} />
+              <p className="text-zinc-300 uppercase tracking-wider text-sm">Nx CLI</p>
+            </div>
           </div>
-          <h2 className="text-4xl font-bold mb-4">Agent Resource Usage</h2>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #a855f7, #3b82f6, #60a5fa, #a855f7)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Agent Resource Usage</h2>
           <p className="text-zinc-400 text-lg mb-6">Finally see what's happening inside your CI agents</p>
-          <div className="flex justify-center">
-            <div className="rounded-xl overflow-hidden border border-zinc-800 shadow-2xl" style={{ maxWidth: '630px' }}>
+          <div className="flex justify-center items-stretch gap-6">
+            <div
+              className="rounded-xl overflow-hidden border border-zinc-800 shadow-2xl"
+              style={{
+                maxWidth: '480px',
+                animation: activeSection === 12 ? 'slideFromLeft 0.6s ease-out 0.1s both, dashboardGlow 2s ease-in-out 0.7s infinite' : 'none',
+              }}
+            >
               <img
                 src="agent-resource-usage.avif"
                 alt="Agent Resource Usage - Memory and CPU tracking"
                 className="w-full"
               />
             </div>
+            <div
+              className="rounded-xl overflow-hidden border border-zinc-800 shadow-2xl bg-white flex items-center"
+              style={{
+                maxWidth: '480px',
+                animation: activeSection === 12 ? 'slideFromRight 0.6s ease-out 0.3s both, dashboardGlowCyan 2s ease-in-out 0.9s infinite' : 'none',
+              }}
+            >
+              <img
+                src="usage.png"
+                alt="Agent Resource Usage - Detailed view"
+                className="w-full"
+              />
+            </div>
           </div>
           <div className="flex justify-center gap-8 mt-6 text-sm">
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 12 ? 'metricSlide 0.4s ease-out 0.5s both' : 'none' }}>
               <span className="text-pink-400 font-bold">Identify</span> OOM errors
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 12 ? 'metricSlide 0.4s ease-out 0.7s both' : 'none' }}>
               <span className="text-cyan-400 font-bold">Optimize</span> agent sizing
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 12 ? 'metricSlide 0.4s ease-out 0.9s both' : 'none' }}>
               <span className="text-green-400 font-bold">Debug</span> slow tasks
             </div>
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Leosvel • Chau • Louie</p>
         </div>
+        <style>{`
+          @keyframes slideFromLeft {
+            0% { opacity: 0; transform: translateX(-50px) scale(0.9); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+          }
+          @keyframes slideFromRight {
+            0% { opacity: 0; transform: translateX(50px) scale(0.9); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+          }
+          @keyframes dashboardGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.4); }
+          }
+          @keyframes dashboardGlowCyan {
+            0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.4); }
+          }
+          @keyframes metricSlide {
+            0% { opacity: 0; transform: translateX(-20px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+        `}</style>
       </Section>
 
       {/* Flaky Task Analytics - Orca */}
@@ -1370,54 +1879,104 @@ export default function EngWrapped() {
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
             <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
           </div>
-          <h2 className="text-4xl font-bold mb-4">Flaky Task Analytics</h2>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #a855f7, #c084fc, #e9d5ff, #a855f7)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Flaky Task Analytics</h2>
           <p className="text-zinc-400 text-lg mb-8">Find and fix unreliable tests before they slow you down</p>
-          <div className="bg-zinc-950 rounded-xl p-6 border border-zinc-800">
+          <div
+            className="bg-zinc-950 rounded-xl p-6 border border-zinc-800"
+            style={{ animation: activeSection === 13 ? 'listContainerFade 0.4s ease-out 0.1s both' : 'none' }}
+          >
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-zinc-900 rounded-lg">
+              <div
+                className="flex items-center justify-between p-3 bg-zinc-900 rounded-lg"
+                style={{ animation: activeSection === 13 ? 'flakeRowSlide 0.5s ease-out 0.2s both' : 'none' }}
+              >
                 <div className="flex items-center gap-3">
-                  <span className="text-yellow-400">⚠️</span>
+                  <span className="text-yellow-400" style={{ animation: activeSection === 13 ? 'warningPulse 0.6s ease-out 0.4s both' : 'none' }}>⚠️</span>
                   <span className="text-zinc-300">e2e-checkout.spec.ts</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-red-400 font-bold">23%</span>
+                  <span className="text-red-400 font-bold" style={{ animation: activeSection === 13 ? 'percentPop 0.4s ease-out 0.5s both' : 'none' }}>23%</span>
                   <span className="text-zinc-500 text-sm ml-2">flake rate</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between p-3 bg-zinc-900 rounded-lg">
+              <div
+                className="flex items-center justify-between p-3 bg-zinc-900 rounded-lg"
+                style={{ animation: activeSection === 13 ? 'flakeRowSlide 0.5s ease-out 0.4s both' : 'none' }}
+              >
                 <div className="flex items-center gap-3">
-                  <span className="text-yellow-400">⚠️</span>
+                  <span className="text-yellow-400" style={{ animation: activeSection === 13 ? 'warningPulse 0.6s ease-out 0.6s both' : 'none' }}>⚠️</span>
                   <span className="text-zinc-300">api-integration.spec.ts</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-orange-400 font-bold">12%</span>
+                  <span className="text-orange-400 font-bold" style={{ animation: activeSection === 13 ? 'percentPop 0.4s ease-out 0.7s both' : 'none' }}>12%</span>
                   <span className="text-zinc-500 text-sm ml-2">flake rate</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between p-3 bg-zinc-900 rounded-lg">
+              <div
+                className="flex items-center justify-between p-3 bg-zinc-900 rounded-lg"
+                style={{ animation: activeSection === 13 ? 'flakeRowSlide 0.5s ease-out 0.6s both' : 'none' }}
+              >
                 <div className="flex items-center gap-3">
-                  <span className="text-green-400">✓</span>
+                  <span className="text-green-400" style={{ animation: activeSection === 13 ? 'checkBounce 0.5s ease-out 0.8s both' : 'none' }}>✓</span>
                   <span className="text-zinc-300">unit-tests.spec.ts</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-green-400 font-bold">0%</span>
+                  <span className="text-green-400 font-bold" style={{ animation: activeSection === 13 ? 'percentPop 0.4s ease-out 0.9s both' : 'none' }}>0%</span>
                   <span className="text-zinc-500 text-sm ml-2">flake rate</span>
                 </div>
               </div>
             </div>
           </div>
           <div className="flex justify-center gap-8 mt-6 text-sm">
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'featureFade 0.4s ease-out 1.0s both' : 'none' }}>
               <span className="text-yellow-400 font-bold">Track</span> flaky tests
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'featureFade 0.4s ease-out 1.2s both' : 'none' }}>
               <span className="text-blue-400 font-bold">Analyze</span> failure patterns
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'featureFade 0.4s ease-out 1.4s both' : 'none' }}>
               <span className="text-green-400 font-bold">Auto-retry</span> on failure
             </div>
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Dillon • Nicole • Louie</p>
         </div>
+        <style>{`
+          @keyframes listContainerFade {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes flakeRowSlide {
+            0% { opacity: 0; transform: translateX(-30px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes warningPulse {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.4); }
+            75% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+          }
+          @keyframes checkBounce {
+            0% { transform: scale(0) rotate(-45deg); }
+            60% { transform: scale(1.3) rotate(10deg); }
+            100% { transform: scale(1) rotate(0); }
+          }
+          @keyframes percentPop {
+            0% { opacity: 0; transform: scale(0.5); }
+            70% { transform: scale(1.15); }
+            100% { opacity: 1; transform: scale(1); }
+          }
+          @keyframes featureFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
       </Section>
 
       {/* Onboarding Flow - Orca */}
@@ -1427,32 +1986,86 @@ export default function EngWrapped() {
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
             <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
           </div>
-          <h2 className="text-4xl font-bold mb-4">Streamlined Onboarding</h2>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #a855f7, #c084fc, #e9d5ff, #a855f7)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Streamlined Onboarding</h2>
           <p className="text-zinc-400 text-lg mb-8">Connect your workspace in under a minute</p>
-          <div className="flex justify-center gap-6">
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs">
-              <div className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="flex justify-center gap-6 relative">
+            {/* Connecting line animation */}
+            <div
+              className="absolute top-10 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-purple-500 via-purple-400 to-green-500"
+              style={{
+                animation: activeSection === 14 ? 'lineGrow 1s ease-out 0.5s both' : 'none',
+                transformOrigin: 'left',
+              }}
+            />
+            <div
+              className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
+              style={{ animation: activeSection === 14 ? 'stepSlideIn 0.5s ease-out 0.1s both' : 'none' }}
+            >
+              <div
+                className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ animation: activeSection === 14 ? 'numberPop 0.4s ease-out 0.3s both' : 'none' }}
+              >
                 <span className="text-purple-400 text-xl">1</span>
               </div>
               <h3 className="font-bold mb-2">Connect VCS</h3>
               <p className="text-zinc-400 text-sm">GitHub, GitLab, or Bitbucket</p>
             </div>
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs">
-              <div className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
+              style={{ animation: activeSection === 14 ? 'stepSlideIn 0.5s ease-out 0.3s both' : 'none' }}
+            >
+              <div
+                className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ animation: activeSection === 14 ? 'numberPop 0.4s ease-out 0.5s both' : 'none' }}
+              >
                 <span className="text-purple-400 text-xl">2</span>
               </div>
               <h3 className="font-bold mb-2">Select Repo</h3>
               <p className="text-zinc-400 text-sm">Auto-detect Nx workspace</p>
             </div>
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs">
-              <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div
+              className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
+              style={{ animation: activeSection === 14 ? 'stepSlideIn 0.5s ease-out 0.5s both' : 'none' }}
+            >
+              <div
+                className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ animation: activeSection === 14 ? 'checkmarkPop 0.5s ease-out 0.7s both' : 'none' }}
+              >
                 <span className="text-green-400 text-xl">✓</span>
               </div>
               <h3 className="font-bold mb-2">You're Live</h3>
               <p className="text-zinc-400 text-sm">Remote caching enabled</p>
             </div>
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Nicole • Dillon • Mark • Chau</p>
         </div>
+        <style>{`
+          @keyframes stepSlideIn {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes numberPop {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+          }
+          @keyframes checkmarkPop {
+            0% { transform: scale(0) rotate(-180deg); }
+            70% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+          }
+          @keyframes lineGrow {
+            0% { transform: scaleX(0); opacity: 0; }
+            100% { transform: scaleX(1); opacity: 1; }
+          }
+        `}</style>
       </Section>
 
       {/* Azure Single Tenant - Infrastructure */}
@@ -1462,23 +2075,50 @@ export default function EngWrapped() {
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.infrastructure }} />
             <p className="text-zinc-300 uppercase tracking-wider text-sm">Infrastructure</p>
           </div>
-          <h2 className="text-4xl font-bold mb-4">Azure Single Tenant</h2>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #64748b, #94a3b8, #e2e8f0, #64748b)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Azure Single Tenant</h2>
           <p className="text-zinc-400 text-lg mb-8">Enterprise cloud expansion for Azure customers</p>
           <div className="flex justify-center gap-8">
-            <div className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-48">
+            <div
+              className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-48"
+              style={{ animation: activeSection === 15 ? 'cloudFloat 0.6s ease-out 0.1s both' : 'none' }}
+            >
               <img src="aws-logo.webp" alt="AWS" className="h-12 mx-auto mb-4 object-contain" />
               <p className="text-green-400 text-sm">Supported</p>
             </div>
-            <div className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-48 ring-2 ring-green-500">
+            <div
+              className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-48 ring-2 ring-green-500"
+              style={{ animation: activeSection === 15 ? 'cloudFloat 0.6s ease-out 0.2s both, azurePulse 2s ease-in-out 0.8s infinite' : 'none' }}
+            >
               <img src="azure-logo.png" alt="Azure" className="h-12 mx-auto mb-4 object-contain" />
               <p className="text-green-400 text-sm">New in 2025</p>
             </div>
-            <div className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-48">
+            <div
+              className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-48"
+              style={{ animation: activeSection === 15 ? 'cloudFloat 0.6s ease-out 0.3s both' : 'none' }}
+            >
               <img src="gcp-logo.jpg" alt="GCP" className="h-12 mx-auto mb-4 object-contain" />
               <p className="text-green-400 text-sm">Supported</p>
             </div>
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Steve</p>
         </div>
+        <style>{`
+          @keyframes cloudFloat {
+            0% { opacity: 0; transform: translateY(-30px) scale(0.8); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+          }
+          @keyframes azurePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            50% { box-shadow: 0 0 20px 5px rgba(34, 197, 94, 0.2); }
+          }
+        `}</style>
       </Section>
 
       {/* Helm Chart v1 - Infrastructure */}
@@ -1488,26 +2128,54 @@ export default function EngWrapped() {
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.infrastructure }} />
             <p className="text-zinc-300 uppercase tracking-wider text-sm">Infrastructure</p>
           </div>
-          <h2 className="text-4xl font-bold mb-4">Helm Chart v1</h2>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #64748b, #94a3b8, #e2e8f0, #64748b)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Helm Chart v1</h2>
           <p className="text-zinc-400 text-lg mb-8">Migrated multi-tenant from Kustomize to Helm</p>
           <div className="flex justify-center gap-6">
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center">
-              <p className="text-3xl mb-3">⎈</p>
+            <div
+              className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center"
+              style={{ animation: activeSection === 16 ? 'helmSpin 0.6s ease-out 0.1s both' : 'none' }}
+            >
+              <p className="text-3xl mb-3" style={{ animation: activeSection === 16 ? 'iconRotate 0.8s ease-out 0.3s both' : 'none' }}>⎈</p>
               <h3 className="font-bold mb-1">Kustomize → Helm</h3>
               <p className="text-zinc-500 text-sm">Unified deployment model</p>
             </div>
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center">
-              <p className="text-3xl mb-3">🔄</p>
+            <div
+              className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center"
+              style={{ animation: activeSection === 16 ? 'helmSpin 0.6s ease-out 0.2s both' : 'none' }}
+            >
+              <p className="text-3xl mb-3" style={{ animation: activeSection === 16 ? 'iconRotate 0.8s ease-out 0.4s both' : 'none' }}>🔄</p>
               <h3 className="font-bold mb-1">ArgoCD AppSets</h3>
               <p className="text-zinc-500 text-sm">GCP & AWS deployments</p>
             </div>
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center">
-              <p className="text-3xl mb-3">📦</p>
+            <div
+              className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center"
+              style={{ animation: activeSection === 16 ? 'helmSpin 0.6s ease-out 0.3s both' : 'none' }}
+            >
+              <p className="text-3xl mb-3" style={{ animation: activeSection === 16 ? 'iconRotate 0.8s ease-out 0.5s both' : 'none' }}>📦</p>
               <h3 className="font-bold mb-1">Single Chart</h3>
               <p className="text-zinc-500 text-sm">All components included</p>
             </div>
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Szymon</p>
         </div>
+        <style>{`
+          @keyframes helmSpin {
+            0% { opacity: 0; transform: rotateY(-90deg) scale(0.5); }
+            100% { opacity: 1; transform: rotateY(0) scale(1); }
+          }
+          @keyframes iconRotate {
+            0% { transform: rotate(-180deg) scale(0); }
+            60% { transform: rotate(20deg) scale(1.2); }
+            100% { transform: rotate(0) scale(1); }
+          }
+        `}</style>
       </Section>
 
       {/* Observability - Infrastructure */}
@@ -1517,10 +2185,23 @@ export default function EngWrapped() {
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.infrastructure }} />
             <p className="text-zinc-300 uppercase tracking-wider text-sm">Infrastructure</p>
           </div>
-          <h2 className="text-4xl font-bold mb-4">Full Observability</h2>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #64748b, #94a3b8, #e2e8f0, #64748b)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Full Observability</h2>
           <p className="text-zinc-400 text-lg mb-6">Metrics, tracing, and dashboards across the stack</p>
           <div className="flex justify-center">
-            <div className="rounded-xl overflow-hidden border border-zinc-800 shadow-2xl" style={{ maxWidth: '900px' }}>
+            <div
+              className="rounded-xl overflow-hidden border border-zinc-800 shadow-2xl"
+              style={{
+                maxWidth: '900px',
+                animation: activeSection === 17 ? 'dashboardReveal 0.8s ease-out 0.2s both' : 'none'
+              }}
+            >
               <img
                 src="grafana-dashboard.png"
                 alt="Grafana dashboard showing MongoDB Atlas cluster metrics"
@@ -1529,16 +2210,297 @@ export default function EngWrapped() {
             </div>
           </div>
           <div className="flex justify-center gap-8 mt-6 text-sm">
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 17 ? 'tagFadeIn 0.4s ease-out 0.6s both' : 'none' }}>
               <span className="text-green-400 font-bold">Grafana</span> dashboards
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 17 ? 'tagFadeIn 0.4s ease-out 0.7s both' : 'none' }}>
               <span className="text-blue-400 font-bold">Distributed</span> tracing
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 17 ? 'tagFadeIn 0.4s ease-out 0.8s both' : 'none' }}>
               <span className="text-purple-400 font-bold">Proactive</span> alerting
             </div>
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Patrick • Steve</p>
+        </div>
+        <style>{`
+          @keyframes dashboardReveal {
+            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+          }
+          @keyframes tagFadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
+      </Section>
+
+      {/* Docker + Nx Release - CLI */}
+      <Section className="bg-zinc-900">
+        <div className="text-center max-w-4xl">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cli }} />
+            <p className="text-zinc-300 uppercase tracking-wider text-sm">Nx CLI</p>
+          </div>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd, #3b82f6)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Docker + Nx Release</h2>
+          <p className="text-zinc-400 text-lg mb-8">From build to deploy, all in one workflow</p>
+          <div className="flex justify-center gap-6">
+            <div
+              className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
+              style={{ animation: activeSection === 18 ? 'dockerSlide 0.5s ease-out 0.1s both' : 'none' }}
+            >
+              <p className="text-4xl mb-4" style={{ animation: activeSection === 18 ? 'iconWobble 0.6s ease-out 0.3s both' : 'none' }}>🐳</p>
+              <h3 className="font-bold mb-2">Docker Plugin</h3>
+              <p className="text-zinc-400 text-sm">Build and push container images</p>
+              <p className="text-zinc-500 text-xs mt-2">Inferred targets • Multi-stage builds</p>
+            </div>
+            <div
+              className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
+              style={{ animation: activeSection === 18 ? 'dockerSlide 0.5s ease-out 0.25s both' : 'none' }}
+            >
+              <p className="text-4xl mb-4" style={{ animation: activeSection === 18 ? 'iconWobble 0.6s ease-out 0.45s both' : 'none' }}>📦</p>
+              <h3 className="font-bold mb-2">Nx Release</h3>
+              <p className="text-zinc-400 text-sm">Versioning, changelogs, publishing</p>
+              <p className="text-zinc-500 text-xs mt-2">GitLab releases • Monorepo-aware</p>
+            </div>
+          </div>
+          <p className="text-zinc-500 text-sm mt-6">Colum • James</p>
+        </div>
+        <style>{`
+          @keyframes dockerSlide {
+            0% { opacity: 0; transform: translateX(-40px) rotate(-5deg); }
+            100% { opacity: 1; transform: translateX(0) rotate(0); }
+          }
+          @keyframes iconWobble {
+            0% { transform: scale(0) rotate(-20deg); }
+            50% { transform: scale(1.3) rotate(10deg); }
+            75% { transform: scale(0.9) rotate(-5deg); }
+            100% { transform: scale(1) rotate(0); }
+          }
+        `}</style>
+      </Section>
+
+      {/* GitHub Templates - CLI + Cloud */}
+      <Section className="bg-zinc-900">
+        <div className="text-center max-w-5xl">
+          <div className="flex items-center justify-center gap-4 mb-2">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cli }} />
+              <p className="text-zinc-300 uppercase tracking-wider text-sm">Nx CLI</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
+              <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
+            </div>
+          </div>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #3b82f6, #a855f7, #c084fc, #3b82f6)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >GitHub Template Onboarding</h2>
+          <p className="text-zinc-400 text-lg mb-8">Same great starting points in CLI and Cloud</p>
+          <div className="flex justify-center gap-6">
+            <div
+              className="flex-1 bg-zinc-950 rounded-xl p-6 border border-zinc-800"
+              style={{ animation: activeSection === 19 ? 'panelSlideLeft 0.5s ease-out 0.1s both' : 'none' }}
+            >
+              <p className="text-zinc-400 text-sm mb-3 font-medium">create-nx-workspace</p>
+              <div className="bg-zinc-900 rounded-lg p-4 font-mono text-sm text-left">
+                <div className="text-zinc-400" style={{ animation: activeSection === 19 ? 'typeIn 0.3s ease-out 0.4s both' : 'none' }}>? Which starter do you want to use? …</div>
+                <div className="text-yellow-300 underline" style={{ animation: activeSection === 19 ? 'typeIn 0.3s ease-out 0.5s both' : 'none' }}>TypeScript</div>
+                <div className="text-zinc-500" style={{ animation: activeSection === 19 ? 'typeIn 0.3s ease-out 0.55s both' : 'none' }}>NPM Packages</div>
+                <div className="text-zinc-500" style={{ animation: activeSection === 19 ? 'typeIn 0.3s ease-out 0.6s both' : 'none' }}>React</div>
+                <div className="text-zinc-500" style={{ animation: activeSection === 19 ? 'typeIn 0.3s ease-out 0.65s both' : 'none' }}>Angular</div>
+                <div className="text-zinc-500" style={{ animation: activeSection === 19 ? 'typeIn 0.3s ease-out 0.7s both' : 'none' }}>Custom</div>
+              </div>
+            </div>
+            <div
+              className="flex-1 rounded-xl border border-zinc-800 overflow-hidden"
+              style={{ animation: activeSection === 19 ? 'panelSlideRight 0.5s ease-out 0.2s both' : 'none' }}
+            >
+              <p className="text-zinc-400 text-sm py-3 font-medium bg-zinc-950">Nx Cloud UI</p>
+              <img
+                src="cloud-templates.png"
+                alt="Nx Cloud template selection UI"
+                className="w-full"
+              />
+            </div>
+          </div>
+          <p className="text-zinc-500 text-sm mt-6">Jack • Nicole • Colum • Dillon</p>
+        </div>
+        <style>{`
+          @keyframes panelSlideLeft {
+            0% { opacity: 0; transform: translateX(-50px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes panelSlideRight {
+            0% { opacity: 0; transform: translateX(50px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes typeIn {
+            0% { opacity: 0; transform: translateX(-10px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+        `}</style>
+      </Section>
+
+      {/* Node 24 - CLI */}
+      <Section className="bg-zinc-950">
+        <div className="text-center max-w-4xl">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cli }} />
+            <p className="text-zinc-300 uppercase tracking-wider text-sm">Nx CLI</p>
+          </div>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #22c55e, #4ade80, #86efac, #22c55e)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Node 24 LTS Support</h2>
+          <p className="text-zinc-400 text-lg mb-8">Ready when Node 24 entered LTS</p>
+          <div className="flex justify-center gap-6">
+            <div
+              className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 flex-1 max-w-xs"
+              style={{ animation: activeSection === 20 ? 'nodePopIn 0.5s ease-out 0.1s both' : 'none' }}
+            >
+              <p className="text-4xl mb-3" style={{ animation: activeSection === 20 ? 'nodePulse 0.6s ease-out 0.3s both' : 'none' }}>💚</p>
+              <h3 className="text-lg font-bold mb-2">Node 24 LTS</h3>
+              <p className="text-zinc-400 text-sm">Full compatibility testing</p>
+              <p className="text-zinc-400 text-sm">across all Nx plugins</p>
+            </div>
+            <div
+              className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 flex-1 max-w-xs"
+              style={{ animation: activeSection === 20 ? 'nodePopIn 0.5s ease-out 0.25s both' : 'none' }}
+            >
+              <p className="text-4xl mb-3" style={{ animation: activeSection === 20 ? 'nodePulse 0.6s ease-out 0.45s both' : 'none' }}>🔷</p>
+              <h3 className="text-lg font-bold mb-2">TypeScript Native</h3>
+              <p className="text-zinc-400 text-sm">Compatible with Node's</p>
+              <p className="text-zinc-400 text-sm">type stripping (22.12+)</p>
+            </div>
+          </div>
+          <p className="text-zinc-500 text-sm mt-6">Jack</p>
+        </div>
+        <style>{`
+          @keyframes nodePopIn {
+            0% { opacity: 0; transform: scale(0.5) translateY(20px); }
+            70% { transform: scale(1.05) translateY(-5px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+          }
+          @keyframes nodePulse {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.4); }
+            75% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+          }
+        `}</style>
+      </Section>
+
+      {/* Nx & Ocean CI Stability - Cloud/Infra */}
+      <Section className="bg-zinc-950">
+        <div className="text-center max-w-4xl">
+          <div className="flex items-center justify-center gap-4 mb-2">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
+              <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.infrastructure }} />
+              <p className="text-zinc-300 uppercase tracking-wider text-sm">Infrastructure</p>
+            </div>
+          </div>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #a855f7, #64748b, #94a3b8, #a855f7)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Nx & Ocean CI Stability</h2>
+          <p className="text-zinc-400 text-lg mb-8">Making our own CI rock solid</p>
+          <div className="flex justify-center gap-6">
+            <div
+              className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
+              style={{ animation: activeSection === 21 ? 'stabilitySlide 0.5s ease-out 0.1s both' : 'none' }}
+            >
+              <p className="text-4xl mb-4" style={{ animation: activeSection === 21 ? 'shieldPulse 0.8s ease-out 0.3s both' : 'none' }}>🛡️</p>
+              <h3 className="font-bold mb-2">Nx CI Stability</h3>
+              <p className="text-zinc-400 text-sm">Reliable builds for the</p>
+              <p className="text-zinc-400 text-sm">nrwl/nx monorepo</p>
+            </div>
+            <div
+              className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
+              style={{ animation: activeSection === 21 ? 'stabilitySlide 0.5s ease-out 0.25s both' : 'none' }}
+            >
+              <p className="text-4xl mb-4" style={{ animation: activeSection === 21 ? 'shieldPulse 0.8s ease-out 0.45s both' : 'none' }}>🐋</p>
+              <h3 className="font-bold mb-2">Ocean CI Stability</h3>
+              <p className="text-zinc-400 text-sm">Keeping Nx Cloud's own</p>
+              <p className="text-zinc-400 text-sm">workspace green</p>
+            </div>
+          </div>
+          <p className="text-zinc-500 text-sm mt-6">Rares</p>
+        </div>
+        <style>{`
+          @keyframes stabilitySlide {
+            0% { opacity: 0; transform: translateY(30px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+          }
+          @keyframes shieldPulse {
+            0% { transform: scale(0) rotate(-10deg); }
+            50% { transform: scale(1.3) rotate(5deg); }
+            75% { transform: scale(0.95); }
+            100% { transform: scale(1) rotate(0); }
+          }
+        `}</style>
+      </Section>
+
+      {/* Docs Migration to Astro Starlight - Docs */}
+      <Section className="bg-zinc-900">
+        <div className="text-center max-w-4xl">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.docs }} />
+            <p className="text-zinc-300 uppercase tracking-wider text-sm">Documentation</p>
+          </div>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #ec4899, #f472b6, #fbcfe8, #ec4899)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Docs Migration to Astro Starlight</h2>
+          <p className="text-zinc-400 text-lg mb-8">Better authoring experience, more standard tooling</p>
+          <div className="flex justify-center gap-6">
+            <div className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs">
+              <p className="text-4xl mb-4">✍️</p>
+              <h3 className="font-bold mb-2">Better Authoring</h3>
+              <p className="text-zinc-400 text-sm">Markdown-first experience</p>
+              <p className="text-zinc-400 text-sm">with modern tooling</p>
+            </div>
+            <div className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs">
+              <p className="text-4xl mb-4">⭐</p>
+              <h3 className="font-bold mb-2">Starlight Framework</h3>
+              <p className="text-zinc-400 text-sm">Industry-standard docs</p>
+              <p className="text-zinc-400 text-sm">built on Astro</p>
+            </div>
+            <div className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs">
+              <p className="text-4xl mb-4">🚀</p>
+              <h3 className="font-bold mb-2">Faster & Lighter</h3>
+              <p className="text-zinc-400 text-sm">Static-first architecture</p>
+              <p className="text-zinc-400 text-sm">for blazing speed</p>
+            </div>
+          </div>
+          <p className="text-zinc-500 text-sm mt-6">Jack • Caleb</p>
         </div>
       </Section>
 
@@ -1557,17 +2519,40 @@ export default function EngWrapped() {
               animation: 'gradientShift 3s ease-in-out infinite',
             }}
           >
-            Every Major Release
+            Every Major Ecosystem Release
           </h2>
           <div className="grid grid-cols-4 gap-4">
             {frameworkReleases.map((fw, i) => (
-              <div key={i} className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 transition-colors border border-zinc-700/50">
-                <span className="text-2xl mb-2 block">{fw.icon}</span>
+              <div
+                key={i}
+                className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
+                style={{
+                  animation: activeSection === 23 ? `gridItemPop 0.4s ease-out ${0.1 + i * 0.08}s both` : 'none',
+                }}
+              >
+                <span
+                  className="text-2xl mb-2 block"
+                  style={{ animation: activeSection === 23 ? `iconBounce 0.5s ease-out ${0.3 + i * 0.08}s both` : 'none' }}
+                >{fw.icon}</span>
                 <p className="text-sm font-medium">{fw.name}</p>
               </div>
             ))}
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Colum • Leosvel</p>
         </div>
+        <style>{`
+          @keyframes gridItemPop {
+            0% { opacity: 0; transform: scale(0.5) translateY(20px); }
+            70% { transform: scale(1.05) translateY(-5px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+          }
+          @keyframes iconBounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.3); }
+            75% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+          }
+        `}</style>
       </Section>
 
       {/* Orca Highlights */}
@@ -1585,17 +2570,39 @@ export default function EngWrapped() {
               animation: 'gradientShift 3s ease-in-out infinite',
             }}
           >
-            Smarter & Easier to Use
+            Smarter, Easier & More Experimentation
           </h2>
           <div className="grid grid-cols-4 gap-4">
             {cloudHighlights.map((item, i) => (
-              <div key={i} className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 transition-colors border border-zinc-700/50">
-                <span className="text-2xl mb-2 block">{item.icon}</span>
+              <div
+                key={i}
+                className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
+                style={{
+                  animation: activeSection === 24 ? `orcaGridPop 0.4s ease-out ${0.1 + i * 0.08}s both` : 'none',
+                }}
+              >
+                <span
+                  className="text-2xl mb-2 block"
+                  style={{ animation: activeSection === 24 ? `orcaIconWiggle 0.6s ease-out ${0.3 + i * 0.08}s both` : 'none' }}
+                >{item.icon}</span>
                 <p className="text-sm font-medium">{item.name}</p>
               </div>
             ))}
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Nicole • Chau • Louie • Dillon</p>
         </div>
+        <style>{`
+          @keyframes orcaGridPop {
+            0% { opacity: 0; transform: translateX(-30px) rotate(-5deg); }
+            100% { opacity: 1; transform: translateX(0) rotate(0); }
+          }
+          @keyframes orcaIconWiggle {
+            0% { transform: rotate(-15deg) scale(0); }
+            40% { transform: rotate(10deg) scale(1.2); }
+            70% { transform: rotate(-5deg) scale(1); }
+            100% { transform: rotate(0) scale(1); }
+          }
+        `}</style>
       </Section>
 
       {/* Infrastructure Highlights */}
@@ -1617,13 +2624,34 @@ export default function EngWrapped() {
           </h2>
           <div className="grid grid-cols-4 gap-4">
             {infraHighlights.map((item, i) => (
-              <div key={i} className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 transition-colors border border-zinc-700/50">
-                <span className="text-2xl mb-2 block">{item.icon}</span>
+              <div
+                key={i}
+                className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
+                style={{
+                  animation: activeSection === 25 ? `infraSlideUp 0.5s ease-out ${0.1 + i * 0.07}s both` : 'none',
+                }}
+              >
+                <span
+                  className="text-2xl mb-2 block"
+                  style={{ animation: activeSection === 25 ? `infraIconGrow 0.4s ease-out ${0.25 + i * 0.07}s both` : 'none' }}
+                >{item.icon}</span>
                 <p className="text-sm font-medium">{item.name}</p>
               </div>
             ))}
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Steve • Patrick • Szymon</p>
         </div>
+        <style>{`
+          @keyframes infraSlideUp {
+            0% { opacity: 0; transform: translateY(40px) scale(0.8); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+          }
+          @keyframes infraIconGrow {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.3); }
+            100% { transform: scale(1); opacity: 1; }
+          }
+        `}</style>
       </Section>
 
       {/* RedPanda Highlights */}
@@ -1645,18 +2673,38 @@ export default function EngWrapped() {
           </h2>
           <div className="grid grid-cols-3 gap-4">
             {redpandaHighlights.map((item, i) => (
-              <div key={i} className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 transition-colors border border-zinc-700/50">
-                <span className="text-2xl mb-2 block">{item.icon}</span>
+              <div
+                key={i}
+                className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
+                style={{
+                  animation: activeSection === 26 ? `pandaFlipIn 0.5s ease-out ${0.1 + i * 0.1}s both` : 'none',
+                }}
+              >
+                <span
+                  className="text-2xl mb-2 block"
+                  style={{ animation: activeSection === 26 ? `pandaIconSpin 0.6s ease-out ${0.3 + i * 0.1}s both` : 'none' }}
+                >{item.icon}</span>
                 <p className="text-sm font-medium">{item.name}</p>
               </div>
             ))}
           </div>
+          <p className="text-zinc-500 text-sm mt-6">Victor • Jon • James • Altan • Mark • Ben</p>
         </div>
+        <style>{`
+          @keyframes pandaFlipIn {
+            0% { opacity: 0; transform: perspective(400px) rotateY(-90deg); }
+            100% { opacity: 1; transform: perspective(400px) rotateY(0); }
+          }
+          @keyframes pandaIconSpin {
+            0% { transform: rotate(-180deg) scale(0); }
+            100% { transform: rotate(0) scale(1); }
+          }
+        `}</style>
       </Section>
 
       {/* Stats Intro */}
       <Section className="bg-zinc-950 relative overflow-hidden">
-        <NumbersRain isActive={activeSection === 21} />
+        <NumbersRain isActive={activeSection === 27} />
         <div className="text-center max-w-2xl relative z-10">
           <p className="text-6xl mb-6">📊</p>
           <h2 className="text-5xl font-black mb-4">By the Numbers</h2>
@@ -1666,16 +2714,25 @@ export default function EngWrapped() {
 
       {/* Projects Showcase */}
       <Section className="bg-zinc-900">
-        <ProjectsShowcase isActive={activeSection === 22} />
+        <ProjectsShowcase isActive={activeSection === 28} />
       </Section>
 
       {/* Projects Breakdown */}
       <Section className="bg-zinc-950">
         <div className="max-w-4xl w-full">
-          <h2 className="text-4xl font-bold mb-8 text-center">Projects by Team</h2>
+          <h2
+            className="text-4xl font-bold mb-8 text-center"
+            style={{ animation: activeSection === 29 ? 'titleDrop 0.5s ease-out both' : 'none' }}
+          >Projects by Team</h2>
           <div className="flex items-center justify-center gap-12">
-            <div style={{ width: 250, height: 250 }}>
-              {activeSection === 23 && (
+            <div
+              style={{
+                width: 250,
+                height: 250,
+                animation: activeSection === 29 ? 'chartSpin 0.8s ease-out both' : 'none',
+              }}
+            >
+              {activeSection === 29 && (
                 <ResponsiveContainer width={250} height={250}>
                   <PieChart>
                     <Pie
@@ -1700,15 +2757,52 @@ export default function EngWrapped() {
             </div>
             <div className="space-y-3">
               {projectData.map((item, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <div className="w-4 h-4 rounded" style={{ backgroundColor: item.color }} />
+                <div
+                  key={i}
+                  className="flex items-center gap-3"
+                  style={{ animation: activeSection === 29 ? `legendSlide 0.4s ease-out ${0.3 + i * 0.15}s both` : 'none' }}
+                >
+                  <div
+                    className="w-4 h-4 rounded"
+                    style={{
+                      backgroundColor: item.color,
+                      animation: activeSection === 29 ? `colorPop 0.3s ease-out ${0.5 + i * 0.15}s both` : 'none',
+                    }}
+                  />
                   <span className="text-zinc-300 w-28">{item.name}</span>
-                  <span className="text-2xl font-bold">{item.value}+</span>
+                  <span
+                    className="text-2xl font-bold"
+                    style={{ animation: activeSection === 29 ? `numberBounce 0.4s ease-out ${0.6 + i * 0.15}s both` : 'none' }}
+                  >{item.value}+</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
+        <style>{`
+          @keyframes titleDrop {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes chartSpin {
+            0% { opacity: 0; transform: rotate(-180deg) scale(0.5); }
+            100% { opacity: 1; transform: rotate(0) scale(1); }
+          }
+          @keyframes legendSlide {
+            0% { opacity: 0; transform: translateX(30px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes colorPop {
+            0% { transform: scale(0); }
+            70% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+          }
+          @keyframes numberBounce {
+            0% { opacity: 0; transform: scale(0); }
+            60% { transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+          }
+        `}</style>
       </Section>
 
       {/* Top Contributors Chart */}
@@ -1718,7 +2812,7 @@ export default function EngWrapped() {
           <h2 className="text-4xl font-bold mb-2 text-center">Commit Volume</h2>
           <p className="text-zinc-500 text-sm mb-8 text-center">Commits aren't everything—but we sure shipped a lot of code</p>
           <div style={{ height: 500 }}>
-            {activeSection === 24 && (
+            {activeSection === 30 && (
               <ResponsiveContainer width="100%" height={500}>
                 <BarChart data={commitData} layout="vertical" margin={{ left: 20, right: 40 }}>
                   <XAxis type="number" scale="log" domain={[50, 2000]} hide />
@@ -1733,7 +2827,7 @@ export default function EngWrapped() {
             )}
           </div>
           <div className="flex justify-center gap-6 mt-4">
-            {Object.entries(teamColors).map(([team, color]) => (
+            {Object.entries(teamColors).filter(([team]) => team !== 'docs').map(([team, color]) => (
               <div key={team} className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
                 <span className="text-zinc-400 text-sm capitalize">{team === 'redpanda' ? 'RedPanda' : team === 'cli' ? 'CLI' : team === 'cloud' ? 'Orca' : 'Infra'}</span>
@@ -1746,15 +2840,29 @@ export default function EngWrapped() {
       {/* Closing */}
       <Section className="bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
         <div className="text-center max-w-4xl">
-          <h2 className="text-5xl font-black mb-6">Thanks for everything.</h2>
+          <h2
+            className="text-5xl font-black mb-6"
+            style={{
+              animation: activeSection === 31 ? 'thankYouReveal 0.8s ease-out both' : 'none',
+            }}
+          >Thanks for everything.</h2>
           <div className="flex flex-col gap-8 mb-8">
             <div className="flex justify-center gap-3">
               {teamPhotos.slice(0, 12).map((person, i) => (
-                <div key={i} className="group relative hover:z-10">
+                <div
+                  key={i}
+                  className="group relative hover:z-10"
+                  style={{
+                    animation: activeSection === 31 ? `photoWaveIn 0.5s ease-out ${0.2 + i * 0.05}s both` : 'none',
+                  }}
+                >
                   <img
                     src={person.photo}
                     alt={person.name}
                     className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
+                    style={{
+                      animation: activeSection === 31 ? `photoGlow 2s ease-in-out ${1.5 + i * 0.1}s infinite` : 'none',
+                    }}
                   />
                   <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
                     {person.name}
@@ -1764,11 +2872,20 @@ export default function EngWrapped() {
             </div>
             <div className="flex justify-center gap-3">
               {teamPhotos.slice(12).map((person, i) => (
-                <div key={i} className="group relative hover:z-10">
+                <div
+                  key={i}
+                  className="group relative hover:z-10"
+                  style={{
+                    animation: activeSection === 31 ? `photoWaveIn 0.5s ease-out ${0.8 + i * 0.05}s both` : 'none',
+                  }}
+                >
                   <img
                     src={person.photo}
                     alt={person.name}
                     className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
+                    style={{
+                      animation: activeSection === 31 ? `photoGlow 2s ease-in-out ${2 + i * 0.1}s infinite` : 'none',
+                    }}
                   />
                   <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
                     {person.name}
@@ -1777,13 +2894,53 @@ export default function EngWrapped() {
               ))}
             </div>
           </div>
-          <p className="text-zinc-400 text-xl mb-8">See you in 2026.</p>
+          <p
+            className="text-zinc-400 text-xl mb-8"
+            style={{
+              animation: activeSection === 31 ? 'fadeInUp 0.6s ease-out 1.2s both' : 'none',
+            }}
+          >See you in 2026.</p>
           <div className="flex justify-center gap-2">
             {Object.values(teamColors).map((color, i) => (
-              <div key={i} className="w-16 h-2 rounded-full" style={{ backgroundColor: color }} />
+              <div
+                key={i}
+                className="w-16 h-2 rounded-full"
+                style={{
+                  backgroundColor: color,
+                  animation: activeSection === 31 ? `barGrow 0.4s ease-out ${1.4 + i * 0.1}s both, barPulse 2s ease-in-out ${2 + i * 0.2}s infinite` : 'none',
+                }}
+              />
             ))}
           </div>
         </div>
+        <style>{`
+          @keyframes thankYouReveal {
+            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+            50% { transform: scale(1.05) translateY(-5px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+          }
+          @keyframes photoWaveIn {
+            0% { opacity: 0; transform: translateY(30px) scale(0); }
+            70% { transform: translateY(-5px) scale(1.1); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+          }
+          @keyframes photoGlow {
+            0%, 100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+            50% { box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+          }
+          @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes barGrow {
+            0% { transform: scaleX(0); opacity: 0; }
+            100% { transform: scaleX(1); opacity: 1; }
+          }
+          @keyframes barPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+          }
+        `}</style>
       </Section>
     </div>
   );
