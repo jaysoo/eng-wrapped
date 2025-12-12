@@ -34,7 +34,7 @@ const commitData = [
 const projectData = [
   { name: 'Infrastructure', value: 40, color: teamColors.infrastructure },
   { name: 'CLI', value: 19, color: teamColors.cli },
-  { name: 'Cloud', value: 17, color: teamColors.cloud },
+  { name: 'Orca', value: 17, color: teamColors.cloud },
   { name: 'RedPanda', value: 4, color: teamColors.redpanda },
 ];
 
@@ -586,33 +586,36 @@ export default function EngWrapped() {
     if (!audio) return;
     audio.muted = isMuted;
   }, [isMuted]);
-  const sectionCount = 23;
+  const sectionCount = 26;
 
   // Slide durations in ms
   const slideDurations = [
     2800,  // 0: Hero
     3000,  // 1: Big Numbers
-    5200,  // 2: Teams
-    3000,  // 3: Big Features Intro
-    2300,  // 4: Self-Healing CI
-    2300,  // 5: Terminal UI
-    2300,  // 6: .NET + Maven
-    2300,  // 7: AI Code Generation
-    2300,  // 8: CPU/Memory Tracking
-    2300,  // 9: Flaky Task Analytics
-    2300,  // 10: Onboarding Flow
-    2300,  // 11: Azure Single Tenant
-    2300,  // 12: Helm Chart
-    2300,  // 13: Observability
-    2600,  // 14: Framework Support
-    2600,  // 15: Cloud Highlights
-    2600,  // 16: Infrastructure Highlights
-    2600,  // 17: RedPanda Highlights
-    3000,  // 18: Stats Intro
-    6000,  // 19: Projects Showcase (animated)
-    3000,  // 20: Projects Breakdown
-    4000,  // 21: Top Contributors Chart
-    3000,  // 22: Closing
+    3500,  // 2: Team Shakeup Intro
+    4000,  // 3: RedPanda Team Formation
+    3000,  // 4: Orca Introduction
+    5200,  // 5: Meet the Teams
+    3000,  // 6: Big Features Intro
+    2300,  // 7: Self-Healing CI
+    2300,  // 8: Terminal UI
+    2300,  // 9: .NET + Maven
+    2300,  // 10: AI Code Generation
+    2300,  // 11: CPU/Memory Tracking
+    2300,  // 12: Flaky Task Analytics
+    2300,  // 13: Onboarding Flow
+    2300,  // 14: Azure Single Tenant
+    2300,  // 15: Helm Chart
+    2300,  // 16: Observability
+    2600,  // 17: Framework Support
+    2600,  // 18: Orca Highlights
+    2600,  // 19: Infrastructure Highlights
+    2600,  // 20: RedPanda Highlights
+    3000,  // 21: Stats Intro
+    6000,  // 22: Projects Showcase (animated)
+    3000,  // 23: Projects Breakdown
+    4000,  // 24: Top Contributors Chart
+    3000,  // 25: Closing
   ];
 
   // Progress bar - use ref to avoid re-renders during auto-play
@@ -940,8 +943,153 @@ export default function EngWrapped() {
         </div>
       </Section>
 
-      {/* Team Details */}
+      {/* Team Shakeup Intro */}
       <Section className="bg-zinc-900">
+        <div className="text-center max-w-3xl relative">
+          <p className="text-zinc-400 text-sm uppercase tracking-wider mb-4">Meanwhile...</p>
+          <h2 className="text-5xl font-bold mb-8">Teams Were Shuffling</h2>
+          <div className="relative h-48 mb-8">
+            {/* Musical chairs animation */}
+            {['👨‍💻', '👩‍💻', '🧑‍💻', '👨‍💼'].map((emoji, i) => (
+              <div
+                key={i}
+                className="absolute text-5xl"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  animation: `orbit ${3 + i * 0.5}s linear infinite`,
+                  animationDelay: `${i * 0.75}s`,
+                }}
+              >
+                {emoji}
+              </div>
+            ))}
+            {/* Center element */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <div
+                className="text-6xl"
+                style={{ animation: 'pulse 2s ease-in-out infinite' }}
+              >
+                🔀
+              </div>
+            </div>
+            {/* Floating question marks */}
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={`q-${i}`}
+                className="absolute text-2xl text-zinc-600"
+                style={{
+                  left: `${15 + i * 14}%`,
+                  top: `${20 + (i % 2) * 60}%`,
+                  animation: `float ${2 + i * 0.3}s ease-in-out infinite`,
+                  animationDelay: `${i * 0.2}s`,
+                }}
+              >
+                ?
+              </div>
+            ))}
+          </div>
+          <p className="text-zinc-400 text-lg">New teams, new missions, new energy</p>
+          <style>{`
+            @keyframes orbit {
+              0% { transform: translate(-50%, -50%) rotate(0deg) translateX(80px) rotate(0deg); }
+              100% { transform: translate(-50%, -50%) rotate(360deg) translateX(80px) rotate(-360deg); }
+            }
+            @keyframes pulse {
+              0%, 100% { transform: scale(1); opacity: 0.8; }
+              50% { transform: scale(1.2); opacity: 1; }
+            }
+            @keyframes float {
+              0%, 100% { transform: translateY(0); opacity: 0.4; }
+              50% { transform: translateY(-15px); opacity: 0.7; }
+            }
+          `}</style>
+        </div>
+      </Section>
+
+      {/* RedPanda Team Formation */}
+      <Section className="bg-zinc-950">
+        <div className="text-center max-w-4xl">
+          <p className="text-zinc-400 text-sm uppercase tracking-wider mb-2">New in 2025</p>
+          <h2 className="text-4xl font-bold mb-8">
+            <span className="text-orange-400">🐼 RedPanda</span> Team Formed
+          </h2>
+          <div className="flex items-center justify-center gap-12 mb-8">
+            <div className="text-center">
+              <p className="text-zinc-500 text-sm mb-3">From CLI</p>
+              <div className="flex gap-3">
+                <div className="bg-zinc-800 rounded-xl p-3 border border-blue-500/30">
+                  <img src="https://nx.dev/images/team/jonathan-cammisuli.avif" alt="Jon" className="w-12 h-12 rounded-full mb-2 mx-auto" />
+                  <p className="text-sm font-medium">Jon</p>
+                </div>
+                <div className="bg-zinc-800 rounded-xl p-3 border border-blue-500/30">
+                  <img src="https://nx.dev/images/team/james-henry.avif" alt="James" className="w-12 h-12 rounded-full mb-2 mx-auto" />
+                  <p className="text-sm font-medium">James</p>
+                </div>
+              </div>
+            </div>
+            <div className="text-4xl text-orange-400">→</div>
+            <img
+              src="redpanda.png"
+              alt="RedPanda team"
+              className="w-64 rounded-xl shadow-2xl border border-orange-500/50"
+            />
+            <div className="text-4xl text-orange-400">←</div>
+            <div className="text-center">
+              <p className="text-zinc-500 text-sm mb-3">From Orca</p>
+              <div className="flex gap-3">
+                <div className="bg-zinc-800 rounded-xl p-3 border border-purple-500/30">
+                  <img src="https://nx.dev/images/team/altan-stalker.avif" alt="Altan" className="w-12 h-12 rounded-full mb-2 mx-auto" />
+                  <p className="text-sm font-medium">Altan</p>
+                </div>
+                <div className="bg-zinc-800 rounded-xl p-3 border border-purple-500/30">
+                  <img src="https://nx.dev/images/team/mark-lindsey.avif" alt="Mark" className="w-12 h-12 rounded-full mb-2 mx-auto" />
+                  <p className="text-sm font-medium">Mark</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="text-zinc-400">A new team focused on Self-Healing CI</p>
+        </div>
+      </Section>
+
+      {/* Orca Introduction */}
+      <Section className="bg-zinc-900">
+        <div className="text-center max-w-4xl">
+          <p className="text-zinc-400 text-sm uppercase tracking-wider mb-2">Also in 2025...</p>
+          <h2 className="text-4xl font-bold mb-4">
+            Nx Cloud became{' '}
+            <span
+              className="bg-clip-text text-transparent"
+              style={{
+                backgroundImage: 'linear-gradient(90deg, #7c3aed, #c084fc, #e9d5ff, #7c3aed)',
+                backgroundSize: '200% 100%',
+                animation: 'gradientShift 3s ease-in-out infinite',
+              }}
+            >
+              Orca
+            </span>
+          </h2>
+          <p className="text-zinc-400 text-lg mb-8">A new name. The same powerful cloud CI platform.</p>
+          <img
+            src="orca.png"
+            alt="Go Team Orca!"
+            className="mx-auto max-w-lg rounded-xl shadow-2xl"
+            style={{
+              animation: 'float 3s ease-in-out infinite',
+            }}
+          />
+          <style>{`
+            @keyframes float {
+              0%, 100% { transform: translateY(0); }
+              50% { transform: translateY(-10px); }
+            }
+          `}</style>
+        </div>
+      </Section>
+
+      {/* Meet the Teams */}
+      <Section className="bg-zinc-950">
         <div className="max-w-4xl w-full">
           <h2 className="text-3xl font-bold mb-6 text-center">Meet the Teams</h2>
           <div className="grid grid-cols-2 gap-4">
@@ -980,7 +1128,7 @@ export default function EngWrapped() {
               members={['Colum Ferry', 'Leosvel Pérez', 'Jack Hsu', 'Max Kless', 'Craigory Coppola']}
             />
             <TeamCard
-              name="Nx Cloud"
+              name="Orca"
               lead="Nicole Oliver"
               color={teamColors.cloud}
               delay={0.3}
@@ -1020,7 +1168,7 @@ export default function EngWrapped() {
       {/* Big Features Intro */}
       <Section className="bg-zinc-950">
         <div className="text-center max-w-2xl">
-          <RocketLaunch isActive={activeSection === 3} />
+          <RocketLaunch isActive={activeSection === 6} />
           <h2 className="text-5xl font-black mb-4">Big Features</h2>
           <p className="text-zinc-400 text-xl">A few highlights from the year</p>
         </div>
@@ -1183,12 +1331,12 @@ export default function EngWrapped() {
         </div>
       </Section>
 
-      {/* CPU/Memory Tracking - Cloud */}
+      {/* CPU/Memory Tracking - Orca */}
       <Section className="bg-zinc-900">
         <div className="text-center max-w-4xl">
           <div className="flex items-center justify-center gap-2 mb-2">
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
-            <p className="text-zinc-300 uppercase tracking-wider text-sm">Nx Cloud</p>
+            <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
           </div>
           <h2 className="text-4xl font-bold mb-4">Agent Resource Usage</h2>
           <p className="text-zinc-400 text-lg mb-6">Finally see what's happening inside your CI agents</p>
@@ -1215,12 +1363,12 @@ export default function EngWrapped() {
         </div>
       </Section>
 
-      {/* Flaky Task Analytics - Cloud */}
+      {/* Flaky Task Analytics - Orca */}
       <Section className="bg-zinc-950">
         <div className="text-center max-w-4xl">
           <div className="flex items-center justify-center gap-2 mb-2">
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
-            <p className="text-zinc-300 uppercase tracking-wider text-sm">Nx Cloud</p>
+            <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
           </div>
           <h2 className="text-4xl font-bold mb-4">Flaky Task Analytics</h2>
           <p className="text-zinc-400 text-lg mb-8">Find and fix unreliable tests before they slow you down</p>
@@ -1272,12 +1420,12 @@ export default function EngWrapped() {
         </div>
       </Section>
 
-      {/* Onboarding Flow - Cloud */}
+      {/* Onboarding Flow - Orca */}
       <Section className="bg-zinc-900">
         <div className="text-center max-w-4xl">
           <div className="flex items-center justify-center gap-2 mb-2">
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
-            <p className="text-zinc-300 uppercase tracking-wider text-sm">Nx Cloud</p>
+            <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
           </div>
           <h2 className="text-4xl font-bold mb-4">Streamlined Onboarding</h2>
           <p className="text-zinc-400 text-lg mb-8">Connect your workspace in under a minute</p>
@@ -1422,12 +1570,12 @@ export default function EngWrapped() {
         </div>
       </Section>
 
-      {/* Cloud Highlights */}
+      {/* Orca Highlights */}
       <Section className="bg-zinc-900">
         <div className="text-center max-w-4xl">
           <div className="flex items-center justify-center gap-2 mb-2">
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
-            <p className="text-zinc-300 uppercase tracking-wider text-sm">Nx Cloud</p>
+            <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
           </div>
           <h2
             className="text-4xl font-bold mb-8 bg-clip-text text-transparent"
@@ -1508,7 +1656,7 @@ export default function EngWrapped() {
 
       {/* Stats Intro */}
       <Section className="bg-zinc-950 relative overflow-hidden">
-        <NumbersRain isActive={activeSection === 18} />
+        <NumbersRain isActive={activeSection === 21} />
         <div className="text-center max-w-2xl relative z-10">
           <p className="text-6xl mb-6">📊</p>
           <h2 className="text-5xl font-black mb-4">By the Numbers</h2>
@@ -1518,7 +1666,7 @@ export default function EngWrapped() {
 
       {/* Projects Showcase */}
       <Section className="bg-zinc-900">
-        <ProjectsShowcase isActive={activeSection === 19} />
+        <ProjectsShowcase isActive={activeSection === 22} />
       </Section>
 
       {/* Projects Breakdown */}
@@ -1527,7 +1675,7 @@ export default function EngWrapped() {
           <h2 className="text-4xl font-bold mb-8 text-center">Projects by Team</h2>
           <div className="flex items-center justify-center gap-12">
             <div style={{ width: 250, height: 250 }}>
-              {activeSection === 20 && (
+              {activeSection === 23 && (
                 <ResponsiveContainer width={250} height={250}>
                   <PieChart>
                     <Pie
@@ -1570,7 +1718,7 @@ export default function EngWrapped() {
           <h2 className="text-4xl font-bold mb-2 text-center">Commit Volume</h2>
           <p className="text-zinc-500 text-sm mb-8 text-center">Commits aren't everything—but we sure shipped a lot of code</p>
           <div style={{ height: 500 }}>
-            {activeSection === 21 && (
+            {activeSection === 24 && (
               <ResponsiveContainer width="100%" height={500}>
                 <BarChart data={commitData} layout="vertical" margin={{ left: 20, right: 40 }}>
                   <XAxis type="number" scale="log" domain={[50, 2000]} hide />
@@ -1588,7 +1736,7 @@ export default function EngWrapped() {
             {Object.entries(teamColors).map(([team, color]) => (
               <div key={team} className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-                <span className="text-zinc-400 text-sm capitalize">{team === 'redpanda' ? 'RedPanda' : team === 'cli' ? 'CLI' : team === 'cloud' ? 'Cloud' : 'Infra'}</span>
+                <span className="text-zinc-400 text-sm capitalize">{team === 'redpanda' ? 'RedPanda' : team === 'cli' ? 'CLI' : team === 'cloud' ? 'Orca' : 'Infra'}</span>
               </div>
             ))}
           </div>
