@@ -1502,26 +1502,44 @@ export default function EngWrapped() {
             }}
           >AI-Powered Self-Healing CI</h2>
           <p className="text-zinc-400 text-lg mb-8">Get to green faster with automatic fixes</p>
-          <div className="flex justify-center mb-8">
+          <div
+            className="flex justify-center mb-8"
+            style={{ animation: activeSection === 7 ? 'healingImageZoom 0.6s ease-out 0.1s both' : 'none' }}
+          >
             <img
               src="self-healing-ci.webp"
               alt="Self-Healing CI workflow: Submit PR → CI fails → AI fix → Verify → Approve"
-              className="max-w-3xl w-full"
+              className="max-w-3xl w-full rounded-xl"
+              style={{ animation: activeSection === 7 ? 'healingGlow 2s ease-in-out 0.5s infinite' : 'none' }}
             />
           </div>
           <div className="flex justify-center gap-8 text-sm">
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 7 ? 'healingBadge 0.4s ease-out 0.6s both' : 'none' }}>
               <span className="text-orange-400 font-bold">GitHub</span> + GitLab + Azure DevOps
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 7 ? 'healingBadge 0.4s ease-out 0.8s both' : 'none' }}>
               <span className="text-green-400 font-bold">Verified</span> before applying
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 7 ? 'healingBadge 0.4s ease-out 1.0s both' : 'none' }}>
               <span className="text-purple-400 font-bold">Enterprise</span> customers live
             </div>
           </div>
           <p className="text-zinc-500 text-sm mt-6">Jon • James • Victor • Ben • Altan</p>
         </div>
+        <style>{`
+          @keyframes healingImageZoom {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+          }
+          @keyframes healingGlow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.2)); }
+            50% { filter: drop-shadow(0 0 25px rgba(74, 222, 128, 0.4)); }
+          }
+          @keyframes healingBadge {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
       </Section>
 
       {/* Terminal UI - CLI */}
@@ -1540,38 +1558,41 @@ export default function EngWrapped() {
             }}
           >Terminal UI</h2>
           <p className="text-zinc-400 text-lg mb-8">A modern interface for running Nx tasks</p>
-          <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 shadow-2xl">
+          <div
+            className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 shadow-2xl"
+            style={{ animation: activeSection === 8 ? 'terminalWindowPop 0.5s ease-out 0.1s both' : 'none' }}
+          >
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-3 h-3 rounded-full bg-red-500" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500" />
-              <div className="w-3 h-3 rounded-full bg-green-500" />
-              <span className="text-zinc-500 text-sm ml-2 font-mono">nx run-many -t e2e</span>
+              <div className="w-3 h-3 rounded-full bg-red-500" style={{ animation: activeSection === 8 ? 'terminalDot 0.3s ease-out 0.3s both' : 'none' }} />
+              <div className="w-3 h-3 rounded-full bg-yellow-500" style={{ animation: activeSection === 8 ? 'terminalDot 0.3s ease-out 0.4s both' : 'none' }} />
+              <div className="w-3 h-3 rounded-full bg-green-500" style={{ animation: activeSection === 8 ? 'terminalDot 0.3s ease-out 0.5s both' : 'none' }} />
+              <span className="text-zinc-500 text-sm ml-2 font-mono" style={{ animation: activeSection === 8 ? 'terminalType 0.6s ease-out 0.6s both' : 'none' }}>nx run-many -t e2e</span>
             </div>
             <div className="text-left font-mono text-sm space-y-2">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3" style={{ animation: activeSection === 8 ? 'terminalLine 0.4s ease-out 0.8s both' : 'none' }}>
                 <span className="text-blue-400 font-bold">NX</span>
                 <span className="text-zinc-300">Running 1 e2e task, and 5 others</span>
               </div>
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div className="space-y-1">
-                  <div className="text-zinc-500 flex items-center gap-2">
+                  <div className="text-zinc-500 flex items-center gap-2" style={{ animation: activeSection === 8 ? 'terminalLine 0.3s ease-out 1.0s both' : 'none' }}>
                     <span className="text-green-400">✓</span> @org/shop:build
                     <span className="text-zinc-600">28ms</span>
                   </div>
-                  <div className="text-zinc-500 flex items-center gap-2">
+                  <div className="text-zinc-500 flex items-center gap-2" style={{ animation: activeSection === 8 ? 'terminalLine 0.3s ease-out 1.1s both' : 'none' }}>
                     <span className="text-green-400">✓</span> @org/api-products:build
                     <span className="text-zinc-600">32ms</span>
                   </div>
-                  <div className="text-zinc-500 flex items-center gap-2">
+                  <div className="text-zinc-500 flex items-center gap-2" style={{ animation: activeSection === 8 ? 'terminalLine 0.3s ease-out 1.2s both' : 'none' }}>
                     <span className="text-green-400">✓</span> @org/api:build:production
                     <span className="text-zinc-600">4ms</span>
                   </div>
-                  <div className="text-zinc-400 flex items-center gap-2">
+                  <div className="text-zinc-400 flex items-center gap-2" style={{ animation: activeSection === 8 ? 'terminalLine 0.3s ease-out 1.3s both' : 'none' }}>
                     <span className="text-yellow-400 animate-pulse">●</span> @org/shop-e2e:e2e
                     <span className="text-zinc-600">31.4s</span>
                   </div>
                 </div>
-                <div className="bg-zinc-800/50 rounded p-3 border border-zinc-700">
+                <div className="bg-zinc-800/50 rounded p-3 border border-zinc-700" style={{ animation: activeSection === 8 ? 'terminalPanelSlide 0.5s ease-out 1.0s both' : 'none' }}>
                   <div className="text-green-400 text-xs mb-2">✓ @org/shop:build</div>
                   <div className="text-zinc-500 text-xs">&gt; vite build</div>
                   <div className="text-zinc-400 text-xs mt-2">✓ 54 modules transformed</div>
@@ -1581,18 +1602,44 @@ export default function EngWrapped() {
             </div>
           </div>
           <div className="flex justify-center gap-8 mt-6 text-sm">
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 8 ? 'terminalBadge 0.4s ease-out 1.4s both' : 'none' }}>
               <span className="text-green-400 font-bold">Real-time</span> task output
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 8 ? 'terminalBadge 0.4s ease-out 1.5s both' : 'none' }}>
               <span className="text-blue-400 font-bold">Keyboard</span> navigation
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 8 ? 'terminalBadge 0.4s ease-out 1.6s both' : 'none' }}>
               <span className="text-purple-400 font-bold">Windows</span> support
             </div>
           </div>
           <p className="text-zinc-500 text-sm mt-6">Craigory • James • Leosvel • Jason</p>
         </div>
+        <style>{`
+          @keyframes terminalWindowPop {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+          }
+          @keyframes terminalDot {
+            0% { opacity: 0; transform: scale(0); }
+            100% { opacity: 1; transform: scale(1); }
+          }
+          @keyframes terminalType {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+          }
+          @keyframes terminalLine {
+            0% { opacity: 0; transform: translateX(-10px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes terminalPanelSlide {
+            0% { opacity: 0; transform: translateX(20px); }
+            100% { opacity: 1; transform: translateX(0); }
+          }
+          @keyframes terminalBadge {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
       </Section>
 
       {/* Continuous Tasks - CLI/Cloud */}
@@ -1622,32 +1669,54 @@ export default function EngWrapped() {
               src="https://img.youtube.com/vi/AD51BKJtDBk/maxresdefault.jpg"
               alt="Continuous Tasks in Nx 21"
               className="w-1/2 rounded-xl border border-zinc-800"
+              style={{ animation: activeSection === 9 ? 'contVideoSlide 0.5s ease-out 0.1s both' : 'none' }}
             />
-            <div className="w-1/2 bg-zinc-900 rounded-xl p-5 border border-zinc-800 text-left font-mono text-sm">
-              <div className="text-zinc-500 mb-2">// e2e → frontend → backend</div>
-              <div className="text-zinc-300">{`"backend": { `}<span className="text-green-400">"continuous": true</span>{` },`}</div>
-              <div className="text-zinc-300 mt-2">{`"frontend": {`}</div>
-              <div className="text-zinc-300 pl-4"><span className="text-green-400">"continuous": true</span>,</div>
-              <div className="text-zinc-300 pl-4">{`"dependsOn": [`}<span className="text-cyan-400">"backend"</span>{`]`}</div>
-              <div className="text-zinc-300">{`},`}</div>
-              <div className="text-zinc-300 mt-2">{`"e2e": {`}</div>
-              <div className="text-zinc-300 pl-4">{`"dependsOn": [`}<span className="text-cyan-400">"frontend"</span>{`]`}</div>
-              <div className="text-zinc-300">{`}`}</div>
+            <div
+              className="w-1/2 bg-zinc-900 rounded-xl p-5 border border-zinc-800 text-left font-mono text-sm"
+              style={{ animation: activeSection === 9 ? 'contCodeSlide 0.5s ease-out 0.3s both' : 'none' }}
+            >
+              <div className="text-zinc-500 mb-2" style={{ animation: activeSection === 9 ? 'contCodeLine 0.3s ease-out 0.5s both' : 'none' }}>// e2e → frontend → backend</div>
+              <div className="text-zinc-300" style={{ animation: activeSection === 9 ? 'contCodeLine 0.3s ease-out 0.6s both' : 'none' }}>{`"backend": { `}<span className="text-green-400">"continuous": true</span>{` },`}</div>
+              <div className="text-zinc-300 mt-2" style={{ animation: activeSection === 9 ? 'contCodeLine 0.3s ease-out 0.7s both' : 'none' }}>{`"frontend": {`}</div>
+              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 9 ? 'contCodeLine 0.3s ease-out 0.8s both' : 'none' }}><span className="text-green-400">"continuous": true</span>,</div>
+              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 9 ? 'contCodeLine 0.3s ease-out 0.9s both' : 'none' }}>{`"dependsOn": [`}<span className="text-cyan-400">"backend"</span>{`]`}</div>
+              <div className="text-zinc-300" style={{ animation: activeSection === 9 ? 'contCodeLine 0.3s ease-out 1.0s both' : 'none' }}>{`},`}</div>
+              <div className="text-zinc-300 mt-2" style={{ animation: activeSection === 9 ? 'contCodeLine 0.3s ease-out 1.1s both' : 'none' }}>{`"e2e": {`}</div>
+              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 9 ? 'contCodeLine 0.3s ease-out 1.2s both' : 'none' }}>{`"dependsOn": [`}<span className="text-cyan-400">"frontend"</span>{`]`}</div>
+              <div className="text-zinc-300" style={{ animation: activeSection === 9 ? 'contCodeLine 0.3s ease-out 1.3s both' : 'none' }}>{`}`}</div>
             </div>
           </div>
           <div className="flex justify-center gap-8 text-sm">
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 9 ? 'contBadge 0.4s ease-out 1.4s both' : 'none' }}>
               <span className="text-green-400 font-bold">Chains</span> of dependencies
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 9 ? 'contBadge 0.4s ease-out 1.5s both' : 'none' }}>
               <span className="text-blue-400 font-bold">Waits</span> for ready signal
             </div>
-            <div className="text-zinc-400">
+            <div className="text-zinc-400" style={{ animation: activeSection === 9 ? 'contBadge 0.4s ease-out 1.6s both' : 'none' }}>
               <span className="text-purple-400 font-bold">Cleans up</span> on completion
             </div>
           </div>
           <p className="text-zinc-500 text-sm mt-6">Jason • Altan • Leosvel • Craigory</p>
         </div>
+        <style>{`
+          @keyframes contVideoSlide {
+            0% { opacity: 0; transform: translateX(-30px) scale(0.95); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+          }
+          @keyframes contCodeSlide {
+            0% { opacity: 0; transform: translateX(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+          }
+          @keyframes contCodeLine {
+            0% { opacity: 0; transform: translateY(5px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes contBadge {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
       </Section>
 
       {/* .NET + Maven - CLI */}
