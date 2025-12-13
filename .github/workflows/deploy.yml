@@ -26,7 +26,8 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm run build
+      - run: ls -la node_modules/.bin/
+      - run: npm run build --verbose
 
       - uses: actions/upload-pages-artifact@v3
         with:
