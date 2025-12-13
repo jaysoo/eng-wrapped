@@ -385,7 +385,7 @@ export default function EngWrapped() {
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">Commits</p>
           </div>
           <div
-            className="transform mr-16"
+            className="transform mr-15"
             style={{
               animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.15s both, snakeFloat2 3s ease-in-out 0.6s infinite' : 'none',
             }}
@@ -396,7 +396,7 @@ export default function EngWrapped() {
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">LOC Changed</p>
           </div>
           <div
-            className="transform mr-12"
+            className="transform mr-14"
             style={{
               animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.3s both, snakeFloat1 3s ease-in-out 0.6s infinite' : 'none',
             }}
