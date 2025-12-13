@@ -176,6 +176,16 @@ export default function EngWrapped() {
       touchStartX = e.touches[0].clientX;
     };
 
+    const handleTouchMove = (e) => {
+      // Prevent pull-to-refresh and other default touch behaviors
+      const deltaY = touchStartY - e.touches[0].clientY;
+      const deltaX = Math.abs(touchStartX - e.touches[0].clientX);
+      // If vertical movement is dominant, prevent default
+      if (Math.abs(deltaY) > 10 && Math.abs(deltaY) > deltaX) {
+        e.preventDefault();
+      }
+    };
+
     const handleTouchEnd = (e) => {
       const touchEndY = e.changedTouches[0].clientY;
       const touchEndX = e.changedTouches[0].clientX;
@@ -244,11 +254,13 @@ export default function EngWrapped() {
 
     container.addEventListener("wheel", handleWheel, { passive: false });
     container.addEventListener("touchstart", handleTouchStart, { passive: true });
+    container.addEventListener("touchmove", handleTouchMove, { passive: false });
     container.addEventListener("touchend", handleTouchEnd, { passive: true });
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       container.removeEventListener("wheel", handleWheel);
       container.removeEventListener("touchstart", handleTouchStart);
+      container.removeEventListener("touchmove", handleTouchMove);
       container.removeEventListener("touchend", handleTouchEnd);
       window.removeEventListener("keydown", handleKeyDown);
     };
