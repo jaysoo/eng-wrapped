@@ -481,6 +481,57 @@ const AnimatedNumber = ({ value, duration = 2000, isActive }) => {
   return <span>{current.toLocaleString()}</span>;
 };
 
+const AnimatedTeamCount = ({ isActive }) => {
+  const [current, setCurrent] = useState(0);
+  const [showHalf, setShowHalf] = useState(false);
+
+  useEffect(() => {
+    if (!isActive) {
+      setCurrent(0);
+      setShowHalf(false);
+      return;
+    }
+
+    // Count from 0 to 4 over 2 seconds
+    const steps = 60;
+    const increment = 4 / steps;
+    let step = 0;
+
+    const timer = setInterval(() => {
+      step++;
+      setCurrent(Math.min(Math.floor(increment * step), 4));
+      if (step >= steps) clearInterval(timer);
+    }, 2000 / steps);
+
+    // At 3500ms, add the 0.5 for docs
+    const halfTimer = setTimeout(() => {
+      setShowHalf(true);
+    }, 3500);
+
+    return () => {
+      clearInterval(timer);
+      clearTimeout(halfTimer);
+    };
+  }, [isActive]);
+
+  return (
+    <span style={{ display: 'inline-flex', alignItems: 'baseline' }}>
+      {current}
+      <span
+        style={{
+          opacity: showHalf ? 1 : 0,
+          transform: showHalf ? 'translateY(0) scale(1)' : 'translateY(10px) scale(0.5)',
+          transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
+          fontSize: '0.7em',
+          marginLeft: '2px',
+        }}
+      >
+        .5
+      </span>
+    </span>
+  );
+};
+
 const Section = ({ children, className = '' }) => (
   <div className={`h-screen flex flex-col items-center justify-center p-8 shrink-0 ${className}`}>
     {children}
@@ -986,7 +1037,7 @@ export default function EngWrapped() {
             }}
           >
             <p className="text-6xl font-black text-purple-400">
-              4
+              <AnimatedTeamCount isActive={activeSection === 1} />
             </p>
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">Teams</p>
           </div>
