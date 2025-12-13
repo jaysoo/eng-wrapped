@@ -1424,7 +1424,7 @@ export default function EngWrapped() {
               className="bg-zinc-900 rounded-2xl p-5 border-l-4 hover:scale-[1.02] transition-transform col-span-2 justify-self-center w-1/2"
               style={{
                 borderColor: teamColors.docs,
-                animation: activeSection === 5 ? 'cardFlipIn 0.5s ease-out 2.2s both' : 'none',
+                animation: activeSection === 5 ? 'cardFlipIn 0.5s ease-out 1.7s both' : 'none',
               }}
             >
               <div className="flex items-center gap-3 mb-4">
@@ -1432,7 +1432,7 @@ export default function EngWrapped() {
                   className="w-3 h-3 rounded-full"
                   style={{
                     backgroundColor: teamColors.docs,
-                    animation: activeSection === 5 ? 'dotPing 0.4s ease-out 2.5s both' : 'none'
+                    animation: activeSection === 5 ? 'dotPing 0.4s ease-out 2.0s both' : 'none'
                   }}
                 />
                 <h3 className="text-lg font-bold">Documentation</h3>
@@ -1446,7 +1446,7 @@ export default function EngWrapped() {
                   <div
                     key={i}
                     className="flex flex-col items-center"
-                    style={{ animation: activeSection === 5 ? `photoPopIn 0.4s ease-out ${2.6 + i * 0.1}s both` : 'none' }}
+                    style={{ animation: activeSection === 5 ? `photoPopIn 0.4s ease-out ${2.1 + i * 0.1}s both` : 'none' }}
                   >
                     <img src={p.photo} alt={p.name} className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-pink-500 transition-colors" />
                     <span className="text-xs text-zinc-400 mt-1">{p.name}</span>
