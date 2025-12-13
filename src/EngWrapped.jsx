@@ -1753,23 +1753,31 @@ export default function EngWrapped() {
             }}
           >Improved Nx Graph</h2>
           <p className="text-zinc-400 text-lg mb-8">Handles repos of any size + enterprise visualization</p>
-          <div className="flex justify-center gap-4">
-            <div className="w-1/2">
-              <img
-                src="new-graph.avif"
-                alt="Nx Graph in CLI/Console"
-                className="rounded-xl border border-zinc-800 shadow-2xl w-full"
+          <div className="flex justify-center gap-4 items-stretch">
+            <div className="w-1/2 flex flex-col">
+              <div
+                className="flex-1 rounded-xl border border-zinc-800 shadow-2xl overflow-hidden"
                 style={{ animation: activeSection === 10 ? 'graphSlideLeft 0.5s ease-out 0.1s both' : 'none' }}
-              />
+              >
+                <img
+                  src="new-graph.avif"
+                  alt="Nx Graph in CLI/Console"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
               <p className="text-zinc-500 text-xs mt-2">Composite mode in Nx Console</p>
             </div>
-            <div className="w-1/2">
-              <img
-                src="workspace-graph.avif"
-                alt="Polygraph Enterprise Visualization"
-                className="rounded-xl border border-zinc-800 shadow-2xl w-full"
+            <div className="w-1/2 flex flex-col">
+              <div
+                className="flex-1 rounded-xl border border-zinc-800 shadow-2xl overflow-hidden"
                 style={{ animation: activeSection === 10 ? 'graphSlideRight 0.5s ease-out 0.3s both' : 'none' }}
-              />
+              >
+                <img
+                  src="workspace-graph.avif"
+                  alt="Polygraph Enterprise Visualization"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
               <p className="text-zinc-500 text-xs mt-2">Polygraph cross-repo view</p>
             </div>
           </div>
