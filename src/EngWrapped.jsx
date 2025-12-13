@@ -372,7 +372,7 @@ export default function EngWrapped() {
 
       {/* Big Numbers */}
       <Section className="bg-zinc-950">
-        <div className="grid grid-cols-3 gap-12 text-center max-w-4xl">
+        <div className="grid grid-cols-4 gap-10 text-center max-w-5xl">
           <div
             className="transform"
             style={{
@@ -390,6 +390,17 @@ export default function EngWrapped() {
               animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.15s both, subtleFloat 3s ease-in-out 0.75s infinite' : 'none',
             }}
           >
+            <p className="text-5xl font-black text-cyan-400">
+              <AnimatedNumber value={4454661} isActive={activeSection === 1} />
+            </p>
+            <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">LOC Changed</p>
+          </div>
+          <div
+            className="transform"
+            style={{
+              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.3s both, subtleFloat 3s ease-in-out 0.9s infinite' : 'none',
+            }}
+          >
             <p className="text-6xl font-black text-blue-400">
               <AnimatedNumber value={80} isActive={activeSection === 1} />+
             </p>
@@ -398,7 +409,7 @@ export default function EngWrapped() {
           <div
             className="transform"
             style={{
-              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.3s both, subtleFloat 3s ease-in-out 0.9s infinite' : 'none',
+              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.45s both, subtleFloat 3s ease-in-out 1.05s infinite' : 'none',
             }}
           >
             <p className="text-6xl font-black text-purple-400">
@@ -407,7 +418,6 @@ export default function EngWrapped() {
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">Teams</p>
           </div>
         </div>
-        
       </Section>
 
       {/* Team Shakeup Intro */}

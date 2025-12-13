@@ -95,7 +95,6 @@ export const allProjects = [
   // CLI
   { name: 'Terminal UI', team: 'cli' },
   { name: 'Migrate UI', team: 'cli' },
-  { name: 'Improved Nx Graph', team: 'cloud' },
   { name: 'Expo 54 Support', team: 'cli' },
   { name: 'Vitest 4 Support', team: 'cli' },
   { name: 'Nuxt 4 Support', team: 'cli' },
@@ -108,6 +107,7 @@ export const allProjects = [
   { name: 'Angular RSPack', team: 'cli' },
   { name: '.NET Plugin', team: 'cli' },
   // Cloud
+  { name: 'Improved Nx Graph', team: 'cloud' },
   { name: 'Agent Resource Usage', team: 'cloud' },
   { name: 'Onboarding Flow', team: 'cloud' },
   { name: 'Enterprise Usage UI', team: 'cloud' },
