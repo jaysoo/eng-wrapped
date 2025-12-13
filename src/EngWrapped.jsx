@@ -2004,13 +2004,13 @@ export default function EngWrapped() {
             </div>
           </div>
           <div className="flex justify-center gap-8 mt-6 text-sm">
-            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'featureFade 0.4s ease-out 1.0s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'featureFade 0.3s ease-out 0.5s both' : 'none' }}>
               <span className="text-yellow-400 font-bold">Track</span> flaky tests
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'featureFade 0.4s ease-out 1.2s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'featureFade 0.3s ease-out 0.6s both' : 'none' }}>
               <span className="text-blue-400 font-bold">Analyze</span> failure patterns
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'featureFade 0.4s ease-out 1.4s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'featureFade 0.3s ease-out 0.7s both' : 'none' }}>
               <span className="text-green-400 font-bold">Auto-retry</span> on failure
             </div>
           </div>
