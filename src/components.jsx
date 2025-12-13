@@ -1,6 +1,331 @@
 import React, { useState, useEffect } from 'react';
 import { teamColors, allProjects } from './data';
 
+// Starfield background for Hero section
+export const Starfield = ({ isActive }) => {
+  const [stars, setStars] = useState([]);
+
+  useEffect(() => {
+    if (!isActive) return;
+
+    const newStars = Array.from({ length: 100 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: 1 + Math.random() * 3,
+      duration: 2 + Math.random() * 4,
+      delay: Math.random() * 2,
+      color: ['#22c55e', '#3b82f6', '#a855f7', '#ffffff'][Math.floor(Math.random() * 4)],
+    }));
+    setStars(newStars);
+  }, [isActive]);
+
+  if (!isActive) return null;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {stars.map((star) => (
+        <div
+          key={star.id}
+          className="absolute rounded-full"
+          style={{
+            left: `${star.x}%`,
+            top: `${star.y}%`,
+            width: star.size,
+            height: star.size,
+            backgroundColor: star.color,
+            animation: `particleFloat ${star.duration}s ease-in-out ${star.delay}s infinite`,
+            boxShadow: `0 0 ${star.size * 2}px ${star.color}`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+// Fireworks for Closing section
+export const Fireworks = ({ isActive }) => {
+  const [bursts, setBursts] = useState([]);
+
+  useEffect(() => {
+    if (!isActive) {
+      setBursts([]);
+      return;
+    }
+
+    const colors = ['#22c55e', '#3b82f6', '#a855f7', '#f97316', '#eab308', '#ec4899', '#14b8a6'];
+    const createBurst = () => {
+      const id = Date.now() + Math.random();
+      const x = 20 + Math.random() * 60;
+      const y = 20 + Math.random() * 40;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const particles = Array.from({ length: 12 }, (_, i) => ({
+        id: i,
+        angle: (i * 30) * (Math.PI / 180),
+        distance: 40 + Math.random() * 60,
+      }));
+      return { id, x, y, color, particles };
+    };
+
+    // Initial bursts
+    setBursts([createBurst(), createBurst(), createBurst()]);
+
+    // Continuous bursts
+    const interval = setInterval(() => {
+      setBursts(prev => [...prev.slice(-6), createBurst()]);
+    }, 400);
+
+    return () => clearInterval(interval);
+  }, [isActive]);
+
+  if (!isActive) return null;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {bursts.map((burst) => (
+        <div
+          key={burst.id}
+          className="absolute"
+          style={{ left: `${burst.x}%`, top: `${burst.y}%` }}
+        >
+          {burst.particles.map((p) => (
+            <div
+              key={p.id}
+              className="absolute w-2 h-2 rounded-full"
+              style={{
+                backgroundColor: burst.color,
+                boxShadow: `0 0 6px ${burst.color}, 0 0 12px ${burst.color}`,
+                animation: 'fireworkBurst 1s ease-out forwards',
+                '--tx': `${Math.cos(p.angle) * p.distance}px`,
+                '--ty': `${Math.sin(p.angle) * p.distance}px`,
+                transform: `translate(${Math.cos(p.angle) * p.distance}px, ${Math.sin(p.angle) * p.distance}px)`,
+              }}
+            />
+          ))}
+          {/* Center glow */}
+          <div
+            className="absolute w-4 h-4 rounded-full -translate-x-1/2 -translate-y-1/2"
+            style={{
+              backgroundColor: burst.color,
+              boxShadow: `0 0 20px ${burst.color}, 0 0 40px ${burst.color}`,
+              animation: 'fireworkBurst 0.5s ease-out forwards',
+            }}
+          />
+        </div>
+      ))}
+      <style>{`
+        @keyframes fireworkBurst {
+          0% { transform: translate(0, 0) scale(1); opacity: 1; }
+          100% { transform: translate(var(--tx, 0), var(--ty, 0)) scale(0); opacity: 0; }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+// Healing wave effect for Self-Healing CI
+export const HealingWave = ({ isActive }) => {
+  const [waves, setWaves] = useState([]);
+
+  useEffect(() => {
+    if (!isActive) {
+      setWaves([]);
+      return;
+    }
+
+    const createWave = () => ({ id: Date.now(), delay: 0 });
+    setWaves([createWave()]);
+
+    const interval = setInterval(() => {
+      setWaves(prev => [...prev.slice(-3), createWave()]);
+    }, 800);
+
+    return () => clearInterval(interval);
+  }, [isActive]);
+
+  if (!isActive) return null;
+
+  return (
+    <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+      {waves.map((wave) => (
+        <div
+          key={wave.id}
+          className="absolute rounded-full border-2 border-green-400"
+          style={{
+            width: '100%',
+            height: '100%',
+            animation: 'healingWave 2s ease-out forwards',
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+// Flying code symbols for LOC Stats
+export const FlyingCode = ({ isActive }) => {
+  const [symbols, setSymbols] = useState([]);
+
+  useEffect(() => {
+    if (!isActive) {
+      setSymbols([]);
+      return;
+    }
+
+    const createSymbols = () => {
+      return Array.from({ length: 30 }, (_, i) => ({
+        id: i,
+        symbol: i % 2 === 0 ? '+' : '-',
+        color: i % 2 === 0 ? '#4ade80' : '#f87171',
+        y: 10 + Math.random() * 80,
+        size: 16 + Math.random() * 24,
+        duration: 3 + Math.random() * 3,
+        delay: Math.random() * 2,
+        direction: i % 3 === 0 ? 'left' : 'right',
+      }));
+    };
+
+    setSymbols(createSymbols());
+  }, [isActive]);
+
+  if (!isActive) return null;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {symbols.map((s) => (
+        <div
+          key={s.id}
+          className="absolute font-mono font-bold"
+          style={{
+            top: `${s.y}%`,
+            left: s.direction === 'left' ? '-50px' : 'auto',
+            right: s.direction === 'right' ? '-50px' : 'auto',
+            color: s.color,
+            fontSize: s.size,
+            textShadow: `0 0 10px ${s.color}`,
+            animation: `flyCode${s.direction === 'left' ? 'Left' : 'Right'} ${s.duration}s linear ${s.delay}s infinite`,
+            '--start-y': `${Math.random() * 20 - 10}px`,
+            '--end-y': `${Math.random() * 20 - 10}px`,
+          }}
+        >
+          {s.symbol}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// CRT Scanline overlay for Terminal UI
+export const CRTOverlay = ({ isActive }) => {
+  if (!isActive) return null;
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
+      {/* Scanline */}
+      <div
+        className="absolute left-0 right-0 h-1 bg-gradient-to-b from-transparent via-green-400/10 to-transparent"
+        style={{ animation: 'scanline 3s linear infinite' }}
+      />
+      {/* CRT lines overlay */}
+      <div
+        className="absolute inset-0 opacity-5"
+        style={{
+          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)',
+        }}
+      />
+      {/* Corner vignette */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.3) 100%)',
+        }}
+      />
+    </div>
+  );
+};
+
+// Blinking cursor
+export const BlinkingCursor = ({ isActive }) => {
+  if (!isActive) return null;
+
+  return (
+    <span
+      className="inline-block w-2 h-5 bg-green-400 ml-1"
+      style={{ animation: 'cursorBlink 1s step-end infinite' }}
+    />
+  );
+};
+
+// Pulse rings for Big Numbers
+export const PulseRings = ({ color, isActive }) => {
+  if (!isActive) return null;
+
+  return (
+    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+      {[0, 0.5, 1].map((delay) => (
+        <div
+          key={delay}
+          className="absolute w-full h-full rounded-full"
+          style={{
+            border: `2px solid ${color}`,
+            animation: `pulseRing 2s ease-out ${delay}s infinite`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+// Confetti cannon for celebrations
+export const ConfettiCannon = ({ isActive }) => {
+  const [particles, setParticles] = useState([]);
+
+  useEffect(() => {
+    if (!isActive) {
+      setParticles([]);
+      return;
+    }
+
+    const colors = ['#22c55e', '#3b82f6', '#a855f7', '#f97316', '#eab308', '#ec4899'];
+    const newParticles = Array.from({ length: 60 }, (_, i) => ({
+      id: i,
+      x: 50 + (Math.random() - 0.5) * 20,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      tx: (Math.random() - 0.5) * 400,
+      ty: -100 - Math.random() * 300,
+      rotation: Math.random() * 720,
+      size: 6 + Math.random() * 8,
+      delay: Math.random() * 0.3,
+      duration: 1.5 + Math.random() * 1,
+    }));
+    setParticles(newParticles);
+  }, [isActive]);
+
+  if (!isActive) return null;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="absolute"
+          style={{
+            left: `${p.x}%`,
+            bottom: '20%',
+            width: p.size,
+            height: p.size,
+            backgroundColor: p.color,
+            borderRadius: Math.random() > 0.5 ? '50%' : '2px',
+            animation: `confettiCannon ${p.duration}s ease-out ${p.delay}s forwards`,
+            '--tx': `${p.tx}px`,
+            '--ty': `${p.ty}px`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 export const RocketLaunch = ({ isActive }) => {
   const [phase, setPhase] = useState('idle');
   const [smokeParticles, setSmokeParticles] = useState([]);

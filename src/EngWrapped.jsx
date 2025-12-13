@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { teamColors, frameworkReleases, slideDurations, sectionCount } from './data';
 import {
   RocketLaunch, teamPhotos,
-  AnimatedNumber, AnimatedTeamCount, Section, TeamCard
+  AnimatedNumber, AnimatedTeamCount, Section, TeamCard,
+  Starfield, Fireworks, HealingWave, FlyingCode, CRTOverlay, BlinkingCursor, PulseRings, ConfettiCannon
 } from './components';
 import {
   OrcaHighlights, InfraHighlights, RedPandaHighlights,
@@ -167,12 +168,12 @@ export default function EngWrapped() {
       } else if (e.key === 'm' || e.key === 'M') {
         e.preventDefault();
         setIsMuted(prev => !prev);
-      } else if (e.key >= '1' && e.key <= '8') {
+      } else if (e.key >= '1' && e.key <= '8' && !e.metaKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
         setIsPlaying(false);
         const targetSection = parseInt(e.key) - 1; // 1 -> 0, 2 -> 1, etc.
         scrollToSection(targetSection, true);
-      } else if (e.key === '9') {
+      } else if (e.key === '9' && !e.metaKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
         setIsPlaying(false);
         scrollToSection(sectionCount - 1, true); // Go to last section
@@ -353,21 +354,30 @@ export default function EngWrapped() {
       </div>
 
       {/* Hero */}
-      <Section className="bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950">
-        <div className="text-center max-w-2xl">
-          <p className="text-zinc-500 uppercase tracking-[0.3em] text-sm mb-4">Nx Engineering</p>
+      <Section className="bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden">
+        <Starfield isActive={activeSection === 0} />
+        <div className="text-center max-w-2xl relative z-10">
+          <p
+            className="text-zinc-500 uppercase tracking-[0.3em] text-sm mb-4"
+            style={{ animation: activeSection === 0 ? 'fadeInDown 0.8s ease-out' : 'none' }}
+          >Nx Engineering</p>
           <h1
-            className="text-6xl font-black mb-4 bg-clip-text text-transparent"
+            className="text-6xl font-black mb-4 bg-clip-text text-transparent relative"
             style={{
               backgroundImage: 'linear-gradient(90deg, #22c55e, #3b82f6, #a855f7, #22c55e)',
               backgroundSize: '200% 100%',
-              animation: 'gradientShift 3s ease-in-out infinite',
+              animation: activeSection === 0
+                ? 'gradientShift 3s ease-in-out infinite, glitchText 4s ease-in-out 1s infinite, dramaticReveal 1s ease-out'
+                : 'gradientShift 3s ease-in-out infinite',
             }}
           >
             2025 Wrapped
           </h1>
-          
-          <p className="text-zinc-400 text-lg">A year of shipping, solving, and scaling.</p>
+
+          <p
+            className="text-zinc-400 text-lg"
+            style={{ animation: activeSection === 0 ? 'fadeInUp 0.8s ease-out 0.3s both' : 'none' }}
+          >A year of shipping, solving, and scaling.</p>
         </div>
       </Section>
 
@@ -821,8 +831,8 @@ export default function EngWrapped() {
       </Section>
 
       {/* Self-Healing CI - RedPanda */}
-      <Section className="bg-zinc-900">
-        <div className="text-center max-w-5xl">
+      <Section className="bg-zinc-900 relative overflow-hidden">
+        <div className="text-center max-w-5xl relative z-10">
           <div className="flex items-center justify-center gap-2 mb-2">
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.redpanda }} />
             <p className="text-zinc-300 uppercase tracking-wider text-sm">RedPanda</p>
@@ -837,13 +847,14 @@ export default function EngWrapped() {
           >AI-Powered Self-Healing CI</h2>
           <p className="text-zinc-400 text-lg mb-8">Get to green faster with automatic fixes</p>
           <div
-            className="flex justify-center mb-8"
+            className="flex justify-center mb-8 relative"
             style={{ animation: activeSection === 8 ? 'healingImageZoom 0.6s ease-out 0.1s both' : 'none' }}
           >
+            <HealingWave isActive={activeSection === 8} />
             <img
               src="self-healing-ci.webp"
               alt="Self-Healing CI workflow: Submit PR → CI fails → AI fix → Verify → Approve"
-              className="max-w-3xl w-full rounded-xl"
+              className="max-w-3xl w-full rounded-xl relative z-10"
               style={{ animation: activeSection === 8 ? 'healingGlow 2s ease-in-out 0.5s infinite' : 'none' }}
             />
           </div>
@@ -860,7 +871,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Jon • James • Victor • Ben • Altan</p>
         </div>
-        
+
       </Section>
 
       {/* Terminal UI - CLI */}
@@ -880,16 +891,20 @@ export default function EngWrapped() {
           >Terminal UI</h2>
           <p className="text-zinc-400 text-lg mb-8">A modern interface for running Nx tasks</p>
           <div
-            className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 shadow-2xl"
-            style={{ animation: activeSection === 9 ? 'terminalWindowPop 0.5s ease-out 0.1s both' : 'none' }}
+            className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 shadow-2xl relative"
+            style={{ animation: activeSection === 9 ? 'terminalWindowPop 0.5s ease-out 0.1s both, rumble 0.3s ease-out 0.1s' : 'none' }}
           >
-            <div className="flex items-center gap-2 mb-4">
+            <CRTOverlay isActive={activeSection === 9} />
+            <div className="flex items-center gap-2 mb-4 relative z-10">
               <div className="w-3 h-3 rounded-full bg-red-500" style={{ animation: activeSection === 9 ? 'terminalDot 0.3s ease-out 0.3s both' : 'none' }} />
               <div className="w-3 h-3 rounded-full bg-yellow-500" style={{ animation: activeSection === 9 ? 'terminalDot 0.3s ease-out 0.4s both' : 'none' }} />
               <div className="w-3 h-3 rounded-full bg-green-500" style={{ animation: activeSection === 9 ? 'terminalDot 0.3s ease-out 0.5s both' : 'none' }} />
-              <span className="text-zinc-500 text-sm ml-2 font-mono" style={{ animation: activeSection === 9 ? 'terminalType 0.6s ease-out 0.6s both' : 'none' }}>nx run-many -t e2e</span>
+              <span className="text-zinc-500 text-sm ml-2 font-mono" style={{ animation: activeSection === 9 ? 'terminalType 0.6s ease-out 0.6s both' : 'none' }}>
+                nx run-many -t e2e
+                <BlinkingCursor isActive={activeSection === 9} />
+              </span>
             </div>
-            <div className="text-left font-mono text-sm space-y-2">
+            <div className="text-left font-mono text-sm space-y-2 relative z-10">
               <div className="flex items-center gap-3" style={{ animation: activeSection === 9 ? 'terminalLine 0.4s ease-out 0.8s both' : 'none' }}>
                 <span className="text-blue-400 font-bold">NX</span>
                 <span className="text-zinc-300">Running 1 e2e task, and 5 others</span>
@@ -935,7 +950,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Craigory • James • Leosvel • Jason</p>
         </div>
-        
+
       </Section>
 
       {/* Migrate UI - CLI */}

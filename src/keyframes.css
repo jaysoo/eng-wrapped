@@ -569,3 +569,379 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(8px); }
 }
+
+/* ========================================
+   BOLDER ANIMATIONS - Added for impact
+   ======================================== */
+
+/* Glitch text effect */
+@keyframes glitchText {
+  0%, 100% {
+    text-shadow: 2px 0 #22c55e, -2px 0 #3b82f6;
+    transform: translate(0);
+  }
+  20% {
+    text-shadow: -3px 0 #a855f7, 3px 0 #22c55e;
+    transform: translate(-2px, 1px);
+  }
+  40% {
+    text-shadow: 3px 0 #3b82f6, -3px 0 #a855f7;
+    transform: translate(2px, -1px);
+  }
+  60% {
+    text-shadow: -2px 0 #22c55e, 2px 0 #3b82f6;
+    transform: translate(-1px, 2px);
+  }
+  80% {
+    text-shadow: 2px 0 #a855f7, -2px 0 #22c55e;
+    transform: translate(1px, -2px);
+  }
+}
+
+@keyframes glitchTextIntense {
+  0%, 100% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+  5% {
+    clip-path: inset(40% 0 20% 0);
+    transform: translate(-5px, 0);
+  }
+  10% {
+    clip-path: inset(10% 0 60% 0);
+    transform: translate(5px, 0);
+  }
+  15% {
+    clip-path: inset(80% 0 5% 0);
+    transform: translate(-3px, 0);
+  }
+  20% {
+    clip-path: inset(0 0 0 0);
+    transform: translate(0);
+  }
+}
+
+/* Pulse ring expansion */
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    opacity: 0;
+    box-shadow: 0 0 0 60px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* Fireworks burst */
+@keyframes fireworkBurst {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes fireworkTrail {
+  0% {
+    transform: translateY(100px) scale(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Healing wave ripple */
+@keyframes healingWave {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.8;
+    border-width: 4px;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+/* 3D explosion for numbers */
+@keyframes explode3D {
+  0% {
+    transform: scale(0) translateZ(-200px);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.3) translateZ(50px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateZ(0);
+    opacity: 1;
+  }
+}
+
+/* Flying code symbols */
+@keyframes flyCodeLeft {
+  0% {
+    transform: translateX(-100vw) translateY(var(--start-y, 0)) rotate(0deg);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% {
+    transform: translateX(100vw) translateY(var(--end-y, 0)) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes flyCodeRight {
+  0% {
+    transform: translateX(100vw) translateY(var(--start-y, 0)) rotate(0deg);
+    opacity: 0;
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% {
+    transform: translateX(-100vw) translateY(var(--end-y, 0)) rotate(-360deg);
+    opacity: 0;
+  }
+}
+
+/* CRT scanline effect */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Cursor blink */
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Electric arc */
+@keyframes electricArc {
+  0%, 100% {
+    opacity: 0.3;
+    filter: blur(1px);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Particle float */
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translate(10px, -20px) scale(1.2);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-5px, -40px) scale(0.8);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translate(15px, -20px) scale(1.1);
+    opacity: 0.9;
+  }
+}
+
+/* Shimmer sweep */
+@keyframes shimmerSweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Dramatic reveal */
+@keyframes dramaticReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotateX(90deg);
+    filter: blur(20px);
+  }
+  50% {
+    transform: scale(1.1) rotateX(-10deg);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateX(0);
+    filter: blur(0);
+  }
+}
+
+/* Neon flicker */
+@keyframes neonFlicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow:
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 40px var(--neon-color, #22c55e),
+      0 0 80px var(--neon-color, #22c55e),
+      0 0 90px var(--neon-color, #22c55e);
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+    opacity: 0.8;
+  }
+}
+
+/* Shake/rumble */
+@keyframes rumble {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+  20% { transform: translate(2px, 1px) rotate(0.5deg); }
+  30% { transform: translate(-1px, 2px) rotate(-0.5deg); }
+  40% { transform: translate(1px, -2px) rotate(0.5deg); }
+  50% { transform: translate(-2px, 1px) rotate(-0.5deg); }
+  60% { transform: translate(2px, -1px) rotate(0.5deg); }
+  70% { transform: translate(-1px, -2px) rotate(-0.5deg); }
+  80% { transform: translate(1px, 2px) rotate(0.5deg); }
+  90% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+}
+
+/* Slot machine digit roll */
+@keyframes slotRoll {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(0); }
+}
+
+/* Elastic bounce */
+@keyframes elasticBounce {
+  0% { transform: scale(0); }
+  30% { transform: scale(1.25); }
+  50% { transform: scale(0.9); }
+  70% { transform: scale(1.1); }
+  85% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* Spiral in */
+@keyframes spiralIn {
+  0% {
+    transform: rotate(-720deg) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Typewriter with cursor */
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Matrix rain */
+@keyframes matrixFall {
+  0% {
+    transform: translateY(-100%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0.3;
+  }
+}
+
+/* Confetti cannon */
+@keyframes confettiCannon {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg) scale(0);
+    opacity: 1;
+  }
+  10% {
+    transform: translateY(calc(var(--ty) * 0.3)) translateX(calc(var(--tx) * 0.3)) rotate(180deg) scale(1);
+  }
+  100% {
+    transform: translateY(var(--ty)) translateX(var(--tx)) rotate(720deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Photo assembly */
+@keyframes photoAssemble {
+  0% {
+    transform: translate(var(--from-x), var(--from-y)) rotate(var(--from-rotate)) scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(0, 0) rotate(5deg) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 0) rotate(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Golden shimmer */
+@keyframes goldenShimmer {
+  0% {
+    filter: brightness(1) drop-shadow(0 0 0 transparent);
+  }
+  50% {
+    filter: brightness(1.3) drop-shadow(0 0 20px rgba(251, 191, 36, 0.6));
+  }
+  100% {
+    filter: brightness(1) drop-shadow(0 0 0 transparent);
+  }
+}
+
+/* Warp speed */
+@keyframes warpSpeed {
+  0% {
+    transform: scale(0.1) translateZ(-500px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateZ(0);
+    opacity: 1;
+  }
+}
+
+/* Ripple effect */
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
