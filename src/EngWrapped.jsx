@@ -453,6 +453,7 @@ const teamPhotos = [
   { name: 'Craigory Coppola', photo: 'https://nx.dev/images/team/craigory-coppola.avif' },
   { name: 'Nicole Oliver', photo: 'https://nx.dev/images/team/nicole-oliver.avif' },
   { name: 'Dillon', photo: 'https://nx.dev/images/team/dillon-chanis.avif' },
+  { name: 'Caleb Ukle', photo: 'https://nx.dev/images/team/caleb-ukle.avif' },
 ];
 
 const AnimatedNumber = ({ value, duration = 2000, isActive }) => {
@@ -2917,7 +2918,7 @@ export default function EngWrapped() {
           >Thanks for everything.</h2>
           <div className="flex flex-col gap-8 mb-8">
             <div className="flex justify-center gap-3">
-              {teamPhotos.slice(0, 12).map((person, i) => (
+              {teamPhotos.slice(0, 7).map((person, i) => (
                 <div
                   key={i}
                   className="group relative hover:z-10"
@@ -2940,7 +2941,30 @@ export default function EngWrapped() {
               ))}
             </div>
             <div className="flex justify-center gap-3">
-              {teamPhotos.slice(12).map((person, i) => (
+              {teamPhotos.slice(7, 14).map((person, i) => (
+                <div
+                  key={i}
+                  className="group relative hover:z-10"
+                  style={{
+                    animation: activeSection === 31 ? `photoWaveIn 0.5s ease-out ${0.5 + i * 0.05}s both` : 'none',
+                  }}
+                >
+                  <img
+                    src={person.photo}
+                    alt={person.name}
+                    className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
+                    style={{
+                      animation: activeSection === 31 ? `photoGlow 2s ease-in-out ${1.8 + i * 0.1}s infinite` : 'none',
+                    }}
+                  />
+                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
+                    {person.name}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex justify-center gap-3">
+              {teamPhotos.slice(14, 21).map((person, i) => (
                 <div
                   key={i}
                   className="group relative hover:z-10"
@@ -2953,7 +2977,7 @@ export default function EngWrapped() {
                     alt={person.name}
                     className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
                     style={{
-                      animation: activeSection === 31 ? `photoGlow 2s ease-in-out ${2 + i * 0.1}s infinite` : 'none',
+                      animation: activeSection === 31 ? `photoGlow 2s ease-in-out ${2.1 + i * 0.1}s infinite` : 'none',
                     }}
                   />
                   <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
