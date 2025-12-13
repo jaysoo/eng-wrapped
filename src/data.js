@@ -128,7 +128,7 @@ export const allProjects = [
 // Slide durations in ms
 export const slideDurations = [
   2800,  // 0: Hero
-  3000,  // 1: Big Numbers
+  3800,  // 1: Big Numbers
   3500,  // 2: Team Shakeup Intro
   4000,  // 3: RedPanda Team Formation
   3000,  // 4: Orca Introduction
