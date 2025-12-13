@@ -291,6 +291,10 @@ export const ProjectsShowcase = ({ isActive }) => {
           </div>
         ))}
       </div>
+      <p
+        className="text-zinc-500 text-sm mt-6"
+        style={{ animation: isActive ? 'fadeInUp 0.5s ease-out 2.8s both' : 'none' }}
+      >...and many more contributions across the teams</p>
       <style>{`
         @keyframes popIn {
           0% { transform: scale(0); opacity: 0; }

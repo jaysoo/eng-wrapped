@@ -144,23 +144,24 @@ export const slideDurations = [
   2600,  // 14: CPU/Memory Tracking
   2600,  // 15: Flaky Task Analytics
   2600,  // 16: Onboarding Flow
-  2600,  // 17: Azure Single Tenant
-  2600,  // 18: Helm Chart
-  2600,  // 19: Observability
-  2600,  // 20: Docker + Nx Release
-  2600,  // 21: GitHub Templates
-  2600,  // 22: Node 24
-  2600,  // 23: Nx & Ocean CI Stability
-  2600,  // 24: Docs Migration to Astro Starlight
-  2600,  // 25: Framework Support
-  2600,  // 26: Orca Highlights
-  2600,  // 27: Infrastructure Highlights
-  2600,  // 28: RedPanda Highlights
-  3000,  // 29: Stats Intro
-  6000,  // 30: Projects Showcase (animated)
-  3000,  // 31: Projects Breakdown
-  4000,  // 32: Top Contributors Chart
-  3000,  // 33: Closing
+  2600,  // 17: Enterprise Usage UI
+  2600,  // 18: Azure Single Tenant
+  2600,  // 19: Helm Chart
+  2600,  // 20: Observability
+  2600,  // 21: Docker + Nx Release
+  2600,  // 22: GitHub Templates
+  2600,  // 23: Node 24
+  2600,  // 24: Nx & Ocean CI Stability
+  2600,  // 25: Docs Migration to Astro Starlight
+  2600,  // 26: Framework Support
+  2600,  // 27: Orca Highlights
+  2600,  // 28: Infrastructure Highlights
+  2600,  // 29: RedPanda Highlights
+  3000,  // 30: Stats Intro
+  6000,  // 31: Projects Showcase (animated)
+  3000,  // 32: Projects Breakdown
+  4000,  // 33: Top Contributors Chart
+  3000,  // 34: Closing
 ];
 
 export const sectionCount = slideDurations.length;

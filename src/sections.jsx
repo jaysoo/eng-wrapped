@@ -30,12 +30,12 @@ export function OrcaHighlights({ activeSection }) {
               key={i}
               className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
               style={{
-                animation: activeSection === 26 ? `orcaGridPop 0.4s ease-out ${0.1 + i * 0.08}s both` : 'none',
+                animation: activeSection === 27 ? `orcaGridPop 0.4s ease-out ${0.1 + i * 0.08}s both` : 'none',
               }}
             >
               <span
                 className="text-2xl mb-2 block"
-                style={{ animation: activeSection === 26 ? `orcaIconWiggle 0.6s ease-out ${0.3 + i * 0.08}s both` : 'none' }}
+                style={{ animation: activeSection === 27 ? `orcaIconWiggle 0.6s ease-out ${0.3 + i * 0.08}s both` : 'none' }}
               >{item.icon}</span>
               <p className="text-sm font-medium">{item.name}</p>
             </div>
@@ -71,12 +71,12 @@ export function InfraHighlights({ activeSection }) {
               key={i}
               className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
               style={{
-                animation: activeSection === 27 ? `infraSlideUp 0.5s ease-out ${0.1 + i * 0.07}s both` : 'none',
+                animation: activeSection === 28 ? `infraSlideUp 0.5s ease-out ${0.1 + i * 0.07}s both` : 'none',
               }}
             >
               <span
                 className="text-2xl mb-2 block"
-                style={{ animation: activeSection === 27 ? `infraIconGrow 0.4s ease-out ${0.25 + i * 0.07}s both` : 'none' }}
+                style={{ animation: activeSection === 28 ? `infraIconGrow 0.4s ease-out ${0.25 + i * 0.07}s both` : 'none' }}
               >{item.icon}</span>
               <p className="text-sm font-medium">{item.name}</p>
             </div>
@@ -112,12 +112,12 @@ export function RedPandaHighlights({ activeSection }) {
               key={i}
               className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
               style={{
-                animation: activeSection === 28 ? `pandaFlipIn 0.5s ease-out ${0.1 + i * 0.1}s both` : 'none',
+                animation: activeSection === 29 ? `pandaFlipIn 0.5s ease-out ${0.1 + i * 0.1}s both` : 'none',
               }}
             >
               <span
                 className="text-2xl mb-2 block"
-                style={{ animation: activeSection === 28 ? `pandaIconSpin 0.6s ease-out ${0.3 + i * 0.1}s both` : 'none' }}
+                style={{ animation: activeSection === 29 ? `pandaIconSpin 0.6s ease-out ${0.3 + i * 0.1}s both` : 'none' }}
               >{item.icon}</span>
               <p className="text-sm font-medium">{item.name}</p>
             </div>
@@ -132,7 +132,7 @@ export function RedPandaHighlights({ activeSection }) {
 export function StatsIntro({ activeSection }) {
   return (
     <Section className="bg-zinc-950 relative overflow-hidden">
-      <NumbersRain isActive={activeSection === 29} />
+      <NumbersRain isActive={activeSection === 30} />
       <div className="text-center max-w-2xl relative z-10">
         <p className="text-6xl mb-6">📊</p>
         <h2 className="text-5xl font-black mb-4">By the Numbers</h2>
@@ -145,7 +145,7 @@ export function StatsIntro({ activeSection }) {
 export function ProjectsShowcaseSection({ activeSection }) {
   return (
     <Section className="bg-zinc-900">
-      <ProjectsShowcase isActive={activeSection === 30} />
+      <ProjectsShowcase isActive={activeSection === 31} />
     </Section>
   );
 }
@@ -156,17 +156,17 @@ export function ProjectsBreakdown({ activeSection }) {
       <div className="max-w-4xl w-full">
         <h2
           className="text-4xl font-bold mb-8 text-center"
-          style={{ animation: activeSection === 31 ? 'titleDrop 0.5s ease-out both' : 'none' }}
+          style={{ animation: activeSection === 32 ? 'titleDrop 0.5s ease-out both' : 'none' }}
         >Projects by Team</h2>
         <div className="flex items-center justify-center gap-12">
           <div
             style={{
               width: 250,
               height: 250,
-              animation: activeSection === 31 ? 'chartSpin 0.8s ease-out both' : 'none',
+              animation: activeSection === 32 ? 'chartSpin 0.8s ease-out both' : 'none',
             }}
           >
-            {activeSection === 31 && (
+            {activeSection === 32 && (
               <ResponsiveContainer width={250} height={250}>
                 <PieChart>
                   <Pie
@@ -194,19 +194,19 @@ export function ProjectsBreakdown({ activeSection }) {
               <div
                 key={i}
                 className="flex items-center gap-3"
-                style={{ animation: activeSection === 31 ? `legendSlide 0.4s ease-out ${0.3 + i * 0.15}s both` : 'none' }}
+                style={{ animation: activeSection === 32 ? `legendSlide 0.4s ease-out ${0.3 + i * 0.15}s both` : 'none' }}
               >
                 <div
                   className="w-4 h-4 rounded"
                   style={{
                     backgroundColor: item.color,
-                    animation: activeSection === 31 ? `colorPop 0.3s ease-out ${0.5 + i * 0.15}s both` : 'none',
+                    animation: activeSection === 32 ? `colorPop 0.3s ease-out ${0.5 + i * 0.15}s both` : 'none',
                   }}
                 />
                 <span className="text-zinc-300 w-28">{item.name}</span>
                 <span
                   className="text-2xl font-bold"
-                  style={{ animation: activeSection === 31 ? `numberBounce 0.4s ease-out ${0.6 + i * 0.15}s both` : 'none' }}
+                  style={{ animation: activeSection === 32 ? `numberBounce 0.4s ease-out ${0.6 + i * 0.15}s both` : 'none' }}
                 >{item.value}+</span>
               </div>
             ))}
@@ -225,7 +225,7 @@ export function TopContributors({ activeSection }) {
         <h2 className="text-4xl font-bold mb-2 text-center">Commit Volume</h2>
         <p className="text-zinc-500 text-sm mb-8 text-center">Commits aren't everything—but we sure shipped a lot of code</p>
         <div style={{ height: 500 }}>
-          {activeSection === 32 && (
+          {activeSection === 33 && (
             <ResponsiveContainer width="100%" height={500}>
               <BarChart data={commitData} layout="vertical" margin={{ left: 20, right: 40 }}>
                 <XAxis type="number" scale="log" domain={[50, 2000]} hide />
@@ -259,7 +259,7 @@ export function Closing({ activeSection }) {
         <h2
           className="text-5xl font-black mb-6"
           style={{
-            animation: activeSection === 33 ? 'thankYouReveal 0.8s ease-out both' : 'none',
+            animation: activeSection === 34 ? 'thankYouReveal 0.8s ease-out both' : 'none',
           }}
         >Thanks for everything.</h2>
         <div className="flex flex-col gap-8 mb-8">
@@ -269,7 +269,7 @@ export function Closing({ activeSection }) {
                 key={i}
                 className="group relative hover:z-10"
                 style={{
-                  animation: activeSection === 33 ? `photoWaveIn 0.5s ease-out ${0.2 + i * 0.05}s both` : 'none',
+                  animation: activeSection === 34 ? `photoWaveIn 0.5s ease-out ${0.2 + i * 0.05}s both` : 'none',
                 }}
               >
                 <img
@@ -277,7 +277,7 @@ export function Closing({ activeSection }) {
                   alt={person.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
                   style={{
-                    animation: activeSection === 33 ? `photoGlow 2s ease-in-out ${1.5 + i * 0.1}s infinite` : 'none',
+                    animation: activeSection === 34 ? `photoGlow 2s ease-in-out ${1.5 + i * 0.1}s infinite` : 'none',
                   }}
                 />
                 <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
@@ -292,7 +292,7 @@ export function Closing({ activeSection }) {
                 key={i}
                 className="group relative hover:z-10"
                 style={{
-                  animation: activeSection === 33 ? `photoWaveIn 0.5s ease-out ${0.5 + i * 0.05}s both` : 'none',
+                  animation: activeSection === 34 ? `photoWaveIn 0.5s ease-out ${0.5 + i * 0.05}s both` : 'none',
                 }}
               >
                 <img
@@ -300,7 +300,7 @@ export function Closing({ activeSection }) {
                   alt={person.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
                   style={{
-                    animation: activeSection === 33 ? `photoGlow 2s ease-in-out ${1.8 + i * 0.1}s infinite` : 'none',
+                    animation: activeSection === 34 ? `photoGlow 2s ease-in-out ${1.8 + i * 0.1}s infinite` : 'none',
                   }}
                 />
                 <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
@@ -315,7 +315,7 @@ export function Closing({ activeSection }) {
                 key={i}
                 className="group relative hover:z-10"
                 style={{
-                  animation: activeSection === 33 ? `photoWaveIn 0.5s ease-out ${0.8 + i * 0.05}s both` : 'none',
+                  animation: activeSection === 34 ? `photoWaveIn 0.5s ease-out ${0.8 + i * 0.05}s both` : 'none',
                 }}
               >
                 <img
@@ -323,7 +323,7 @@ export function Closing({ activeSection }) {
                   alt={person.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
                   style={{
-                    animation: activeSection === 33 ? `photoGlow 2s ease-in-out ${2.1 + i * 0.1}s infinite` : 'none',
+                    animation: activeSection === 34 ? `photoGlow 2s ease-in-out ${2.1 + i * 0.1}s infinite` : 'none',
                   }}
                 />
                 <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
@@ -336,7 +336,7 @@ export function Closing({ activeSection }) {
         <p
           className="text-zinc-400 text-xl mb-8"
           style={{
-            animation: activeSection === 33 ? 'fadeInUp 0.6s ease-out 1.2s both' : 'none',
+            animation: activeSection === 34 ? 'fadeInUp 0.6s ease-out 1.2s both' : 'none',
           }}
         >See you in 2026.</p>
         <div className="flex justify-center gap-2">
@@ -346,7 +346,7 @@ export function Closing({ activeSection }) {
               className="w-16 h-2 rounded-full"
               style={{
                 backgroundColor: color,
-                animation: activeSection === 33 ? `closingBarGrow 0.4s ease-out ${1.4 + i * 0.1}s both, barPulse 2s ease-in-out ${2 + i * 0.2}s infinite` : 'none',
+                animation: activeSection === 34 ? `closingBarGrow 0.4s ease-out ${1.4 + i * 0.1}s both, barPulse 2s ease-in-out ${2 + i * 0.2}s infinite` : 'none',
               }}
             />
           ))}
