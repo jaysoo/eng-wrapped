@@ -372,9 +372,9 @@ export default function EngWrapped() {
 
       {/* Big Numbers */}
       <Section className="bg-zinc-950">
-        <div className="flex justify-center gap-16 text-center">
+        <div className="flex justify-center text-center">
           <div
-            className="transform w-40"
+            className="transform mr-16"
             style={{
               animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0s both, snakeFloat1 3s ease-in-out 0.6s infinite' : 'none',
             }}
@@ -385,7 +385,7 @@ export default function EngWrapped() {
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">Commits</p>
           </div>
           <div
-            className="transform w-48"
+            className="transform mr-20"
             style={{
               animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.15s both, snakeFloat2 3s ease-in-out 0.6s infinite' : 'none',
             }}
@@ -396,7 +396,7 @@ export default function EngWrapped() {
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">LOC Changed</p>
           </div>
           <div
-            className="transform w-40"
+            className="transform mr-10"
             style={{
               animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.3s both, snakeFloat1 3s ease-in-out 0.6s infinite' : 'none',
             }}
@@ -407,7 +407,7 @@ export default function EngWrapped() {
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">Projects Shipped</p>
           </div>
           <div
-            className="transform w-32"
+            className="transform"
             style={{
               animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.45s both, snakeFloat2 3s ease-in-out 0.6s infinite' : 'none',
             }}
