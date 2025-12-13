@@ -132,7 +132,7 @@ export const slideDurations = [
   3500,  // 2: Team Shakeup Intro
   4000,  // 3: RedPanda Team Formation
   3000,  // 4: Orca Introduction
-  5200,  // 5: Meet the Teams
+  4300,  // 5: Meet the Teams
   3000,  // 6: Big Features Intro
   2600,  // 7: Self-Healing CI
   2600,  // 8: Terminal UI
