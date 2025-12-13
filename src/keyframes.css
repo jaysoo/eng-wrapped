@@ -537,3 +537,14 @@
   60% { transform: scale(1.2); }
   100% { opacity: 1; transform: scale(1); }
 }
+
+/* Snake wave float - alternating up/down */
+@keyframes snakeFloat1 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes snakeFloat2 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}

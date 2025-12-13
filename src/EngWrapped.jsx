@@ -372,22 +372,22 @@ export default function EngWrapped() {
 
       {/* Big Numbers */}
       <Section className="bg-zinc-950">
-        <div className="grid grid-cols-4 gap-10 text-center max-w-5xl">
+        <div className="flex justify-center gap-16 text-center">
           <div
-            className="transform"
+            className="transform w-40"
             style={{
-              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0s both, subtleFloat 3s ease-in-out 0.6s infinite' : 'none',
+              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0s both, snakeFloat1 3s ease-in-out 0.6s infinite' : 'none',
             }}
           >
-            <p className="text-6xl font-black text-green-400">
+            <p className="text-5xl font-black text-green-400">
               <AnimatedNumber value={7000} isActive={activeSection === 1} />+
             </p>
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">Commits</p>
           </div>
           <div
-            className="transform"
+            className="transform w-48"
             style={{
-              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.15s both, subtleFloat 3s ease-in-out 0.75s infinite' : 'none',
+              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.15s both, snakeFloat2 3s ease-in-out 0.6s infinite' : 'none',
             }}
           >
             <p className="text-5xl font-black text-cyan-400">
@@ -396,23 +396,23 @@ export default function EngWrapped() {
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">LOC Changed</p>
           </div>
           <div
-            className="transform"
+            className="transform w-40"
             style={{
-              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.3s both, subtleFloat 3s ease-in-out 0.9s infinite' : 'none',
+              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.3s both, snakeFloat1 3s ease-in-out 0.6s infinite' : 'none',
             }}
           >
-            <p className="text-6xl font-black text-blue-400">
+            <p className="text-5xl font-black text-blue-400">
               <AnimatedNumber value={80} isActive={activeSection === 1} />+
             </p>
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">Projects Shipped</p>
           </div>
           <div
-            className="transform"
+            className="transform w-32"
             style={{
-              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.45s both, subtleFloat 3s ease-in-out 1.05s infinite' : 'none',
+              animation: activeSection === 1 ? 'bounceIn 0.6s ease-out 0.45s both, snakeFloat2 3s ease-in-out 0.6s infinite' : 'none',
             }}
           >
-            <p className="text-6xl font-black text-purple-400">
+            <p className="text-5xl font-black text-purple-400">
               <AnimatedTeamCount isActive={activeSection === 1} />
             </p>
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">Teams</p>
