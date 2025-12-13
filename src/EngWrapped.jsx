@@ -599,22 +599,22 @@ export default function EngWrapped() {
     3000,  // 4: Orca Introduction
     5200,  // 5: Meet the Teams
     3000,  // 6: Big Features Intro
-    2300,  // 7: Self-Healing CI
-    2300,  // 8: Terminal UI
-    2300,  // 9: Continuous Tasks
-    2300,  // 10: .NET + Maven
-    2300,  // 11: AI Code Generation
-    2300,  // 12: CPU/Memory Tracking
-    2300,  // 13: Flaky Task Analytics
-    2300,  // 14: Onboarding Flow
-    2300,  // 15: Azure Single Tenant
-    2300,  // 16: Helm Chart
-    2300,  // 17: Observability
-    2300,  // 18: Docker + Nx Release
-    2300,  // 19: GitHub Templates
-    2300,  // 20: Node 24
-    2300,  // 21: Nx & Ocean CI Stability
-    2300,  // 22: Docs Migration to Astro Starlight
+    2600,  // 7: Self-Healing CI
+    2600,  // 8: Terminal UI
+    2600,  // 9: Continuous Tasks
+    2600,  // 10: .NET + Maven
+    2600,  // 11: AI Code Generation
+    2600,  // 12: CPU/Memory Tracking
+    2600,  // 13: Flaky Task Analytics
+    2600,  // 14: Onboarding Flow
+    2600,  // 15: Azure Single Tenant
+    2600,  // 16: Helm Chart
+    2600,  // 17: Observability
+    2600,  // 18: Docker + Nx Release
+    2600,  // 19: GitHub Templates
+    2600,  // 20: Node 24
+    2600,  // 21: Nx & Ocean CI Stability
+    2600,  // 22: Docs Migration to Astro Starlight
     2600,  // 23: Framework Support
     2600,  // 24: Orca Highlights
     2600,  // 25: Infrastructure Highlights
@@ -1602,13 +1602,13 @@ export default function EngWrapped() {
             </div>
           </div>
           <div className="flex justify-center gap-8 mt-6 text-sm">
-            <div className="text-zinc-400" style={{ animation: activeSection === 8 ? 'terminalBadge 0.4s ease-out 1.4s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 8 ? 'terminalBadge 0.3s ease-out 0.6s both' : 'none' }}>
               <span className="text-green-400 font-bold">Real-time</span> task output
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 8 ? 'terminalBadge 0.4s ease-out 1.5s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 8 ? 'terminalBadge 0.3s ease-out 0.7s both' : 'none' }}>
               <span className="text-blue-400 font-bold">Keyboard</span> navigation
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 8 ? 'terminalBadge 0.4s ease-out 1.6s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 8 ? 'terminalBadge 0.3s ease-out 0.8s both' : 'none' }}>
               <span className="text-purple-400 font-bold">Windows</span> support
             </div>
           </div>
@@ -1687,13 +1687,13 @@ export default function EngWrapped() {
             </div>
           </div>
           <div className="flex justify-center gap-8 text-sm">
-            <div className="text-zinc-400" style={{ animation: activeSection === 9 ? 'contBadge 0.4s ease-out 1.4s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 9 ? 'contBadge 0.3s ease-out 0.6s both' : 'none' }}>
               <span className="text-green-400 font-bold">Chains</span> of dependencies
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 9 ? 'contBadge 0.4s ease-out 1.5s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 9 ? 'contBadge 0.3s ease-out 0.7s both' : 'none' }}>
               <span className="text-blue-400 font-bold">Waits</span> for ready signal
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 9 ? 'contBadge 0.4s ease-out 1.6s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 9 ? 'contBadge 0.3s ease-out 0.8s both' : 'none' }}>
               <span className="text-purple-400 font-bold">Cleans up</span> on completion
             </div>
           </div>
@@ -1816,13 +1816,13 @@ export default function EngWrapped() {
             </div>
           </div>
           <div className="flex justify-center gap-8 mt-6 text-sm">
-            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'badgeFade 0.4s ease-out 1.8s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'badgeFade 0.3s ease-out 0.6s both' : 'none' }}>
               <span className="text-blue-400 font-bold">MCP</span> server support
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'badgeFade 0.4s ease-out 2.0s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'badgeFade 0.3s ease-out 0.7s both' : 'none' }}>
               <span className="text-green-400 font-bold">Context</span> for AI assistants
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'badgeFade 0.4s ease-out 2.2s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'badgeFade 0.3s ease-out 0.8s both' : 'none' }}>
               <span className="text-purple-400 font-bold">Smarter</span> code generation
             </div>
           </div>
