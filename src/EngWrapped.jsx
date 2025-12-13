@@ -98,6 +98,7 @@ const allProjects = [
   // CLI
   { name: 'Terminal UI', team: 'cli' },
   { name: 'Migrate UI', team: 'cli' },
+  { name: 'Improved Nx Graph', team: 'cloud' },
   { name: 'Expo 54 Support', team: 'cli' },
   { name: 'Vitest 4 Support', team: 'cli' },
   { name: 'Nuxt 4 Support', team: 'cli' },
@@ -625,7 +626,7 @@ export default function EngWrapped() {
     if (!audio) return;
     audio.muted = isMuted;
   }, [isMuted]);
-  const sectionCount = 33;
+  const sectionCount = 34;
 
   // Slide durations in ms
   const slideDurations = [
@@ -639,29 +640,30 @@ export default function EngWrapped() {
     2600,  // 7: Self-Healing CI
     2600,  // 8: Terminal UI
     2600,  // 9: Migrate UI
-    2600,  // 10: Continuous Tasks
-    2600,  // 11: .NET + Maven
-    2600,  // 12: AI Code Generation
-    2600,  // 13: CPU/Memory Tracking
-    2600,  // 14: Flaky Task Analytics
-    2600,  // 15: Onboarding Flow
-    2600,  // 16: Azure Single Tenant
-    2600,  // 17: Helm Chart
-    2600,  // 18: Observability
-    2600,  // 19: Docker + Nx Release
-    2600,  // 20: GitHub Templates
-    2600,  // 21: Node 24
-    2600,  // 22: Nx & Ocean CI Stability
-    2600,  // 23: Docs Migration to Astro Starlight
-    2600,  // 24: Framework Support
-    2600,  // 25: Orca Highlights
-    2600,  // 26: Infrastructure Highlights
-    2600,  // 27: RedPanda Highlights
-    3000,  // 28: Stats Intro
-    6000,  // 29: Projects Showcase (animated)
-    3000,  // 30: Projects Breakdown
-    4000,  // 31: Top Contributors Chart
-    3000,  // 32: Closing
+    2600,  // 10: Improved Nx Graph
+    2600,  // 11: Continuous Tasks
+    2600,  // 12: .NET + Maven
+    2600,  // 13: AI Code Generation
+    2600,  // 14: CPU/Memory Tracking
+    2600,  // 15: Flaky Task Analytics
+    2600,  // 16: Onboarding Flow
+    2600,  // 17: Azure Single Tenant
+    2600,  // 18: Helm Chart
+    2600,  // 19: Observability
+    2600,  // 20: Docker + Nx Release
+    2600,  // 21: GitHub Templates
+    2600,  // 22: Node 24
+    2600,  // 23: Nx & Ocean CI Stability
+    2600,  // 24: Docs Migration to Astro Starlight
+    2600,  // 25: Framework Support
+    2600,  // 26: Orca Highlights
+    2600,  // 27: Infrastructure Highlights
+    2600,  // 28: RedPanda Highlights
+    3000,  // 29: Stats Intro
+    6000,  // 30: Projects Showcase (animated)
+    3000,  // 31: Projects Breakdown
+    4000,  // 32: Top Contributors Chart
+    3000,  // 33: Closing
   ];
 
   // Progress bar - use ref to avoid re-renders during auto-play
@@ -1735,6 +1737,71 @@ export default function EngWrapped() {
         `}</style>
       </Section>
 
+      {/* Improved Nx Graph - Orca */}
+      <Section className="bg-zinc-950">
+        <div className="text-center max-w-5xl">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
+            <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
+          </div>
+          <h2
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
+            style={{
+              backgroundImage: 'linear-gradient(90deg, #a855f7, #c084fc, #e879f9, #a855f7)',
+              backgroundSize: '200% 100%',
+              animation: 'gradientShift 3s ease-in-out infinite',
+            }}
+          >Improved Nx Graph</h2>
+          <p className="text-zinc-400 text-lg mb-8">Handles repos of any size + enterprise visualization</p>
+          <div className="flex justify-center gap-4">
+            <div className="w-1/2">
+              <img
+                src="new-graph.avif"
+                alt="Nx Graph in CLI/Console"
+                className="rounded-xl border border-zinc-800 shadow-2xl w-full"
+                style={{ animation: activeSection === 10 ? 'graphSlideLeft 0.5s ease-out 0.1s both' : 'none' }}
+              />
+              <p className="text-zinc-500 text-xs mt-2">Composite mode in Nx Console</p>
+            </div>
+            <div className="w-1/2">
+              <img
+                src="workspace-graph.avif"
+                alt="Polygraph Enterprise Visualization"
+                className="rounded-xl border border-zinc-800 shadow-2xl w-full"
+                style={{ animation: activeSection === 10 ? 'graphSlideRight 0.5s ease-out 0.3s both' : 'none' }}
+              />
+              <p className="text-zinc-500 text-xs mt-2">Polygraph cross-repo view</p>
+            </div>
+          </div>
+          <div className="flex justify-center gap-8 mt-6 text-sm">
+            <div className="text-zinc-400" style={{ animation: activeSection === 10 ? 'graphBadge 0.3s ease-out 0.5s both' : 'none' }}>
+              <span className="text-purple-400 font-bold">Composite</span> rendering
+            </div>
+            <div className="text-zinc-400" style={{ animation: activeSection === 10 ? 'graphBadge 0.3s ease-out 0.6s both' : 'none' }}>
+              <span className="text-blue-400 font-bold">Cross-repo</span> visibility
+            </div>
+            <div className="text-zinc-400" style={{ animation: activeSection === 10 ? 'graphBadge 0.3s ease-out 0.7s both' : 'none' }}>
+              <span className="text-green-400 font-bold">Impact</span> analysis
+            </div>
+          </div>
+          <p className="text-zinc-500 text-sm mt-6">Chau</p>
+        </div>
+        <style>{`
+          @keyframes graphSlideLeft {
+            0% { opacity: 0; transform: translateX(-30px) scale(0.95); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+          }
+          @keyframes graphSlideRight {
+            0% { opacity: 0; transform: translateX(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+          }
+          @keyframes graphBadge {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
+      </Section>
+
       {/* Continuous Tasks - CLI/Cloud */}
       <Section className="bg-zinc-950">
         <div className="text-center max-w-5xl">
@@ -1762,31 +1829,31 @@ export default function EngWrapped() {
               src="https://img.youtube.com/vi/AD51BKJtDBk/maxresdefault.jpg"
               alt="Continuous Tasks in Nx 21"
               className="w-1/2 rounded-xl border border-zinc-800"
-              style={{ animation: activeSection === 11 ? 'contVideoSlide 0.5s ease-out 0.1s both' : 'none' }}
+              style={{ animation: activeSection === 12 ? 'contVideoSlide 0.5s ease-out 0.1s both' : 'none' }}
             />
             <div
               className="w-1/2 bg-zinc-900 rounded-xl p-5 border border-zinc-800 text-left font-mono text-sm"
-              style={{ animation: activeSection === 11 ? 'contCodeSlide 0.5s ease-out 0.3s both' : 'none' }}
+              style={{ animation: activeSection === 12 ? 'contCodeSlide 0.5s ease-out 0.3s both' : 'none' }}
             >
-              <div className="text-zinc-500 mb-2" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 0.5s both' : 'none' }}>// e2e → frontend → backend</div>
-              <div className="text-zinc-300" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 0.6s both' : 'none' }}>{`"backend": { `}<span className="text-green-400">"continuous": true</span>{` },`}</div>
-              <div className="text-zinc-300 mt-2" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 0.7s both' : 'none' }}>{`"frontend": {`}</div>
-              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 0.8s both' : 'none' }}><span className="text-green-400">"continuous": true</span>,</div>
-              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 0.9s both' : 'none' }}>{`"dependsOn": [`}<span className="text-cyan-400">"backend"</span>{`]`}</div>
-              <div className="text-zinc-300" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 1.0s both' : 'none' }}>{`},`}</div>
-              <div className="text-zinc-300 mt-2" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 1.1s both' : 'none' }}>{`"e2e": {`}</div>
-              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 1.2s both' : 'none' }}>{`"dependsOn": [`}<span className="text-cyan-400">"frontend"</span>{`]`}</div>
-              <div className="text-zinc-300" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 1.3s both' : 'none' }}>{`}`}</div>
+              <div className="text-zinc-500 mb-2" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 0.5s both' : 'none' }}>// e2e → frontend → backend</div>
+              <div className="text-zinc-300" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 0.6s both' : 'none' }}>{`"backend": { `}<span className="text-green-400">"continuous": true</span>{` },`}</div>
+              <div className="text-zinc-300 mt-2" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 0.7s both' : 'none' }}>{`"frontend": {`}</div>
+              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 0.8s both' : 'none' }}><span className="text-green-400">"continuous": true</span>,</div>
+              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 0.9s both' : 'none' }}>{`"dependsOn": [`}<span className="text-cyan-400">"backend"</span>{`]`}</div>
+              <div className="text-zinc-300" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 1.0s both' : 'none' }}>{`},`}</div>
+              <div className="text-zinc-300 mt-2" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 1.1s both' : 'none' }}>{`"e2e": {`}</div>
+              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 1.2s both' : 'none' }}>{`"dependsOn": [`}<span className="text-cyan-400">"frontend"</span>{`]`}</div>
+              <div className="text-zinc-300" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 1.3s both' : 'none' }}>{`}`}</div>
             </div>
           </div>
           <div className="flex justify-center gap-8 text-sm">
-            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'contBadge 0.3s ease-out 0.6s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 12 ? 'contBadge 0.3s ease-out 0.6s both' : 'none' }}>
               <span className="text-green-400 font-bold">Chains</span> of dependencies
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'contBadge 0.3s ease-out 0.7s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 12 ? 'contBadge 0.3s ease-out 0.7s both' : 'none' }}>
               <span className="text-blue-400 font-bold">Waits</span> for ready signal
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'contBadge 0.3s ease-out 0.8s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 12 ? 'contBadge 0.3s ease-out 0.8s both' : 'none' }}>
               <span className="text-purple-400 font-bold">Cleans up</span> on completion
             </div>
           </div>
@@ -1831,26 +1898,26 @@ export default function EngWrapped() {
           <div className="flex justify-center gap-8">
             <div
               className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-52"
-              style={{ animation: activeSection === 11 ? 'cardSlideUp 0.5s ease-out 0.1s both' : 'none' }}
+              style={{ animation: activeSection === 12 ? 'cardSlideUp 0.5s ease-out 0.1s both' : 'none' }}
             >
               <img
                 src="dotnet-logo.png"
                 alt=".NET"
                 className="h-16 mx-auto mb-4 object-contain"
-                style={{ animation: activeSection === 11 ? 'logoBounce 0.6s ease-out 0.3s both' : 'none' }}
+                style={{ animation: activeSection === 12 ? 'logoBounce 0.6s ease-out 0.3s both' : 'none' }}
               />
               <p className="text-zinc-400">C#, F#, VB.NET projects</p>
               <p className="text-zinc-500 text-sm mt-2">Build, test, publish</p>
             </div>
             <div
               className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-52"
-              style={{ animation: activeSection === 11 ? 'cardSlideUp 0.5s ease-out 0.25s both' : 'none' }}
+              style={{ animation: activeSection === 12 ? 'cardSlideUp 0.5s ease-out 0.25s both' : 'none' }}
             >
               <img
                 src="maven-logo.png"
                 alt="Maven"
                 className="h-16 mx-auto mb-4 object-contain invert brightness-200"
-                style={{ animation: activeSection === 11 ? 'logoBounce 0.6s ease-out 0.45s both' : 'none' }}
+                style={{ animation: activeSection === 12 ? 'logoBounce 0.6s ease-out 0.45s both' : 'none' }}
               />
               <p className="text-zinc-400">Java & Kotlin projects</p>
               <p className="text-zinc-500 text-sm mt-2">Gradle already supported</p>
@@ -1889,7 +1956,7 @@ export default function EngWrapped() {
           <p className="text-zinc-400 text-lg mb-8">Enhance AI tools with workspace context</p>
           <div
             className="bg-zinc-950 rounded-xl p-6 border border-zinc-800"
-            style={{ animation: activeSection === 12 ? 'terminalSlideIn 0.5s ease-out 0.1s both' : 'none' }}
+            style={{ animation: activeSection === 13 ? 'terminalSlideIn 0.5s ease-out 0.1s both' : 'none' }}
           >
             <div className="text-left font-mono text-sm space-y-3">
               <div className="text-zinc-500"># Configure AI agents to understand your workspace</div>
@@ -1897,25 +1964,25 @@ export default function EngWrapped() {
                 <span className="text-green-400">$</span>
                 <span
                   className="text-zinc-300"
-                  style={{ animation: activeSection === 12 ? 'typeCommand 0.8s steps(24) 0.4s both' : 'none' }}
+                  style={{ animation: activeSection === 13 ? 'typeCommand 0.8s steps(24) 0.4s both' : 'none' }}
                 >npx nx configure-ai-agents</span>
               </div>
               <div className="text-zinc-400 pl-4 border-l-2 border-zinc-700 mt-2">
-                <div style={{ animation: activeSection === 12 ? 'outputFade 0.3s ease-out 0.9s both' : 'none' }}>Generating workspace context for AI tools...</div>
-                <div className="text-green-400" style={{ animation: activeSection === 12 ? 'checkPop 0.4s ease-out 1.2s both' : 'none' }}>✓ Claude Code configured</div>
-                <div className="text-green-400" style={{ animation: activeSection === 12 ? 'checkPop 0.4s ease-out 1.4s both' : 'none' }}>✓ Cursor configured</div>
-                <div className="text-green-400" style={{ animation: activeSection === 12 ? 'checkPop 0.4s ease-out 1.6s both' : 'none' }}>✓ Copilot configured</div>
+                <div style={{ animation: activeSection === 13 ? 'outputFade 0.3s ease-out 0.9s both' : 'none' }}>Generating workspace context for AI tools...</div>
+                <div className="text-green-400" style={{ animation: activeSection === 13 ? 'checkPop 0.4s ease-out 1.2s both' : 'none' }}>✓ Claude Code configured</div>
+                <div className="text-green-400" style={{ animation: activeSection === 13 ? 'checkPop 0.4s ease-out 1.4s both' : 'none' }}>✓ Cursor configured</div>
+                <div className="text-green-400" style={{ animation: activeSection === 13 ? 'checkPop 0.4s ease-out 1.6s both' : 'none' }}>✓ Copilot configured</div>
               </div>
             </div>
           </div>
           <div className="flex justify-center gap-8 mt-6 text-sm">
-            <div className="text-zinc-400" style={{ animation: activeSection === 12 ? 'badgeFade 0.3s ease-out 0.6s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'badgeFade 0.3s ease-out 0.6s both' : 'none' }}>
               <span className="text-blue-400 font-bold">MCP</span> server support
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 12 ? 'badgeFade 0.3s ease-out 0.7s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'badgeFade 0.3s ease-out 0.7s both' : 'none' }}>
               <span className="text-green-400 font-bold">Context</span> for AI assistants
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 12 ? 'badgeFade 0.3s ease-out 0.8s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'badgeFade 0.3s ease-out 0.8s both' : 'none' }}>
               <span className="text-purple-400 font-bold">Smarter</span> code generation
             </div>
           </div>
@@ -1974,7 +2041,7 @@ export default function EngWrapped() {
               className="rounded-xl overflow-hidden border border-zinc-800 shadow-2xl"
               style={{
                 maxWidth: '480px',
-                animation: activeSection === 13 ? 'slideFromLeft 0.6s ease-out 0.1s both, dashboardGlow 2s ease-in-out 0.7s infinite' : 'none',
+                animation: activeSection === 14 ? 'slideFromLeft 0.6s ease-out 0.1s both, dashboardGlow 2s ease-in-out 0.7s infinite' : 'none',
               }}
             >
               <img
@@ -1987,7 +2054,7 @@ export default function EngWrapped() {
               className="rounded-xl overflow-hidden border border-zinc-800 shadow-2xl bg-white flex items-center"
               style={{
                 maxWidth: '480px',
-                animation: activeSection === 13 ? 'slideFromRight 0.6s ease-out 0.3s both, dashboardGlowCyan 2s ease-in-out 0.9s infinite' : 'none',
+                animation: activeSection === 14 ? 'slideFromRight 0.6s ease-out 0.3s both, dashboardGlowCyan 2s ease-in-out 0.9s infinite' : 'none',
               }}
             >
               <img
@@ -1998,13 +2065,13 @@ export default function EngWrapped() {
             </div>
           </div>
           <div className="flex justify-center gap-8 mt-6 text-sm">
-            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'metricSlide 0.4s ease-out 0.5s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 14 ? 'metricSlide 0.4s ease-out 0.5s both' : 'none' }}>
               <span className="text-pink-400 font-bold">Identify</span> OOM errors
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'metricSlide 0.4s ease-out 0.7s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 14 ? 'metricSlide 0.4s ease-out 0.7s both' : 'none' }}>
               <span className="text-cyan-400 font-bold">Optimize</span> agent sizing
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 13 ? 'metricSlide 0.4s ease-out 0.9s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 14 ? 'metricSlide 0.4s ease-out 0.9s both' : 'none' }}>
               <span className="text-green-400 font-bold">Debug</span> slow tasks
             </div>
           </div>
@@ -2052,58 +2119,58 @@ export default function EngWrapped() {
           <p className="text-zinc-400 text-lg mb-8">Find and fix unreliable tests before they slow you down</p>
           <div
             className="bg-zinc-950 rounded-xl p-6 border border-zinc-800"
-            style={{ animation: activeSection === 14 ? 'listContainerFade 0.4s ease-out 0.1s both' : 'none' }}
+            style={{ animation: activeSection === 15 ? 'listContainerFade 0.4s ease-out 0.1s both' : 'none' }}
           >
             <div className="space-y-4">
               <div
                 className="flex items-center justify-between p-3 bg-zinc-900 rounded-lg"
-                style={{ animation: activeSection === 14 ? 'flakeRowSlide 0.5s ease-out 0.2s both' : 'none' }}
+                style={{ animation: activeSection === 15 ? 'flakeRowSlide 0.5s ease-out 0.2s both' : 'none' }}
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-yellow-400" style={{ animation: activeSection === 14 ? 'warningPulse 0.6s ease-out 0.4s both' : 'none' }}>⚠️</span>
+                  <span className="text-yellow-400" style={{ animation: activeSection === 15 ? 'warningPulse 0.6s ease-out 0.4s both' : 'none' }}>⚠️</span>
                   <span className="text-zinc-300">e2e-checkout.spec.ts</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-red-400 font-bold" style={{ animation: activeSection === 14 ? 'percentPop 0.4s ease-out 0.5s both' : 'none' }}>23%</span>
+                  <span className="text-red-400 font-bold" style={{ animation: activeSection === 15 ? 'percentPop 0.4s ease-out 0.5s both' : 'none' }}>23%</span>
                   <span className="text-zinc-500 text-sm ml-2">flake rate</span>
                 </div>
               </div>
               <div
                 className="flex items-center justify-between p-3 bg-zinc-900 rounded-lg"
-                style={{ animation: activeSection === 14 ? 'flakeRowSlide 0.5s ease-out 0.4s both' : 'none' }}
+                style={{ animation: activeSection === 15 ? 'flakeRowSlide 0.5s ease-out 0.4s both' : 'none' }}
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-yellow-400" style={{ animation: activeSection === 14 ? 'warningPulse 0.6s ease-out 0.6s both' : 'none' }}>⚠️</span>
+                  <span className="text-yellow-400" style={{ animation: activeSection === 15 ? 'warningPulse 0.6s ease-out 0.6s both' : 'none' }}>⚠️</span>
                   <span className="text-zinc-300">api-integration.spec.ts</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-orange-400 font-bold" style={{ animation: activeSection === 14 ? 'percentPop 0.4s ease-out 0.7s both' : 'none' }}>12%</span>
+                  <span className="text-orange-400 font-bold" style={{ animation: activeSection === 15 ? 'percentPop 0.4s ease-out 0.7s both' : 'none' }}>12%</span>
                   <span className="text-zinc-500 text-sm ml-2">flake rate</span>
                 </div>
               </div>
               <div
                 className="flex items-center justify-between p-3 bg-zinc-900 rounded-lg"
-                style={{ animation: activeSection === 14 ? 'flakeRowSlide 0.5s ease-out 0.6s both' : 'none' }}
+                style={{ animation: activeSection === 15 ? 'flakeRowSlide 0.5s ease-out 0.6s both' : 'none' }}
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-green-400" style={{ animation: activeSection === 14 ? 'checkBounce 0.5s ease-out 0.8s both' : 'none' }}>✓</span>
+                  <span className="text-green-400" style={{ animation: activeSection === 15 ? 'checkBounce 0.5s ease-out 0.8s both' : 'none' }}>✓</span>
                   <span className="text-zinc-300">unit-tests.spec.ts</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-green-400 font-bold" style={{ animation: activeSection === 14 ? 'percentPop 0.4s ease-out 0.9s both' : 'none' }}>0%</span>
+                  <span className="text-green-400 font-bold" style={{ animation: activeSection === 15 ? 'percentPop 0.4s ease-out 0.9s both' : 'none' }}>0%</span>
                   <span className="text-zinc-500 text-sm ml-2">flake rate</span>
                 </div>
               </div>
             </div>
           </div>
           <div className="flex justify-center gap-8 mt-6 text-sm">
-            <div className="text-zinc-400" style={{ animation: activeSection === 14 ? 'featureFade 0.3s ease-out 0.5s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 15 ? 'featureFade 0.3s ease-out 0.5s both' : 'none' }}>
               <span className="text-yellow-400 font-bold">Track</span> flaky tests
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 14 ? 'featureFade 0.3s ease-out 0.6s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 15 ? 'featureFade 0.3s ease-out 0.6s both' : 'none' }}>
               <span className="text-blue-400 font-bold">Analyze</span> failure patterns
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 14 ? 'featureFade 0.3s ease-out 0.7s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 15 ? 'featureFade 0.3s ease-out 0.7s both' : 'none' }}>
               <span className="text-green-400 font-bold">Auto-retry</span> on failure
             </div>
           </div>
@@ -2162,17 +2229,17 @@ export default function EngWrapped() {
             <div
               className="absolute top-10 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-purple-500 via-purple-400 to-green-500"
               style={{
-                animation: activeSection === 15 ? 'lineGrow 1s ease-out 0.5s both' : 'none',
+                animation: activeSection === 16 ? 'lineGrow 1s ease-out 0.5s both' : 'none',
                 transformOrigin: 'left',
               }}
             />
             <div
               className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
-              style={{ animation: activeSection === 15 ? 'stepSlideIn 0.5s ease-out 0.1s both' : 'none' }}
+              style={{ animation: activeSection === 16 ? 'stepSlideIn 0.5s ease-out 0.1s both' : 'none' }}
             >
               <div
                 className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4"
-                style={{ animation: activeSection === 15 ? 'numberPop 0.4s ease-out 0.3s both' : 'none' }}
+                style={{ animation: activeSection === 16 ? 'numberPop 0.4s ease-out 0.3s both' : 'none' }}
               >
                 <span className="text-purple-400 text-xl">1</span>
               </div>
@@ -2181,11 +2248,11 @@ export default function EngWrapped() {
             </div>
             <div
               className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
-              style={{ animation: activeSection === 15 ? 'stepSlideIn 0.5s ease-out 0.3s both' : 'none' }}
+              style={{ animation: activeSection === 16 ? 'stepSlideIn 0.5s ease-out 0.3s both' : 'none' }}
             >
               <div
                 className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4"
-                style={{ animation: activeSection === 15 ? 'numberPop 0.4s ease-out 0.5s both' : 'none' }}
+                style={{ animation: activeSection === 16 ? 'numberPop 0.4s ease-out 0.5s both' : 'none' }}
               >
                 <span className="text-purple-400 text-xl">2</span>
               </div>
@@ -2194,11 +2261,11 @@ export default function EngWrapped() {
             </div>
             <div
               className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
-              style={{ animation: activeSection === 15 ? 'stepSlideIn 0.5s ease-out 0.5s both' : 'none' }}
+              style={{ animation: activeSection === 16 ? 'stepSlideIn 0.5s ease-out 0.5s both' : 'none' }}
             >
               <div
                 className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4"
-                style={{ animation: activeSection === 15 ? 'checkmarkPop 0.5s ease-out 0.7s both' : 'none' }}
+                style={{ animation: activeSection === 16 ? 'checkmarkPop 0.5s ease-out 0.7s both' : 'none' }}
               >
                 <span className="text-green-400 text-xl">✓</span>
               </div>
@@ -2249,21 +2316,21 @@ export default function EngWrapped() {
           <div className="flex justify-center gap-8">
             <div
               className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-48"
-              style={{ animation: activeSection === 16 ? 'cloudFloat 0.6s ease-out 0.1s both' : 'none' }}
+              style={{ animation: activeSection === 17 ? 'cloudFloat 0.6s ease-out 0.1s both' : 'none' }}
             >
               <img src="aws-logo.webp" alt="AWS" className="h-12 mx-auto mb-4 object-contain" />
               <p className="text-green-400 text-sm">Supported</p>
             </div>
             <div
               className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-48 ring-2 ring-green-500"
-              style={{ animation: activeSection === 16 ? 'cloudFloat 0.6s ease-out 0.2s both, azurePulse 2s ease-in-out 0.8s infinite' : 'none' }}
+              style={{ animation: activeSection === 17 ? 'cloudFloat 0.6s ease-out 0.2s both, azurePulse 2s ease-in-out 0.8s infinite' : 'none' }}
             >
               <img src="azure-logo.png" alt="Azure" className="h-12 mx-auto mb-4 object-contain" />
               <p className="text-green-400 text-sm">New in 2025</p>
             </div>
             <div
               className="bg-zinc-950 rounded-xl p-8 border border-zinc-800 text-center w-48"
-              style={{ animation: activeSection === 16 ? 'cloudFloat 0.6s ease-out 0.3s both' : 'none' }}
+              style={{ animation: activeSection === 17 ? 'cloudFloat 0.6s ease-out 0.3s both' : 'none' }}
             >
               <img src="gcp-logo.jpg" alt="GCP" className="h-12 mx-auto mb-4 object-contain" />
               <p className="text-green-400 text-sm">Supported</p>
@@ -2302,25 +2369,25 @@ export default function EngWrapped() {
           <div className="flex justify-center gap-6">
             <div
               className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center"
-              style={{ animation: activeSection === 17 ? 'helmSpin 0.6s ease-out 0.1s both' : 'none' }}
+              style={{ animation: activeSection === 18 ? 'helmSpin 0.6s ease-out 0.1s both' : 'none' }}
             >
-              <p className="text-3xl mb-3" style={{ animation: activeSection === 17 ? 'iconRotate 0.8s ease-out 0.3s both' : 'none' }}>⎈</p>
+              <p className="text-3xl mb-3" style={{ animation: activeSection === 18 ? 'iconRotate 0.8s ease-out 0.3s both' : 'none' }}>⎈</p>
               <h3 className="font-bold mb-1">Kustomize → Helm</h3>
               <p className="text-zinc-500 text-sm">Unified deployment model</p>
             </div>
             <div
               className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center"
-              style={{ animation: activeSection === 17 ? 'helmSpin 0.6s ease-out 0.2s both' : 'none' }}
+              style={{ animation: activeSection === 18 ? 'helmSpin 0.6s ease-out 0.2s both' : 'none' }}
             >
-              <p className="text-3xl mb-3" style={{ animation: activeSection === 17 ? 'iconRotate 0.8s ease-out 0.4s both' : 'none' }}>🔄</p>
+              <p className="text-3xl mb-3" style={{ animation: activeSection === 18 ? 'iconRotate 0.8s ease-out 0.4s both' : 'none' }}>🔄</p>
               <h3 className="font-bold mb-1">ArgoCD AppSets</h3>
               <p className="text-zinc-500 text-sm">GCP & AWS deployments</p>
             </div>
             <div
               className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center"
-              style={{ animation: activeSection === 17 ? 'helmSpin 0.6s ease-out 0.3s both' : 'none' }}
+              style={{ animation: activeSection === 18 ? 'helmSpin 0.6s ease-out 0.3s both' : 'none' }}
             >
-              <p className="text-3xl mb-3" style={{ animation: activeSection === 17 ? 'iconRotate 0.8s ease-out 0.5s both' : 'none' }}>📦</p>
+              <p className="text-3xl mb-3" style={{ animation: activeSection === 18 ? 'iconRotate 0.8s ease-out 0.5s both' : 'none' }}>📦</p>
               <h3 className="font-bold mb-1">Single Chart</h3>
               <p className="text-zinc-500 text-sm">All components included</p>
             </div>
@@ -2361,7 +2428,7 @@ export default function EngWrapped() {
               className="rounded-xl overflow-hidden border border-zinc-800 shadow-2xl"
               style={{
                 maxWidth: '900px',
-                animation: activeSection === 18 ? 'dashboardReveal 0.8s ease-out 0.2s both' : 'none'
+                animation: activeSection === 19 ? 'dashboardReveal 0.8s ease-out 0.2s both' : 'none'
               }}
             >
               <img
@@ -2372,13 +2439,13 @@ export default function EngWrapped() {
             </div>
           </div>
           <div className="flex justify-center gap-8 mt-6 text-sm">
-            <div className="text-zinc-400" style={{ animation: activeSection === 18 ? 'tagFadeIn 0.4s ease-out 0.6s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 19 ? 'tagFadeIn 0.4s ease-out 0.6s both' : 'none' }}>
               <span className="text-green-400 font-bold">Grafana</span> dashboards
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 18 ? 'tagFadeIn 0.4s ease-out 0.7s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 19 ? 'tagFadeIn 0.4s ease-out 0.7s both' : 'none' }}>
               <span className="text-blue-400 font-bold">Distributed</span> tracing
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 18 ? 'tagFadeIn 0.4s ease-out 0.8s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 19 ? 'tagFadeIn 0.4s ease-out 0.8s both' : 'none' }}>
               <span className="text-purple-400 font-bold">Proactive</span> alerting
             </div>
           </div>
@@ -2415,18 +2482,18 @@ export default function EngWrapped() {
           <div className="flex justify-center gap-6">
             <div
               className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
-              style={{ animation: activeSection === 19 ? 'dockerSlide 0.5s ease-out 0.1s both' : 'none' }}
+              style={{ animation: activeSection === 20 ? 'dockerSlide 0.5s ease-out 0.1s both' : 'none' }}
             >
-              <p className="text-4xl mb-4" style={{ animation: activeSection === 19 ? 'iconWobble 0.6s ease-out 0.3s both' : 'none' }}>🐳</p>
+              <p className="text-4xl mb-4" style={{ animation: activeSection === 20 ? 'iconWobble 0.6s ease-out 0.3s both' : 'none' }}>🐳</p>
               <h3 className="font-bold mb-2">Docker Plugin</h3>
               <p className="text-zinc-400 text-sm">Build and push container images</p>
               <p className="text-zinc-500 text-xs mt-2">Inferred targets • Multi-stage builds</p>
             </div>
             <div
               className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
-              style={{ animation: activeSection === 19 ? 'dockerSlide 0.5s ease-out 0.25s both' : 'none' }}
+              style={{ animation: activeSection === 20 ? 'dockerSlide 0.5s ease-out 0.25s both' : 'none' }}
             >
-              <p className="text-4xl mb-4" style={{ animation: activeSection === 19 ? 'iconWobble 0.6s ease-out 0.45s both' : 'none' }}>📦</p>
+              <p className="text-4xl mb-4" style={{ animation: activeSection === 20 ? 'iconWobble 0.6s ease-out 0.45s both' : 'none' }}>📦</p>
               <h3 className="font-bold mb-2">Nx Release</h3>
               <p className="text-zinc-400 text-sm">Versioning, changelogs, publishing</p>
               <p className="text-zinc-500 text-xs mt-2">GitLab releases • Monorepo-aware</p>
@@ -2473,21 +2540,21 @@ export default function EngWrapped() {
           <div className="flex justify-center gap-6">
             <div
               className="flex-1 bg-zinc-950 rounded-xl p-6 border border-zinc-800"
-              style={{ animation: activeSection === 20 ? 'panelSlideLeft 0.5s ease-out 0.1s both' : 'none' }}
+              style={{ animation: activeSection === 21 ? 'panelSlideLeft 0.5s ease-out 0.1s both' : 'none' }}
             >
               <p className="text-zinc-400 text-sm mb-3 font-medium">create-nx-workspace</p>
               <div className="bg-zinc-900 rounded-lg p-4 font-mono text-sm text-left">
-                <div className="text-zinc-400" style={{ animation: activeSection === 20 ? 'typeIn 0.3s ease-out 0.4s both' : 'none' }}>? Which starter do you want to use? …</div>
-                <div className="text-yellow-300 underline" style={{ animation: activeSection === 20 ? 'typeIn 0.3s ease-out 0.5s both' : 'none' }}>TypeScript</div>
-                <div className="text-zinc-500" style={{ animation: activeSection === 20 ? 'typeIn 0.3s ease-out 0.55s both' : 'none' }}>NPM Packages</div>
-                <div className="text-zinc-500" style={{ animation: activeSection === 20 ? 'typeIn 0.3s ease-out 0.6s both' : 'none' }}>React</div>
-                <div className="text-zinc-500" style={{ animation: activeSection === 20 ? 'typeIn 0.3s ease-out 0.65s both' : 'none' }}>Angular</div>
-                <div className="text-zinc-500" style={{ animation: activeSection === 20 ? 'typeIn 0.3s ease-out 0.7s both' : 'none' }}>Custom</div>
+                <div className="text-zinc-400" style={{ animation: activeSection === 21 ? 'typeIn 0.3s ease-out 0.4s both' : 'none' }}>? Which starter do you want to use? …</div>
+                <div className="text-yellow-300 underline" style={{ animation: activeSection === 21 ? 'typeIn 0.3s ease-out 0.5s both' : 'none' }}>TypeScript</div>
+                <div className="text-zinc-500" style={{ animation: activeSection === 21 ? 'typeIn 0.3s ease-out 0.55s both' : 'none' }}>NPM Packages</div>
+                <div className="text-zinc-500" style={{ animation: activeSection === 21 ? 'typeIn 0.3s ease-out 0.6s both' : 'none' }}>React</div>
+                <div className="text-zinc-500" style={{ animation: activeSection === 21 ? 'typeIn 0.3s ease-out 0.65s both' : 'none' }}>Angular</div>
+                <div className="text-zinc-500" style={{ animation: activeSection === 21 ? 'typeIn 0.3s ease-out 0.7s both' : 'none' }}>Custom</div>
               </div>
             </div>
             <div
               className="flex-1 rounded-xl border border-zinc-800 overflow-hidden"
-              style={{ animation: activeSection === 20 ? 'panelSlideRight 0.5s ease-out 0.2s both' : 'none' }}
+              style={{ animation: activeSection === 21 ? 'panelSlideRight 0.5s ease-out 0.2s both' : 'none' }}
             >
               <p className="text-zinc-400 text-sm py-3 font-medium bg-zinc-950">Nx Cloud UI</p>
               <img
@@ -2534,18 +2601,18 @@ export default function EngWrapped() {
           <div className="flex justify-center gap-6">
             <div
               className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 flex-1 max-w-xs"
-              style={{ animation: activeSection === 21 ? 'nodePopIn 0.5s ease-out 0.1s both' : 'none' }}
+              style={{ animation: activeSection === 22 ? 'nodePopIn 0.5s ease-out 0.1s both' : 'none' }}
             >
-              <p className="text-4xl mb-3" style={{ animation: activeSection === 21 ? 'nodePulse 0.6s ease-out 0.3s both' : 'none' }}>💚</p>
+              <p className="text-4xl mb-3" style={{ animation: activeSection === 22 ? 'nodePulse 0.6s ease-out 0.3s both' : 'none' }}>💚</p>
               <h3 className="text-lg font-bold mb-2">Node 24 LTS</h3>
               <p className="text-zinc-400 text-sm">Full compatibility testing</p>
               <p className="text-zinc-400 text-sm">across all Nx plugins</p>
             </div>
             <div
               className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 flex-1 max-w-xs"
-              style={{ animation: activeSection === 21 ? 'nodePopIn 0.5s ease-out 0.25s both' : 'none' }}
+              style={{ animation: activeSection === 22 ? 'nodePopIn 0.5s ease-out 0.25s both' : 'none' }}
             >
-              <p className="text-4xl mb-3" style={{ animation: activeSection === 21 ? 'nodePulse 0.6s ease-out 0.45s both' : 'none' }}>🔷</p>
+              <p className="text-4xl mb-3" style={{ animation: activeSection === 22 ? 'nodePulse 0.6s ease-out 0.45s both' : 'none' }}>🔷</p>
               <h3 className="text-lg font-bold mb-2">TypeScript Native</h3>
               <p className="text-zinc-400 text-sm">Compatible with Node's</p>
               <p className="text-zinc-400 text-sm">type stripping (22.12+)</p>
@@ -2593,18 +2660,18 @@ export default function EngWrapped() {
           <div className="flex justify-center gap-6">
             <div
               className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
-              style={{ animation: activeSection === 22 ? 'stabilitySlide 0.5s ease-out 0.1s both' : 'none' }}
+              style={{ animation: activeSection === 23 ? 'stabilitySlide 0.5s ease-out 0.1s both' : 'none' }}
             >
-              <p className="text-4xl mb-4" style={{ animation: activeSection === 22 ? 'shieldPulse 0.8s ease-out 0.3s both' : 'none' }}>🛡️</p>
+              <p className="text-4xl mb-4" style={{ animation: activeSection === 23 ? 'shieldPulse 0.8s ease-out 0.3s both' : 'none' }}>🛡️</p>
               <h3 className="font-bold mb-2">Nx CI Stability</h3>
               <p className="text-zinc-400 text-sm">Reliable builds for the</p>
               <p className="text-zinc-400 text-sm">nrwl/nx monorepo</p>
             </div>
             <div
               className="bg-zinc-900 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
-              style={{ animation: activeSection === 22 ? 'stabilitySlide 0.5s ease-out 0.25s both' : 'none' }}
+              style={{ animation: activeSection === 23 ? 'stabilitySlide 0.5s ease-out 0.25s both' : 'none' }}
             >
-              <p className="text-4xl mb-4" style={{ animation: activeSection === 22 ? 'shieldPulse 0.8s ease-out 0.45s both' : 'none' }}>🐋</p>
+              <p className="text-4xl mb-4" style={{ animation: activeSection === 23 ? 'shieldPulse 0.8s ease-out 0.45s both' : 'none' }}>🐋</p>
               <h3 className="font-bold mb-2">Ocean CI Stability</h3>
               <p className="text-zinc-400 text-sm">Keeping Nx Cloud's own</p>
               <p className="text-zinc-400 text-sm">workspace green</p>
@@ -2689,12 +2756,12 @@ export default function EngWrapped() {
                 key={i}
                 className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
                 style={{
-                  animation: activeSection === 24 ? `gridItemPop 0.4s ease-out ${0.1 + i * 0.08}s both` : 'none',
+                  animation: activeSection === 25 ? `gridItemPop 0.4s ease-out ${0.1 + i * 0.08}s both` : 'none',
                 }}
               >
                 <span
                   className="text-2xl mb-2 block"
-                  style={{ animation: activeSection === 24 ? `iconBounce 0.5s ease-out ${0.3 + i * 0.08}s both` : 'none' }}
+                  style={{ animation: activeSection === 25 ? `iconBounce 0.5s ease-out ${0.3 + i * 0.08}s both` : 'none' }}
                 >{fw.icon}</span>
                 <p className="text-sm font-medium">{fw.name}</p>
               </div>
@@ -2740,12 +2807,12 @@ export default function EngWrapped() {
                 key={i}
                 className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
                 style={{
-                  animation: activeSection === 25 ? `orcaGridPop 0.4s ease-out ${0.1 + i * 0.08}s both` : 'none',
+                  animation: activeSection === 26 ? `orcaGridPop 0.4s ease-out ${0.1 + i * 0.08}s both` : 'none',
                 }}
               >
                 <span
                   className="text-2xl mb-2 block"
-                  style={{ animation: activeSection === 25 ? `orcaIconWiggle 0.6s ease-out ${0.3 + i * 0.08}s both` : 'none' }}
+                  style={{ animation: activeSection === 26 ? `orcaIconWiggle 0.6s ease-out ${0.3 + i * 0.08}s both` : 'none' }}
                 >{item.icon}</span>
                 <p className="text-sm font-medium">{item.name}</p>
               </div>
@@ -2790,12 +2857,12 @@ export default function EngWrapped() {
                 key={i}
                 className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
                 style={{
-                  animation: activeSection === 26 ? `infraSlideUp 0.5s ease-out ${0.1 + i * 0.07}s both` : 'none',
+                  animation: activeSection === 27 ? `infraSlideUp 0.5s ease-out ${0.1 + i * 0.07}s both` : 'none',
                 }}
               >
                 <span
                   className="text-2xl mb-2 block"
-                  style={{ animation: activeSection === 26 ? `infraIconGrow 0.4s ease-out ${0.25 + i * 0.07}s both` : 'none' }}
+                  style={{ animation: activeSection === 27 ? `infraIconGrow 0.4s ease-out ${0.25 + i * 0.07}s both` : 'none' }}
                 >{item.icon}</span>
                 <p className="text-sm font-medium">{item.name}</p>
               </div>
@@ -2839,12 +2906,12 @@ export default function EngWrapped() {
                 key={i}
                 className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
                 style={{
-                  animation: activeSection === 27 ? `pandaFlipIn 0.5s ease-out ${0.1 + i * 0.1}s both` : 'none',
+                  animation: activeSection === 28 ? `pandaFlipIn 0.5s ease-out ${0.1 + i * 0.1}s both` : 'none',
                 }}
               >
                 <span
                   className="text-2xl mb-2 block"
-                  style={{ animation: activeSection === 27 ? `pandaIconSpin 0.6s ease-out ${0.3 + i * 0.1}s both` : 'none' }}
+                  style={{ animation: activeSection === 28 ? `pandaIconSpin 0.6s ease-out ${0.3 + i * 0.1}s both` : 'none' }}
                 >{item.icon}</span>
                 <p className="text-sm font-medium">{item.name}</p>
               </div>
@@ -2866,7 +2933,7 @@ export default function EngWrapped() {
 
       {/* Stats Intro */}
       <Section className="bg-zinc-950 relative overflow-hidden">
-        <NumbersRain isActive={activeSection === 28} />
+        <NumbersRain isActive={activeSection === 29} />
         <div className="text-center max-w-2xl relative z-10">
           <p className="text-6xl mb-6">📊</p>
           <h2 className="text-5xl font-black mb-4">By the Numbers</h2>
@@ -2876,7 +2943,7 @@ export default function EngWrapped() {
 
       {/* Projects Showcase */}
       <Section className="bg-zinc-900">
-        <ProjectsShowcase isActive={activeSection === 29} />
+        <ProjectsShowcase isActive={activeSection === 30} />
       </Section>
 
       {/* Projects Breakdown */}
@@ -2884,17 +2951,17 @@ export default function EngWrapped() {
         <div className="max-w-4xl w-full">
           <h2
             className="text-4xl font-bold mb-8 text-center"
-            style={{ animation: activeSection === 30 ? 'titleDrop 0.5s ease-out both' : 'none' }}
+            style={{ animation: activeSection === 31 ? 'titleDrop 0.5s ease-out both' : 'none' }}
           >Projects by Team</h2>
           <div className="flex items-center justify-center gap-12">
             <div
               style={{
                 width: 250,
                 height: 250,
-                animation: activeSection === 30 ? 'chartSpin 0.8s ease-out both' : 'none',
+                animation: activeSection === 31 ? 'chartSpin 0.8s ease-out both' : 'none',
               }}
             >
-              {activeSection === 30 && (
+              {activeSection === 31 && (
                 <ResponsiveContainer width={250} height={250}>
                   <PieChart>
                     <Pie
@@ -2922,19 +2989,19 @@ export default function EngWrapped() {
                 <div
                   key={i}
                   className="flex items-center gap-3"
-                  style={{ animation: activeSection === 30 ? `legendSlide 0.4s ease-out ${0.3 + i * 0.15}s both` : 'none' }}
+                  style={{ animation: activeSection === 31 ? `legendSlide 0.4s ease-out ${0.3 + i * 0.15}s both` : 'none' }}
                 >
                   <div
                     className="w-4 h-4 rounded"
                     style={{
                       backgroundColor: item.color,
-                      animation: activeSection === 30 ? `colorPop 0.3s ease-out ${0.5 + i * 0.15}s both` : 'none',
+                      animation: activeSection === 31 ? `colorPop 0.3s ease-out ${0.5 + i * 0.15}s both` : 'none',
                     }}
                   />
                   <span className="text-zinc-300 w-28">{item.name}</span>
                   <span
                     className="text-2xl font-bold"
-                    style={{ animation: activeSection === 30 ? `numberBounce 0.4s ease-out ${0.6 + i * 0.15}s both` : 'none' }}
+                    style={{ animation: activeSection === 31 ? `numberBounce 0.4s ease-out ${0.6 + i * 0.15}s both` : 'none' }}
                   >{item.value}+</span>
                 </div>
               ))}
@@ -2974,7 +3041,7 @@ export default function EngWrapped() {
           <h2 className="text-4xl font-bold mb-2 text-center">Commit Volume</h2>
           <p className="text-zinc-500 text-sm mb-8 text-center">Commits aren't everything—but we sure shipped a lot of code</p>
           <div style={{ height: 500 }}>
-            {activeSection === 31 && (
+            {activeSection === 32 && (
               <ResponsiveContainer width="100%" height={500}>
                 <BarChart data={commitData} layout="vertical" margin={{ left: 20, right: 40 }}>
                   <XAxis type="number" scale="log" domain={[50, 2000]} hide />
@@ -3005,7 +3072,7 @@ export default function EngWrapped() {
           <h2
             className="text-5xl font-black mb-6"
             style={{
-              animation: activeSection === 32 ? 'thankYouReveal 0.8s ease-out both' : 'none',
+              animation: activeSection === 33 ? 'thankYouReveal 0.8s ease-out both' : 'none',
             }}
           >Thanks for everything.</h2>
           <div className="flex flex-col gap-8 mb-8">
@@ -3015,7 +3082,7 @@ export default function EngWrapped() {
                   key={i}
                   className="group relative hover:z-10"
                   style={{
-                    animation: activeSection === 32 ? `photoWaveIn 0.5s ease-out ${0.2 + i * 0.05}s both` : 'none',
+                    animation: activeSection === 33 ? `photoWaveIn 0.5s ease-out ${0.2 + i * 0.05}s both` : 'none',
                   }}
                 >
                   <img
@@ -3023,7 +3090,7 @@ export default function EngWrapped() {
                     alt={person.name}
                     className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
                     style={{
-                      animation: activeSection === 32 ? `photoGlow 2s ease-in-out ${1.5 + i * 0.1}s infinite` : 'none',
+                      animation: activeSection === 33 ? `photoGlow 2s ease-in-out ${1.5 + i * 0.1}s infinite` : 'none',
                     }}
                   />
                   <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
@@ -3038,7 +3105,7 @@ export default function EngWrapped() {
                   key={i}
                   className="group relative hover:z-10"
                   style={{
-                    animation: activeSection === 32 ? `photoWaveIn 0.5s ease-out ${0.5 + i * 0.05}s both` : 'none',
+                    animation: activeSection === 33 ? `photoWaveIn 0.5s ease-out ${0.5 + i * 0.05}s both` : 'none',
                   }}
                 >
                   <img
@@ -3046,7 +3113,7 @@ export default function EngWrapped() {
                     alt={person.name}
                     className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
                     style={{
-                      animation: activeSection === 32 ? `photoGlow 2s ease-in-out ${1.8 + i * 0.1}s infinite` : 'none',
+                      animation: activeSection === 33 ? `photoGlow 2s ease-in-out ${1.8 + i * 0.1}s infinite` : 'none',
                     }}
                   />
                   <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
@@ -3061,7 +3128,7 @@ export default function EngWrapped() {
                   key={i}
                   className="group relative hover:z-10"
                   style={{
-                    animation: activeSection === 32 ? `photoWaveIn 0.5s ease-out ${0.8 + i * 0.05}s both` : 'none',
+                    animation: activeSection === 33 ? `photoWaveIn 0.5s ease-out ${0.8 + i * 0.05}s both` : 'none',
                   }}
                 >
                   <img
@@ -3069,7 +3136,7 @@ export default function EngWrapped() {
                     alt={person.name}
                     className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
                     style={{
-                      animation: activeSection === 32 ? `photoGlow 2s ease-in-out ${2.1 + i * 0.1}s infinite` : 'none',
+                      animation: activeSection === 33 ? `photoGlow 2s ease-in-out ${2.1 + i * 0.1}s infinite` : 'none',
                     }}
                   />
                   <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
@@ -3082,7 +3149,7 @@ export default function EngWrapped() {
           <p
             className="text-zinc-400 text-xl mb-8"
             style={{
-              animation: activeSection === 32 ? 'fadeInUp 0.6s ease-out 1.2s both' : 'none',
+              animation: activeSection === 33 ? 'fadeInUp 0.6s ease-out 1.2s both' : 'none',
             }}
           >See you in 2026.</p>
           <div className="flex justify-center gap-2">
@@ -3092,7 +3159,7 @@ export default function EngWrapped() {
                 className="w-16 h-2 rounded-full"
                 style={{
                   backgroundColor: color,
-                  animation: activeSection === 32 ? `barGrow 0.4s ease-out ${1.4 + i * 0.1}s both, barPulse 2s ease-in-out ${2 + i * 0.2}s infinite` : 'none',
+                  animation: activeSection === 33 ? `barGrow 0.4s ease-out ${1.4 + i * 0.1}s both, barPulse 2s ease-in-out ${2 + i * 0.2}s infinite` : 'none',
                 }}
               />
             ))}
