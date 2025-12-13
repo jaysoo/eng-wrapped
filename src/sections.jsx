@@ -30,12 +30,12 @@ export function OrcaHighlights({ activeSection }) {
               key={i}
               className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
               style={{
-                animation: activeSection === 27 ? `orcaGridPop 0.4s ease-out ${0.1 + i * 0.08}s both` : 'none',
+                animation: activeSection === 28 ? `orcaGridPop 0.4s ease-out ${0.1 + i * 0.08}s both` : 'none',
               }}
             >
               <span
                 className="text-2xl mb-2 block"
-                style={{ animation: activeSection === 27 ? `orcaIconWiggle 0.6s ease-out ${0.3 + i * 0.08}s both` : 'none' }}
+                style={{ animation: activeSection === 28 ? `orcaIconWiggle 0.6s ease-out ${0.3 + i * 0.08}s both` : 'none' }}
               >{item.icon}</span>
               <p className="text-sm font-medium">{item.name}</p>
             </div>
@@ -71,12 +71,12 @@ export function InfraHighlights({ activeSection }) {
               key={i}
               className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
               style={{
-                animation: activeSection === 28 ? `infraSlideUp 0.5s ease-out ${0.1 + i * 0.07}s both` : 'none',
+                animation: activeSection === 29 ? `infraSlideUp 0.5s ease-out ${0.1 + i * 0.07}s both` : 'none',
               }}
             >
               <span
                 className="text-2xl mb-2 block"
-                style={{ animation: activeSection === 28 ? `infraIconGrow 0.4s ease-out ${0.25 + i * 0.07}s both` : 'none' }}
+                style={{ animation: activeSection === 29 ? `infraIconGrow 0.4s ease-out ${0.25 + i * 0.07}s both` : 'none' }}
               >{item.icon}</span>
               <p className="text-sm font-medium">{item.name}</p>
             </div>
@@ -112,12 +112,12 @@ export function RedPandaHighlights({ activeSection }) {
               key={i}
               className="bg-zinc-800/50 rounded-xl p-4 text-center hover:bg-zinc-800 hover:scale-105 transition-all border border-zinc-700/50"
               style={{
-                animation: activeSection === 29 ? `pandaFlipIn 0.5s ease-out ${0.1 + i * 0.1}s both` : 'none',
+                animation: activeSection === 30 ? `pandaFlipIn 0.5s ease-out ${0.1 + i * 0.1}s both` : 'none',
               }}
             >
               <span
                 className="text-2xl mb-2 block"
-                style={{ animation: activeSection === 29 ? `pandaIconSpin 0.6s ease-out ${0.3 + i * 0.1}s both` : 'none' }}
+                style={{ animation: activeSection === 30 ? `pandaIconSpin 0.6s ease-out ${0.3 + i * 0.1}s both` : 'none' }}
               >{item.icon}</span>
               <p className="text-sm font-medium">{item.name}</p>
             </div>
@@ -132,7 +132,7 @@ export function RedPandaHighlights({ activeSection }) {
 export function StatsIntro({ activeSection }) {
   return (
     <Section className="bg-zinc-950 relative overflow-hidden">
-      <NumbersRain isActive={activeSection === 30} />
+      <NumbersRain isActive={activeSection === 31} />
       <div className="text-center max-w-2xl relative z-10">
         <p className="text-6xl mb-6">📊</p>
         <h2 className="text-5xl font-black mb-4">By the Numbers</h2>
@@ -149,19 +149,19 @@ export function LOCStats({ activeSection }) {
       <div className="text-center max-w-3xl relative z-10">
         <p className="text-zinc-400 text-sm uppercase tracking-wider mb-2" style={{ animation: isActive ? 'fadeInUp 0.4s ease-out both' : 'none' }}>Total Lines of Code Changed</p>
         <div className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-cyan-400 to-red-400 mb-8">
-          {isActive && <AnimatedNumber value={4454661} duration={2000} />}
+          <AnimatedNumber value={4454661} duration={2000} isActive={isActive} />
         </div>
 
         <div className="flex justify-center gap-16 mb-8">
           <div style={{ animation: isActive ? 'slideInLeft 0.5s ease-out 0.3s both' : 'none' }}>
             <p className="text-green-400 text-4xl font-bold">
-              +{isActive && <AnimatedNumber value={2771234} duration={2000} />}
+              +<AnimatedNumber value={2771234} duration={2000} isActive={isActive} />
             </p>
             <p className="text-zinc-500 text-sm">insertions</p>
           </div>
           <div style={{ animation: isActive ? 'slideInRight 0.5s ease-out 0.3s both' : 'none' }}>
             <p className="text-red-400 text-4xl font-bold">
-              -{isActive && <AnimatedNumber value={1683427} duration={2000} />}
+              -<AnimatedNumber value={1683427} duration={2000} isActive={isActive} />
             </p>
             <p className="text-zinc-500 text-sm">deletions</p>
           </div>
@@ -194,7 +194,7 @@ export function LOCStats({ activeSection }) {
 export function ProjectsShowcaseSection({ activeSection }) {
   return (
     <Section className="bg-zinc-900">
-      <ProjectsShowcase isActive={activeSection === 31} />
+      <ProjectsShowcase isActive={activeSection === 2} />
     </Section>
   );
 }
@@ -274,7 +274,7 @@ export function TopContributors({ activeSection }) {
         <h2 className="text-4xl font-bold mb-2 text-center">Commit Volume</h2>
         <p className="text-zinc-500 text-sm mb-8 text-center">Commits aren't everything—but we sure shipped a lot of code</p>
         <div style={{ height: 500 }}>
-          {activeSection === 33 && (
+          {activeSection === 34 && (
             <ResponsiveContainer width="100%" height={500}>
               <BarChart data={commitData} layout="vertical" margin={{ left: 20, right: 40 }}>
                 <XAxis type="number" scale="log" domain={[50, 2000]} hide />

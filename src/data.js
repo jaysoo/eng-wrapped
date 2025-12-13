@@ -129,36 +129,36 @@ export const allProjects = [
 export const slideDurations = [
   2800,  // 0: Hero
   3800,  // 1: Big Numbers
-  3500,  // 2: Team Shakeup Intro
-  4000,  // 3: RedPanda Team Formation
-  3000,  // 4: Orca Introduction
-  4300,  // 5: Meet the Teams
-  3000,  // 6: Big Features Intro
-  2600,  // 7: Self-Healing CI
-  2600,  // 8: Terminal UI
-  2600,  // 9: Migrate UI
-  2600,  // 10: Improved Nx Graph
-  2600,  // 11: Continuous Tasks
-  2600,  // 12: .NET + Maven
-  2600,  // 13: AI Code Generation
-  2600,  // 14: CPU/Memory Tracking
-  2600,  // 15: Flaky Task Analytics
-  2600,  // 16: Onboarding Flow
-  2600,  // 17: Enterprise Usage UI
-  2600,  // 18: Azure Single Tenant
-  2600,  // 19: Helm Chart
-  2600,  // 20: Observability
-  2600,  // 21: Docker + Nx Release
-  2600,  // 22: GitHub Templates
-  2600,  // 23: Node 24
-  2600,  // 24: Nx & Ocean CI Stability
-  2600,  // 25: Docs Migration to Astro Starlight
-  2600,  // 26: Framework Support
-  2600,  // 27: Orca Highlights
-  2600,  // 28: Infrastructure Highlights
-  2600,  // 29: RedPanda Highlights
-  3000,  // 30: Stats Intro
-  6000,  // 31: Projects Showcase (animated)
+  6000,  // 2: Projects Showcase (animated)
+  3500,  // 3: Team Shakeup Intro
+  4000,  // 4: RedPanda Team Formation
+  3000,  // 5: Orca Introduction
+  4300,  // 6: Meet the Teams
+  3000,  // 7: Big Features Intro
+  2600,  // 8: Self-Healing CI
+  2600,  // 9: Terminal UI
+  2600,  // 10: Migrate UI
+  2600,  // 11: Improved Nx Graph
+  2600,  // 12: Continuous Tasks
+  2600,  // 13: .NET + Maven
+  2600,  // 14: AI Code Generation
+  2600,  // 15: CPU/Memory Tracking
+  2600,  // 16: Flaky Task Analytics
+  2600,  // 17: Onboarding Flow
+  2600,  // 18: Enterprise Usage UI
+  2600,  // 19: Azure Single Tenant
+  2600,  // 20: Helm Chart
+  2600,  // 21: Observability
+  2600,  // 22: Docker + Nx Release
+  2600,  // 23: GitHub Templates
+  2600,  // 24: Node 24
+  2600,  // 25: Nx & Ocean CI Stability
+  2600,  // 26: Docs Migration to Astro Starlight
+  2600,  // 27: Framework Support
+  2600,  // 28: Orca Highlights
+  2600,  // 29: Infrastructure Highlights
+  2600,  // 30: RedPanda Highlights
+  3000,  // 31: Stats Intro
   3000,  // 32: Projects Breakdown
   4000,  // 33: LOC Stats
   4000,  // 34: Top Contributors Chart
