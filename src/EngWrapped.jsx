@@ -1800,20 +1800,29 @@ export default function EngWrapped() {
           >Docs Migration to Astro Starlight</h2>
           <p className="text-zinc-400 text-lg mb-8">Better authoring experience, more standard tooling</p>
           <div className="flex justify-center gap-6">
-            <div className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs">
-              <p className="text-4xl mb-4">✍️</p>
+            <div
+              className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
+              style={{ animation: activeSection === 26 ? 'fadeInUp 0.5s ease-out 0.1s both' : 'none' }}
+            >
+              <p className="text-4xl mb-4" style={{ animation: activeSection === 26 ? 'iconBounce 0.5s ease-out 0.3s both' : 'none' }}>✍️</p>
               <h3 className="font-bold mb-2">Better Authoring</h3>
               <p className="text-zinc-400 text-sm">Markdown-first experience</p>
               <p className="text-zinc-400 text-sm">with modern tooling</p>
             </div>
-            <div className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs">
-              <p className="text-4xl mb-4">⭐</p>
+            <div
+              className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
+              style={{ animation: activeSection === 26 ? 'fadeInUp 0.5s ease-out 0.2s both' : 'none' }}
+            >
+              <p className="text-4xl mb-4" style={{ animation: activeSection === 26 ? 'iconBounce 0.5s ease-out 0.4s both' : 'none' }}>⭐</p>
               <h3 className="font-bold mb-2">Starlight Framework</h3>
               <p className="text-zinc-400 text-sm">Industry-standard docs</p>
               <p className="text-zinc-400 text-sm">built on Astro</p>
             </div>
-            <div className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs">
-              <p className="text-4xl mb-4">🚀</p>
+            <div
+              className="bg-zinc-950 rounded-xl p-6 border border-zinc-800 text-center flex-1 max-w-xs"
+              style={{ animation: activeSection === 26 ? 'fadeInUp 0.5s ease-out 0.3s both' : 'none' }}
+            >
+              <p className="text-4xl mb-4" style={{ animation: activeSection === 26 ? 'iconBounce 0.5s ease-out 0.5s both' : 'none' }}>🚀</p>
               <h3 className="font-bold mb-2">Faster & Lighter</h3>
               <p className="text-zinc-400 text-sm">Static-first architecture</p>
               <p className="text-zinc-400 text-sm">for blazing speed</p>
