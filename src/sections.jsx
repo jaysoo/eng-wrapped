@@ -4,7 +4,7 @@ import {
   teamColors, commitData, projectData,
   cloudHighlights, infraHighlights, redpandaHighlights
 } from './data';
-import { NumbersRain, ProjectsShowcase, Section, teamPhotos } from './components';
+import { NumbersRain, ProjectsShowcase, Section, teamPhotos, AnimatedNumber } from './components';
 
 export function OrcaHighlights({ activeSection }) {
   return (
@@ -142,6 +142,55 @@ export function StatsIntro({ activeSection }) {
   );
 }
 
+export function LOCStats({ activeSection }) {
+  const isActive = activeSection === 33;
+  return (
+    <Section className="bg-zinc-900">
+      <div className="text-center max-w-3xl relative z-10">
+        <p className="text-zinc-400 text-sm uppercase tracking-wider mb-2" style={{ animation: isActive ? 'fadeInUp 0.4s ease-out both' : 'none' }}>Total Lines of Code Changed</p>
+        <div className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-cyan-400 to-red-400 mb-8">
+          {isActive && <AnimatedNumber value={4454661} duration={2000} />}
+        </div>
+
+        <div className="flex justify-center gap-16 mb-8">
+          <div style={{ animation: isActive ? 'slideInLeft 0.5s ease-out 0.3s both' : 'none' }}>
+            <p className="text-green-400 text-4xl font-bold">
+              +{isActive && <AnimatedNumber value={2771234} duration={2000} />}
+            </p>
+            <p className="text-zinc-500 text-sm">insertions</p>
+          </div>
+          <div style={{ animation: isActive ? 'slideInRight 0.5s ease-out 0.3s both' : 'none' }}>
+            <p className="text-red-400 text-4xl font-bold">
+              -{isActive && <AnimatedNumber value={1683427} duration={2000} />}
+            </p>
+            <p className="text-zinc-500 text-sm">deletions</p>
+          </div>
+        </div>
+
+        <div className="w-full max-w-lg mx-auto h-4 bg-zinc-800 rounded-full overflow-hidden" style={{ animation: isActive ? 'fadeInUp 0.5s ease-out 0.5s both' : 'none' }}>
+          <div className="h-full flex">
+            <div
+              className="bg-gradient-to-r from-green-500 to-green-400 h-full"
+              style={{
+                width: '62%',
+                animation: isActive ? 'barExpandRight 1s ease-out 0.7s both' : 'none'
+              }}
+            />
+            <div
+              className="bg-gradient-to-r from-red-400 to-red-500 h-full"
+              style={{
+                width: '38%',
+                animation: isActive ? 'barExpandRight 1s ease-out 0.9s both' : 'none'
+              }}
+            />
+          </div>
+        </div>
+        <p className="text-zinc-600 text-xs mt-3" style={{ animation: isActive ? 'fadeInUp 0.3s ease-out 1.2s both' : 'none' }}>excluding lockfile changes</p>
+      </div>
+    </Section>
+  );
+}
+
 export function ProjectsShowcaseSection({ activeSection }) {
   return (
     <Section className="bg-zinc-900">
@@ -259,7 +308,7 @@ export function Closing({ activeSection }) {
         <h2
           className="text-5xl font-black mb-6"
           style={{
-            animation: activeSection === 34 ? 'thankYouReveal 0.8s ease-out both' : 'none',
+            animation: activeSection === 35 ? 'thankYouReveal 0.8s ease-out both' : 'none',
           }}
         >Thanks for everything.</h2>
         <div className="flex flex-col gap-8 mb-8">
@@ -269,7 +318,7 @@ export function Closing({ activeSection }) {
                 key={i}
                 className="group relative hover:z-10"
                 style={{
-                  animation: activeSection === 34 ? `photoWaveIn 0.5s ease-out ${0.2 + i * 0.05}s both` : 'none',
+                  animation: activeSection === 35 ? `photoWaveIn 0.5s ease-out ${0.2 + i * 0.05}s both` : 'none',
                 }}
               >
                 <img
@@ -277,7 +326,7 @@ export function Closing({ activeSection }) {
                   alt={person.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
                   style={{
-                    animation: activeSection === 34 ? `photoGlow 2s ease-in-out ${1.5 + i * 0.1}s infinite` : 'none',
+                    animation: activeSection === 35 ? `photoGlow 2s ease-in-out ${1.5 + i * 0.1}s infinite` : 'none',
                   }}
                 />
                 <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
@@ -292,7 +341,7 @@ export function Closing({ activeSection }) {
                 key={i}
                 className="group relative hover:z-10"
                 style={{
-                  animation: activeSection === 34 ? `photoWaveIn 0.5s ease-out ${0.5 + i * 0.05}s both` : 'none',
+                  animation: activeSection === 35 ? `photoWaveIn 0.5s ease-out ${0.5 + i * 0.05}s both` : 'none',
                 }}
               >
                 <img
@@ -300,7 +349,7 @@ export function Closing({ activeSection }) {
                   alt={person.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
                   style={{
-                    animation: activeSection === 34 ? `photoGlow 2s ease-in-out ${1.8 + i * 0.1}s infinite` : 'none',
+                    animation: activeSection === 35 ? `photoGlow 2s ease-in-out ${1.8 + i * 0.1}s infinite` : 'none',
                   }}
                 />
                 <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
@@ -315,7 +364,7 @@ export function Closing({ activeSection }) {
                 key={i}
                 className="group relative hover:z-10"
                 style={{
-                  animation: activeSection === 34 ? `photoWaveIn 0.5s ease-out ${0.8 + i * 0.05}s both` : 'none',
+                  animation: activeSection === 35 ? `photoWaveIn 0.5s ease-out ${0.8 + i * 0.05}s both` : 'none',
                 }}
               >
                 <img
@@ -323,7 +372,7 @@ export function Closing({ activeSection }) {
                   alt={person.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-zinc-700 hover:border-zinc-400 transition-all hover:scale-110"
                   style={{
-                    animation: activeSection === 34 ? `photoGlow 2s ease-in-out ${2.1 + i * 0.1}s infinite` : 'none',
+                    animation: activeSection === 35 ? `photoGlow 2s ease-in-out ${2.1 + i * 0.1}s infinite` : 'none',
                   }}
                 />
                 <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-xs text-zinc-400 pointer-events-none">
@@ -336,7 +385,7 @@ export function Closing({ activeSection }) {
         <p
           className="text-zinc-400 text-xl mb-8"
           style={{
-            animation: activeSection === 34 ? 'fadeInUp 0.6s ease-out 1.2s both' : 'none',
+            animation: activeSection === 35 ? 'fadeInUp 0.6s ease-out 1.2s both' : 'none',
           }}
         >See you in 2026.</p>
         <div className="flex justify-center gap-2">
@@ -346,7 +395,7 @@ export function Closing({ activeSection }) {
               className="w-16 h-2 rounded-full"
               style={{
                 backgroundColor: color,
-                animation: activeSection === 34 ? `closingBarGrow 0.4s ease-out ${1.4 + i * 0.1}s both, barPulse 2s ease-in-out ${2 + i * 0.2}s infinite` : 'none',
+                animation: activeSection === 35 ? `closingBarGrow 0.4s ease-out ${1.4 + i * 0.1}s both, barPulse 2s ease-in-out ${2 + i * 0.2}s infinite` : 'none',
               }}
             />
           ))}

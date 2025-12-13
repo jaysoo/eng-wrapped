@@ -7,7 +7,7 @@ import {
 import {
   OrcaHighlights, InfraHighlights, RedPandaHighlights,
   StatsIntro, ProjectsShowcaseSection, ProjectsBreakdown,
-  TopContributors, Closing
+  LOCStats, TopContributors, Closing
 } from './sections';
 import './keyframes.css';
 
@@ -1866,6 +1866,7 @@ export default function EngWrapped() {
       <StatsIntro activeSection={activeSection} />
       <ProjectsShowcaseSection activeSection={activeSection} />
       <ProjectsBreakdown activeSection={activeSection} />
+      <LOCStats activeSection={activeSection} />
       <TopContributors activeSection={activeSection} />
       <Closing activeSection={activeSection} />
     </div>

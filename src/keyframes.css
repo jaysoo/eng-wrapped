@@ -534,6 +534,11 @@
   50% { opacity: 1; }
 }
 
+@keyframes barExpandRight {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
 /* Wiggle for cards */
 @keyframes wiggle {
   0%, 100% { transform: rotate(-0.5deg) scale(1); }

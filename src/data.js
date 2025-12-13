@@ -160,8 +160,9 @@ export const slideDurations = [
   3000,  // 30: Stats Intro
   6000,  // 31: Projects Showcase (animated)
   3000,  // 32: Projects Breakdown
-  4000,  // 33: Top Contributors Chart
-  3000,  // 34: Closing
+  4000,  // 33: LOC Stats
+  4000,  // 34: Top Contributors Chart
+  3000,  // 35: Closing
 ];
 
 export const sectionCount = slideDurations.length;
