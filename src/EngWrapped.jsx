@@ -150,10 +150,13 @@ export default function EngWrapped() {
     }
   }, []);
 
-  // Handle wheel and keyboard events
+  // Handle wheel, keyboard, and touch events
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+
+    let touchStartY = 0;
+    let touchStartX = 0;
 
     const handleWheel = (e) => {
       e.preventDefault();
@@ -166,6 +169,31 @@ export default function EngWrapped() {
         Math.min(sectionCount - 1, targetSectionRef.current + direction),
       );
       scrollToSection(newSection, isInterrupting);
+    };
+
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY;
+      touchStartX = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = (e) => {
+      const touchEndY = e.changedTouches[0].clientY;
+      const touchEndX = e.changedTouches[0].clientX;
+      const deltaY = touchStartY - touchEndY;
+      const deltaX = Math.abs(touchStartX - touchEndX);
+
+      // Only trigger if vertical swipe is significant and more vertical than horizontal
+      const minSwipeDistance = 50;
+      if (Math.abs(deltaY) > minSwipeDistance && Math.abs(deltaY) > deltaX) {
+        setIsPlaying(false); // Pause auto-play on swipe
+        const direction = deltaY > 0 ? 1 : -1; // Swipe up = next, swipe down = prev
+        const isInterrupting = animationRef.current !== null;
+        const newSection = Math.max(
+          0,
+          Math.min(sectionCount - 1, targetSectionRef.current + direction),
+        );
+        scrollToSection(newSection, isInterrupting);
+      }
     };
 
     const handleKeyDown = (e) => {
@@ -215,9 +243,13 @@ export default function EngWrapped() {
     };
 
     container.addEventListener("wheel", handleWheel, { passive: false });
+    container.addEventListener("touchstart", handleTouchStart, { passive: true });
+    container.addEventListener("touchend", handleTouchEnd, { passive: true });
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       container.removeEventListener("wheel", handleWheel);
+      container.removeEventListener("touchstart", handleTouchStart);
+      container.removeEventListener("touchend", handleTouchEnd);
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [scrollToSection, isPlaying]);
