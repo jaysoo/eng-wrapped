@@ -346,7 +346,7 @@ export function Closing({ activeSection }) {
               className="w-16 h-2 rounded-full"
               style={{
                 backgroundColor: color,
-                animation: activeSection === 33 ? `barGrow 0.4s ease-out ${1.4 + i * 0.1}s both, barPulse 2s ease-in-out ${2 + i * 0.2}s infinite` : 'none',
+                animation: activeSection === 33 ? `closingBarGrow 0.4s ease-out ${1.4 + i * 0.1}s both, barPulse 2s ease-in-out ${2 + i * 0.2}s infinite` : 'none',
               }}
             />
           ))}
