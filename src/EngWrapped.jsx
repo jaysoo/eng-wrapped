@@ -490,10 +490,10 @@ const AnimatedTeamCount = ({ isActive }) => {
       return;
     }
 
-    // At 3500ms, add the 0.5 for docs
+    // At 2500ms, add the 0.5 for docs
     const halfTimer = setTimeout(() => {
       setShowHalf(true);
-    }, 3500);
+    }, 2500);
 
     return () => clearTimeout(halfTimer);
   }, [isActive]);
