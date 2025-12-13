@@ -315,7 +315,7 @@ export default function EngWrapped() {
   return (
     <div
       ref={containerRef}
-      className="bg-zinc-950 text-white h-screen overflow-hidden relative"
+      className="bg-zinc-950 text-white h-dvh overflow-hidden relative"
     >
       {/* Background music */}
       <audio ref={audioRef} src="running-night-393139.mp3" loop />

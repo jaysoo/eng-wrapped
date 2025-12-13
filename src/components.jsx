@@ -715,7 +715,7 @@ export const AnimatedTeamCount = ({ isActive }) => {
 };
 
 export const Section = ({ children, className = '' }) => (
-  <div className={`h-screen flex flex-col items-center p-4 md:p-8 shrink-0 overflow-y-auto ${className}`}>
+  <div className={`h-dvh flex flex-col items-center p-4 md:p-8 shrink-0 overflow-y-auto ${className}`}>
     <div className="m-auto w-full flex flex-col items-center">
       {children}
     </div>
