@@ -1380,7 +1380,7 @@ export default function EngWrapped() {
               animation: 'gradientShift 3s ease-in-out infinite',
             }}
           >Streamlined Onboarding</h2>
-          <p className="text-zinc-400 text-lg mb-8">Connect your workspace in under a minute</p>
+          <p className="text-zinc-400 text-lg mb-8">Connect your workspace intuitively</p>
           <div className="flex justify-center gap-6 relative">
             {/* Connecting line animation */}
             <div
@@ -1705,7 +1705,7 @@ export default function EngWrapped() {
               />
             </div>
           </div>
-          <p className="text-zinc-500 text-sm mt-6">Jack • Nicole • Colum • Dillon</p>
+          <p className="text-zinc-500 text-sm mt-6">Jack • Nicole • Colum • Dillon • Mark</p>
         </div>
         
       </Section>
