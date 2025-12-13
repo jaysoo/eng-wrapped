@@ -1,593 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
-
-const teamColors = {
-  infrastructure: '#22c55e',
-  cli: '#3b82f6',
-  cloud: '#a855f7',
-  redpanda: '#f97316',
-  docs: '#ec4899'
-};
-
-const commitData = [
-  { name: 'Patrick M.', commits: 1727, team: 'infrastructure' },
-  { name: 'Steve P.', commits: 1147, team: 'infrastructure' },
-  { name: 'Szymon', commits: 509, team: 'infrastructure' },
-  { name: 'Louie W.', commits: 468, team: 'cloud' },
-  { name: 'Altan S.', commits: 389, team: 'redpanda' },
-  { name: 'Max K.', commits: 380, team: 'cli' },
-  { name: 'Rares M.', commits: 353, team: 'cloud' },
-  { name: 'Chau T.', commits: 348, team: 'cloud' },
-  { name: 'Colum F.', commits: 347, team: 'cli' },
-  { name: 'Jason J.', commits: 337, team: 'cli' },
-  { name: 'James H.', commits: 318, team: 'redpanda' },
-  { name: 'Jack H.', commits: 299, team: 'cli' },
-  { name: 'Jon C.', commits: 280, team: 'redpanda' },
-  { name: 'Leosvel P.', commits: 259, team: 'cli' },
-  { name: 'Ben C.', commits: 257, team: 'redpanda' },
-  { name: 'Mark L.', commits: 183, team: 'redpanda' },
-  { name: 'Victor S.', commits: 156, team: 'redpanda' },
-  { name: 'Craigory C.', commits: 132, team: 'cli' },
-  { name: 'Nicole O.', commits: 104, team: 'cloud' },
-  { name: 'Dillon', commits: 71, team: 'cloud' },
-];
-
-const projectData = [
-  { name: 'Infrastructure', value: 40, color: teamColors.infrastructure },
-  { name: 'CLI', value: 19, color: teamColors.cli },
-  { name: 'Orca', value: 17, color: teamColors.cloud },
-  { name: 'RedPanda', value: 4, color: teamColors.redpanda },
-];
-
-const frameworkReleases = [
-  { name: 'Angular 21', icon: '🅰️' },
-  { name: 'Next 16', icon: '▲' },
-  { name: 'Expo 54', icon: '📱' },
-  { name: 'Nuxt 4', icon: '💚' },
-  { name: 'Vitest 4', icon: '⚡' },
-  { name: 'Storybook 10', icon: '📖' },
-  { name: 'Cypress 15', icon: '🌲' },
-  { name: 'Node 24', icon: '💚' },
-];
-
-const cloudHighlights = [
-  { name: 'Onboarding Flow', icon: '🚀' },
-  { name: 'Enterprise Usage UI', icon: '📊' },
-  { name: 'Flaky Task Analytics', icon: '🔍' },
-  { name: 'Graph UX Improvements', icon: '🕸️' },
-  { name: 'Artifact Downloads', icon: '📦' },
-  { name: 'EU Pro Support', icon: '🇪🇺' },
-  { name: 'CI Stability', icon: '🛡️' },
-  { name: 'PostHog Real-Time Monitoring', icon: '🧪' },
-];
-
-const infraHighlights = [
-  { name: 'Docker Layer Caching', icon: '🐳' },
-  { name: 'Azure Single Tenant', icon: '☁️' },
-  { name: 'Distributed Tracing', icon: '🔬' },
-  { name: 'Grafana Dashboards', icon: '📉' },
-  { name: 'Helm Chart v1', icon: '⎈' },
-  { name: 'SOC2 Compliance', icon: '🔒' },
-  { name: 'MongoDB Upgrade', icon: '🍃' },
-  { name: 'Valkey Migration', icon: '⚡' },
-];
-
-const redpandaHighlights = [
-  { name: 'Self-Healing CI', icon: '🩹' },
-  { name: 'GitHub Integration', icon: '🐙' },
-  { name: 'GitLab Integration', icon: '🦊' },
-  { name: 'Azure DevOps', icon: '🔷' },
-  { name: 'Time-to-Green', icon: '⏱️' },
-  { name: 'Polygraph', icon: '📐' },
-];
-
-const allProjects = [
-  // Infrastructure
-  { name: 'Docker Layer Caching', team: 'infrastructure' },
-  { name: 'Azure Single Tenant', team: 'infrastructure' },
-  { name: 'SOC2 DR/BC Exercise', team: 'infrastructure' },
-  { name: 'Distributed Tracing', team: 'infrastructure' },
-  { name: 'Helm Chart v1', team: 'infrastructure' },
-  { name: 'MongoDB Upgrade', team: 'infrastructure' },
-  { name: 'Grafana Dashboards', team: 'infrastructure' },
-  { name: 'Observability Stack', team: 'infrastructure' },
-  { name: 'Valkey Migration', team: 'infrastructure' },
-  { name: 'Trivy Scanner', team: 'infrastructure' },
-  { name: 'Cost Reporting', team: 'infrastructure' },
-  { name: 'AWS CloudTrail', team: 'infrastructure' },
-  // CLI
-  { name: 'Terminal UI', team: 'cli' },
-  { name: 'Migrate UI', team: 'cli' },
-  { name: 'Improved Nx Graph', team: 'cloud' },
-  { name: 'Expo 54 Support', team: 'cli' },
-  { name: 'Vitest 4 Support', team: 'cli' },
-  { name: 'Nuxt 4 Support', team: 'cli' },
-  { name: 'Next 16 Support', team: 'cli' },
-  { name: 'Cypress 15 Support', team: 'cli' },
-  { name: 'Node 24 Support', team: 'cli' },
-  { name: 'Storybook 10 Support', team: 'cli' },
-  { name: 'Pnpm Catalog Support', team: 'cli' },
-  { name: 'AI Code Generation', team: 'cli' },
-  { name: 'Angular RSPack', team: 'cli' },
-  { name: '.NET Plugin', team: 'cli' },
-  // Cloud
-  { name: 'Agent Resource Usage', team: 'cloud' },
-  { name: 'Onboarding Flow', team: 'cloud' },
-  { name: 'Enterprise Usage UI', team: 'cloud' },
-  { name: 'Flaky Task Analytics', team: 'cloud' },
-  { name: 'Graph UX Improvements', team: 'cloud' },
-  { name: 'Agent Pod Debugging', team: 'cloud' },
-  { name: 'Artifact Downloads', team: 'cloud' },
-  { name: 'EU Pro Support', team: 'cloud' },
-  // RedPanda
-  { name: 'Self-Healing CI', team: 'redpanda' },
-  { name: 'GitHub Integration', team: 'redpanda' },
-  { name: 'GitLab Integration', team: 'redpanda' },
-  { name: 'Azure DevOps Integration', team: 'redpanda' },
-  { name: 'Time-to-Green Analytics', team: 'redpanda' },
-  { name: 'Polygraph Conformance', team: 'redpanda' },
-];
-
-const RocketLaunch = ({ isActive }) => {
-  const [phase, setPhase] = useState('idle'); // idle, shake, launch
-  const [smokeParticles, setSmokeParticles] = useState([]);
-
-  useEffect(() => {
-    if (!isActive) {
-      setPhase('idle');
-      setSmokeParticles([]);
-      return;
-    }
-
-    setPhase('shake');
-
-    // Generate smoke during shake phase
-    const smokeInterval = setInterval(() => {
-      setSmokeParticles(prev => [
-        ...prev.slice(-20),
-        {
-          id: Date.now(),
-          x: 50 + (Math.random() - 0.5) * 30,
-          size: 20 + Math.random() * 40,
-          duration: 1 + Math.random() * 1,
-        }
-      ]);
-    }, 100);
-
-    const launchTimer = setTimeout(() => {
-      setPhase('launch');
-      clearInterval(smokeInterval);
-    }, 1200);
-
-    return () => {
-      clearTimeout(launchTimer);
-      clearInterval(smokeInterval);
-    };
-  }, [isActive]);
-
-  return (
-    <div className="relative h-56 mb-8">
-      {/* Smoke particles */}
-      {smokeParticles.map((p) => (
-        <div
-          key={p.id}
-          className="absolute rounded-full"
-          style={{
-            left: `${p.x}%`,
-            bottom: '15%',
-            width: p.size,
-            height: p.size,
-            background: 'radial-gradient(circle, rgba(156,163,175,0.6) 0%, rgba(156,163,175,0) 70%)',
-            animation: `smokeRise ${p.duration}s ease-out forwards`,
-          }}
-        />
-      ))}
-
-      {/* Stars that appear */}
-      {phase === 'launch' && (
-        <div className="absolute inset-0">
-          {Array.from({ length: 40 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute"
-              style={{
-                left: `${5 + Math.random() * 90}%`,
-                top: `${Math.random() * 100}%`,
-                fontSize: `${1.5 + Math.random() * 2}rem`,
-                animation: `twinkle 0.6s ease-out ${i * 0.03}s forwards`,
-                opacity: 0,
-              }}
-            >
-              ✨
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Rocket */}
-      <div
-        className="absolute left-1/2 -translate-x-1/2"
-        style={{
-          fontSize: '10rem',
-          filter: 'drop-shadow(0 0 20px rgba(251,146,60,0.5))',
-          animation: phase === 'shake'
-            ? 'rocketShake 0.06s ease-in-out infinite'
-            : phase === 'launch'
-            ? 'rocketLaunch 0.6s ease-in forwards'
-            : 'none',
-          top: '45%',
-          transform: 'translateX(-50%) translateY(-50%)',
-        }}
-      >
-        🚀
-        {/* Exhaust flames */}
-        {(phase === 'shake' || phase === 'launch') && (
-          <>
-            <div
-              className="absolute left-1/2 -translate-x-1/2"
-              style={{
-                fontSize: '5rem',
-                top: '85%',
-                animation: phase === 'launch' ? 'exhaustGrow 0.3s ease-out forwards' : 'exhaustFlicker 0.08s ease-in-out infinite',
-              }}
-            >
-              🔥
-            </div>
-            <div
-              className="absolute left-1/2 -translate-x-1/2"
-              style={{
-                fontSize: '3rem',
-                top: '115%',
-                opacity: 0.7,
-                animation: phase === 'launch' ? 'exhaustGrow 0.4s ease-out forwards' : 'exhaustFlicker 0.1s ease-in-out infinite',
-              }}
-            >
-              🔥
-            </div>
-          </>
-        )}
-      </div>
-
-      <style>{`
-        @keyframes rocketShake {
-          0%, 100% { transform: translateX(-50%) translateY(-50%) rotate(-4deg) scale(1); }
-          25% { transform: translateX(-50%) translateY(-50%) rotate(4deg) scale(1.02); }
-          50% { transform: translateX(-50%) translateY(-50%) rotate(-3deg) scale(1); }
-          75% { transform: translateX(-50%) translateY(-50%) rotate(3deg) scale(1.01); }
-        }
-        @keyframes rocketLaunch {
-          0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); filter: drop-shadow(0 0 30px rgba(251,146,60,0.8)); }
-          50% { filter: drop-shadow(0 0 60px rgba(251,146,60,1)); }
-          100% { transform: translateX(-50%) translateY(-700px) rotate(0deg); opacity: 0; }
-        }
-        @keyframes exhaustFlicker {
-          0%, 100% { opacity: 0.9; transform: translateX(-50%) scale(1); }
-          50% { opacity: 1; transform: translateX(-50%) scale(1.5); }
-        }
-        @keyframes exhaustGrow {
-          0% { transform: translateX(-50%) scale(1); opacity: 1; }
-          100% { transform: translateX(-50%) scale(3); opacity: 0; }
-        }
-        @keyframes twinkle {
-          0% { opacity: 0; transform: scale(0); }
-          50% { opacity: 1; transform: scale(1.4); }
-          100% { opacity: 0.9; transform: scale(1); }
-        }
-        @keyframes smokeRise {
-          0% { transform: translateY(0) scale(1); opacity: 0.6; }
-          100% { transform: translateY(-150px) scale(2.5); opacity: 0; }
-        }
-      `}</style>
-    </div>
-  );
-};
-
-const NumbersRain = ({ isActive }) => {
-  const [numbers, setNumbers] = useState([]);
-
-  useEffect(() => {
-    if (!isActive) {
-      setNumbers([]);
-      return;
-    }
-
-    const newNumbers = Array.from({ length: 40 }, (_, i) => ({
-      id: i,
-      value: Math.floor(Math.random() * 10),
-      x: Math.random() * 100,
-      delay: Math.random() * 2,
-      duration: 3 + Math.random() * 4,
-      size: 16 + Math.random() * 24,
-      opacity: 0.1 + Math.random() * 0.2,
-    }));
-    setNumbers(newNumbers);
-  }, [isActive]);
-
-  if (!isActive) return null;
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {numbers.map((n) => (
-        <div
-          key={n.id}
-          className="absolute font-mono font-bold text-zinc-600"
-          style={{
-            left: `${n.x}%`,
-            top: -50,
-            fontSize: n.size,
-            opacity: n.opacity,
-            animation: `numberFall ${n.duration}s linear ${n.delay}s infinite`,
-          }}
-        >
-          {n.value}
-        </div>
-      ))}
-      <style>{`
-        @keyframes numberFall {
-          0% { transform: translateY(0); }
-          100% { transform: translateY(calc(100vh + 100px)); }
-        }
-      `}</style>
-    </div>
-  );
-};
-
-const Confetti = ({ active }) => {
-  const [particles, setParticles] = useState([]);
-
-  useEffect(() => {
-    if (!active) return;
-
-    const colors = ['#22c55e', '#3b82f6', '#a855f7', '#f97316', '#eab308', '#ec4899'];
-    const newParticles = Array.from({ length: 50 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      delay: Math.random() * 2,
-      duration: 2 + Math.random() * 2,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      size: 4 + Math.random() * 8,
-    }));
-    setParticles(newParticles);
-  }, [active]);
-
-  if (!active) return null;
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className="absolute animate-fall"
-          style={{
-            left: `${p.x}%`,
-            top: -20,
-            width: p.size,
-            height: p.size,
-            backgroundColor: p.color,
-            borderRadius: Math.random() > 0.5 ? '50%' : '2px',
-            animation: `fall ${p.duration}s ease-in ${p.delay}s forwards`,
-          }}
-        />
-      ))}
-      <style>{`
-        @keyframes fall {
-          0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-          100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
-      `}</style>
-    </div>
-  );
-};
-
-const ProjectsShowcase = ({ isActive }) => {
-  const [visibleCount, setVisibleCount] = useState(0);
-  const [showConfetti, setShowConfetti] = useState(false);
-
-  useEffect(() => {
-    if (!isActive) {
-      setVisibleCount(0);
-      setShowConfetti(false);
-      return;
-    }
-
-    const timer = setInterval(() => {
-      setVisibleCount((prev) => {
-        if (prev >= allProjects.length) {
-          clearInterval(timer);
-          setShowConfetti(true);
-          return prev;
-        }
-        return prev + 1;
-      });
-    }, 80);
-
-    return () => clearInterval(timer);
-  }, [isActive]);
-
-  return (
-    <div className="text-center max-w-5xl relative">
-      <Confetti active={showConfetti} />
-      <p className="text-zinc-300 uppercase tracking-wider text-sm mb-2">Everything we shipped</p>
-      <h2 className="text-4xl font-bold mb-6">80+ Projects</h2>
-      <div className="flex flex-wrap justify-center gap-2 max-h-[60vh] overflow-hidden">
-        {allProjects.slice(0, visibleCount).map((project, i) => (
-          <div
-            key={i}
-            className="px-3 py-1.5 rounded-full text-sm font-medium text-white transition-all duration-300"
-            style={{
-              backgroundColor: teamColors[project.team],
-              animation: 'popIn 0.3s ease-out',
-            }}
-          >
-            {project.name}
-          </div>
-        ))}
-      </div>
-      <style>{`
-        @keyframes popIn {
-          0% { transform: scale(0); opacity: 0; }
-          70% { transform: scale(1.1); }
-          100% { transform: scale(1); opacity: 1; }
-        }
-      `}</style>
-    </div>
-  );
-};
-
-const teamPhotos = [
-  { name: 'Patrick Mariglia', photo: 'https://nx.dev/images/team/patrick-mariglia.avif' },
-  { name: 'Steve Pentland', photo: 'https://nx.dev/images/team/steve-pentland.avif' },
-  { name: 'Szymon', photo: 'https://nx.dev/images/team/szymon-wojciechowski.avif' },
-  { name: 'Louie Weng', photo: 'https://nx.dev/images/team/louie-weng.avif' },
-  { name: 'Altan Stalker', photo: 'https://nx.dev/images/team/altan-stalker.avif' },
-  { name: 'Max Kless', photo: 'https://nx.dev/images/team/max-kless.avif' },
-  { name: 'Rares Matei', photo: 'https://nx.dev/images/team/rares-matei.avif' },
-  { name: 'Chau Tran', photo: 'https://nx.dev/images/team/chau-tran.avif' },
-  { name: 'Colum Ferry', photo: 'https://nx.dev/images/team/colum-ferry.avif' },
-  { name: 'Jason Jean', photo: 'https://nx.dev/images/team/jason-jean.avif' },
-  { name: 'James Henry', photo: 'https://nx.dev/images/team/james-henry.avif' },
-  { name: 'Jack Hsu', photo: 'https://nx.dev/images/team/jack-hsu.avif' },
-  { name: 'Jon Cammisuli', photo: 'https://nx.dev/images/team/jonathan-cammisuli.avif' },
-  { name: 'Leosvel Pérez', photo: 'https://nx.dev/images/team/leosvel-perez-espinosa.avif' },
-  { name: 'Ben Cabanes', photo: 'https://nx.dev/images/team/benjamin-cabanes.avif' },
-  { name: 'Mark Lindsey', photo: 'https://nx.dev/images/team/mark-lindsey.avif' },
-  { name: 'Victor Savkin', photo: 'https://nx.dev/images/team/victor-savkin.avif' },
-  { name: 'Craigory Coppola', photo: 'https://nx.dev/images/team/craigory-coppola.avif' },
-  { name: 'Nicole Oliver', photo: 'https://nx.dev/images/team/nicole-oliver.avif' },
-  { name: 'Dillon', photo: 'https://nx.dev/images/team/dillon-chanis.avif' },
-  { name: 'Caleb Ukle', photo: 'https://nx.dev/images/team/caleb-ukle.avif' },
-];
-
-const AnimatedNumber = ({ value, duration = 2000, isActive }) => {
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    if (!isActive) {
-      setCurrent(0);
-      return;
-    }
-
-    const steps = 60;
-    const increment = value / steps;
-    let step = 0;
-
-    const timer = setInterval(() => {
-      step++;
-      setCurrent(Math.min(Math.floor(increment * step), value));
-      if (step >= steps) clearInterval(timer);
-    }, duration / steps);
-
-    return () => clearInterval(timer);
-  }, [value, duration, isActive]);
-
-  return <span>{current.toLocaleString()}</span>;
-};
-
-const AnimatedTeamCount = ({ isActive }) => {
-  const [showHalf, setShowHalf] = useState(false);
-
-  useEffect(() => {
-    if (!isActive) {
-      setShowHalf(false);
-      return;
-    }
-
-    // At 2000ms, add the 0.5 for docs
-    const halfTimer = setTimeout(() => {
-      setShowHalf(true);
-    }, 2000);
-
-    return () => clearTimeout(halfTimer);
-  }, [isActive]);
-
-  return (
-    <span style={{ display: 'inline-flex', alignItems: 'baseline' }}>
-      4
-      <span
-        style={{
-          opacity: showHalf ? 1 : 0,
-          transform: showHalf ? 'translateY(0) scale(1)' : 'translateY(10px) scale(0.5)',
-          transition: 'opacity 0.4s ease-out, transform 0.4s ease-out',
-          fontSize: '0.7em',
-          marginLeft: '2px',
-        }}
-      >
-        .5
-      </span>
-    </span>
-  );
-};
-
-const Section = ({ children, className = '' }) => (
-  <div className={`h-screen flex flex-col items-center justify-center p-8 shrink-0 ${className}`}>
-    {children}
-  </div>
-);
-
-const TeamCard = ({ name, lead, color, accomplishments, members, delay = 0, wiggleDelay = 0 }) => (
-  <div
-    className="bg-zinc-900 rounded-2xl p-5 border-l-4 transition-all duration-300 hover:shadow-xl group"
-    style={{
-      borderColor: color,
-      animation: `slideInUp 0.6s ease-out ${delay}s both, wiggle 3s ease-in-out ${wiggleDelay}s infinite`
-    }}
-  >
-    <div className="flex items-center gap-3 mb-3">
-      <div
-        className="w-3 h-3 rounded-full animate-pulse"
-        style={{ backgroundColor: color, animationDuration: '2s' }}
-      />
-      <h3 className="text-lg font-bold text-white">{name}</h3>
-    </div>
-    <p className="text-zinc-400 text-sm mb-3">Led by <span className="text-white font-medium">{lead}</span></p>
-    <ul className="space-y-1">
-      {accomplishments.map((item, i) => (
-        <li
-          key={i}
-          className="text-zinc-300 text-sm flex gap-2"
-          style={{ animation: `fadeIn 0.4s ease-out ${delay + 0.1 * (i + 1)}s both` }}
-        >
-          <span style={{ color }}>→</span> {item}
-        </li>
-      ))}
-    </ul>
-    {members && (
-      <div className="mt-3 pt-3 border-t border-zinc-800">
-        <div className="flex flex-wrap gap-1">
-          {members.map((m, i) => (
-            <span
-              key={i}
-              className="text-xs bg-zinc-800 text-zinc-300 px-2 py-0.5 rounded-full hover:scale-110 transition-transform cursor-default"
-              style={{ animation: `popIn 0.3s ease-out ${delay + 0.5 + 0.05 * i}s both` }}
-            >
-              {m}
-            </span>
-          ))}
-        </div>
-      </div>
-    )}
-    <style>{`
-      @keyframes slideInUp {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateX(-10px); }
-        to { opacity: 1; transform: translateX(0); }
-      }
-      @keyframes wiggle {
-        0%, 100% { transform: rotate(-0.5deg) scale(1); }
-        25% { transform: rotate(0.5deg) scale(1.01); }
-        50% { transform: rotate(-0.3deg) scale(1); }
-        75% { transform: rotate(0.4deg) scale(1.005); }
-      }
-      .group:hover {
-        animation-play-state: paused !important;
-        transform: rotate(0deg) scale(1.02) !important;
-      }
-    `}</style>
-  </div>
-);
+import {
+  teamColors, commitData, projectData, frameworkReleases,
+  cloudHighlights, infraHighlights, redpandaHighlights, slideDurations, sectionCount
+} from './data';
+import {
+  RocketLaunch, NumbersRain, ProjectsShowcase, teamPhotos,
+  AnimatedNumber, AnimatedTeamCount, Section, TeamCard
+} from './components';
+import './keyframes.css';
 
 export default function EngWrapped() {
   const [activeSection, setActiveSection] = useState(0);
@@ -626,45 +47,6 @@ export default function EngWrapped() {
     if (!audio) return;
     audio.muted = isMuted;
   }, [isMuted]);
-  const sectionCount = 34;
-
-  // Slide durations in ms
-  const slideDurations = [
-    2800,  // 0: Hero
-    3000,  // 1: Big Numbers
-    3500,  // 2: Team Shakeup Intro
-    4000,  // 3: RedPanda Team Formation
-    3000,  // 4: Orca Introduction
-    5200,  // 5: Meet the Teams
-    3000,  // 6: Big Features Intro
-    2600,  // 7: Self-Healing CI
-    2600,  // 8: Terminal UI
-    2600,  // 9: Migrate UI
-    2600,  // 10: Improved Nx Graph
-    2600,  // 11: Continuous Tasks
-    2600,  // 12: .NET + Maven
-    2600,  // 13: AI Code Generation
-    2600,  // 14: CPU/Memory Tracking
-    2600,  // 15: Flaky Task Analytics
-    2600,  // 16: Onboarding Flow
-    2600,  // 17: Azure Single Tenant
-    2600,  // 18: Helm Chart
-    2600,  // 19: Observability
-    2600,  // 20: Docker + Nx Release
-    2600,  // 21: GitHub Templates
-    2600,  // 22: Node 24
-    2600,  // 23: Nx & Ocean CI Stability
-    2600,  // 24: Docs Migration to Astro Starlight
-    2600,  // 25: Framework Support
-    2600,  // 26: Orca Highlights
-    2600,  // 27: Infrastructure Highlights
-    2600,  // 28: RedPanda Highlights
-    3000,  // 29: Stats Intro
-    6000,  // 30: Projects Showcase (animated)
-    3000,  // 31: Projects Breakdown
-    4000,  // 32: Top Contributors Chart
-    3000,  // 33: Closing
-  ];
 
   // Progress bar - use ref to avoid re-renders during auto-play
   const progressRef = React.useRef(null);
@@ -983,12 +365,7 @@ export default function EngWrapped() {
           >
             2025 Wrapped
           </h1>
-          <style>{`
-            @keyframes gradientShift {
-              0%, 100% { background-position: 0% 50%; }
-              50% { background-position: 100% 50%; }
-            }
-          `}</style>
+          
           <p className="text-zinc-400 text-lg">A year of shipping, solving, and scaling.</p>
         </div>
       </Section>
@@ -1030,18 +407,7 @@ export default function EngWrapped() {
             <p className="text-zinc-500 mt-2 uppercase tracking-wider text-sm">Teams</p>
           </div>
         </div>
-        <style>{`
-          @keyframes bounceIn {
-            0% { opacity: 0; transform: scale(0.3) translateY(50px); }
-            50% { transform: scale(1.05) translateY(-10px); }
-            70% { transform: scale(0.95) translateY(5px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-          }
-          @keyframes subtleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Team Shakeup Intro */}
@@ -1091,20 +457,7 @@ export default function EngWrapped() {
             ))}
           </div>
           <p className="text-zinc-400 text-lg">New teams, new missions, new energy</p>
-          <style>{`
-            @keyframes orbit {
-              0% { transform: translate(-50%, -50%) rotate(0deg) translateX(80px) rotate(0deg); }
-              100% { transform: translate(-50%, -50%) rotate(360deg) translateX(80px) rotate(-360deg); }
-            }
-            @keyframes pulse {
-              0%, 100% { transform: scale(1); opacity: 0.8; }
-              50% { transform: scale(1.2); opacity: 1; }
-            }
-            @keyframes float {
-              0%, 100% { transform: translateY(0); opacity: 0.4; }
-              50% { transform: translateY(-15px); opacity: 0.7; }
-            }
-          `}</style>
+          
         </div>
       </Section>
 
@@ -1212,55 +565,7 @@ export default function EngWrapped() {
             style={{ animation: activeSection === 3 ? 'fadeInUp 0.5s ease-out 0.9s both' : 'none' }}
           >A new team focused on Self-Healing CI</p>
         </div>
-        <style>{`
-          @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
-          }
-          @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-          }
-          @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes personPop {
-            0% { opacity: 0; transform: scale(0); }
-            70% { transform: scale(1.1); }
-            100% { opacity: 1; transform: scale(1); }
-          }
-          @keyframes centerPop {
-            0% { opacity: 0; transform: scale(0.5); }
-            70% { transform: scale(1.05); }
-            100% { opacity: 1; transform: scale(1); }
-          }
-          @keyframes arrowPulse {
-            0% { opacity: 0; transform: scale(0); }
-            50% { transform: scale(1.3); }
-            100% { opacity: 1; transform: scale(1); }
-          }
-          @keyframes arrowBounce {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(5px); }
-          }
-          @keyframes arrowBounceVertical {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-          }
-          @keyframes glowPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(249, 115, 22, 0.6); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Orca Introduction */}
@@ -1289,12 +594,7 @@ export default function EngWrapped() {
               animation: 'float 3s ease-in-out infinite',
             }}
           />
-          <style>{`
-            @keyframes float {
-              0%, 100% { transform: translateY(0); }
-              50% { transform: translateY(-10px); }
-            }
-          `}</style>
+          
         </div>
       </Section>
 
@@ -1495,26 +795,7 @@ export default function EngWrapped() {
             </div>
           </div>
         </div>
-        <style>{`
-          @keyframes titleReveal {
-            0% { opacity: 0; transform: translateY(-20px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes cardFlipIn {
-            0% { opacity: 0; transform: perspective(600px) rotateX(-15deg) translateY(30px); }
-            100% { opacity: 1; transform: perspective(600px) rotateX(0) translateY(0); }
-          }
-          @keyframes dotPing {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.5); }
-            100% { transform: scale(1); }
-          }
-          @keyframes photoPopIn {
-            0% { opacity: 0; transform: scale(0) rotate(-10deg); }
-            70% { transform: scale(1.15) rotate(5deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Big Features Intro */}
@@ -1566,20 +847,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Jon • James • Victor • Ben • Altan</p>
         </div>
-        <style>{`
-          @keyframes healingImageZoom {
-            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-          }
-          @keyframes healingGlow {
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.2)); }
-            50% { filter: drop-shadow(0 0 25px rgba(74, 222, 128, 0.4)); }
-          }
-          @keyframes healingBadge {
-            0% { opacity: 0; transform: translateY(15px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Terminal UI - CLI */}
@@ -1654,32 +922,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Craigory • James • Leosvel • Jason</p>
         </div>
-        <style>{`
-          @keyframes terminalWindowPop {
-            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-          }
-          @keyframes terminalDot {
-            0% { opacity: 0; transform: scale(0); }
-            100% { opacity: 1; transform: scale(1); }
-          }
-          @keyframes terminalType {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-          }
-          @keyframes terminalLine {
-            0% { opacity: 0; transform: translateX(-10px); }
-            100% { opacity: 1; transform: translateX(0); }
-          }
-          @keyframes terminalPanelSlide {
-            0% { opacity: 0; transform: translateX(20px); }
-            100% { opacity: 1; transform: translateX(0); }
-          }
-          @keyframes terminalBadge {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Migrate UI - CLI */}
@@ -1725,16 +968,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Max • Jack</p>
         </div>
-        <style>{`
-          @keyframes migrateImagePop {
-            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-          }
-          @keyframes migrateBadge {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Improved Nx Graph - Orca */}
@@ -1794,20 +1028,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Chau</p>
         </div>
-        <style>{`
-          @keyframes graphSlideLeft {
-            0% { opacity: 0; transform: translateX(-30px) scale(0.95); }
-            100% { opacity: 1; transform: translateX(0) scale(1); }
-          }
-          @keyframes graphSlideRight {
-            0% { opacity: 0; transform: translateX(30px) scale(0.95); }
-            100% { opacity: 1; transform: translateX(0) scale(1); }
-          }
-          @keyframes graphBadge {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Continuous Tasks - CLI/Cloud */}
@@ -1867,24 +1088,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Jason • Altan • Leosvel • Craigory</p>
         </div>
-        <style>{`
-          @keyframes contVideoSlide {
-            0% { opacity: 0; transform: translateX(-30px) scale(0.95); }
-            100% { opacity: 1; transform: translateX(0) scale(1); }
-          }
-          @keyframes contCodeSlide {
-            0% { opacity: 0; transform: translateX(30px) scale(0.95); }
-            100% { opacity: 1; transform: translateX(0) scale(1); }
-          }
-          @keyframes contCodeLine {
-            0% { opacity: 0; transform: translateY(5px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes contBadge {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* .NET + Maven - CLI */}
@@ -1933,17 +1137,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Craigory • Jason • Louie • Max</p>
         </div>
-        <style>{`
-          @keyframes cardSlideUp {
-            0% { opacity: 0; transform: translateY(40px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes logoBounce {
-            0% { opacity: 0; transform: scale(0) rotate(-10deg); }
-            60% { transform: scale(1.2) rotate(5deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* AI Code Generation - CLI */}
@@ -1996,30 +1190,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Max</p>
         </div>
-        <style>{`
-          @keyframes terminalSlideIn {
-            0% { opacity: 0; transform: translateY(20px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-          }
-          @keyframes typeCommand {
-            0% { opacity: 0; }
-            1% { opacity: 1; }
-            100% { opacity: 1; }
-          }
-          @keyframes outputFade {
-            0% { opacity: 0; transform: translateX(-10px); }
-            100% { opacity: 1; transform: translateX(0); }
-          }
-          @keyframes checkPop {
-            0% { opacity: 0; transform: scale(0.5); }
-            60% { transform: scale(1.2); }
-            100% { opacity: 1; transform: scale(1); }
-          }
-          @keyframes badgeFade {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* CPU/Memory Tracking - Orca */}
@@ -2085,28 +1256,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Leosvel • Chau • Louie</p>
         </div>
-        <style>{`
-          @keyframes slideFromLeft {
-            0% { opacity: 0; transform: translateX(-50px) scale(0.9); }
-            100% { opacity: 1; transform: translateX(0) scale(1); }
-          }
-          @keyframes slideFromRight {
-            0% { opacity: 0; transform: translateX(50px) scale(0.9); }
-            100% { opacity: 1; transform: translateX(0) scale(1); }
-          }
-          @keyframes dashboardGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
-            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.4); }
-          }
-          @keyframes dashboardGlowCyan {
-            0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.2); }
-            50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.4); }
-          }
-          @keyframes metricSlide {
-            0% { opacity: 0; transform: translateX(-20px); }
-            100% { opacity: 1; transform: translateX(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Flaky Task Analytics - Orca */}
@@ -2184,36 +1334,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Dillon • Nicole • Louie</p>
         </div>
-        <style>{`
-          @keyframes listContainerFade {
-            0% { opacity: 0; transform: translateY(15px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes flakeRowSlide {
-            0% { opacity: 0; transform: translateX(-30px); }
-            100% { opacity: 1; transform: translateX(0); }
-          }
-          @keyframes warningPulse {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.4); }
-            75% { transform: scale(0.9); }
-            100% { transform: scale(1); }
-          }
-          @keyframes checkBounce {
-            0% { transform: scale(0) rotate(-45deg); }
-            60% { transform: scale(1.3) rotate(10deg); }
-            100% { transform: scale(1) rotate(0); }
-          }
-          @keyframes percentPop {
-            0% { opacity: 0; transform: scale(0.5); }
-            70% { transform: scale(1.15); }
-            100% { opacity: 1; transform: scale(1); }
-          }
-          @keyframes featureFade {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Onboarding Flow - Orca */}
@@ -2283,26 +1404,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Nicole • Dillon • Mark • Chau</p>
         </div>
-        <style>{`
-          @keyframes stepSlideIn {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes numberPop {
-            0% { transform: scale(0); }
-            70% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-          }
-          @keyframes checkmarkPop {
-            0% { transform: scale(0) rotate(-180deg); }
-            70% { transform: scale(1.2) rotate(10deg); }
-            100% { transform: scale(1) rotate(0deg); }
-          }
-          @keyframes lineGrow {
-            0% { transform: scaleX(0); opacity: 0; }
-            100% { transform: scaleX(1); opacity: 1; }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Azure Single Tenant - Infrastructure */}
@@ -2346,16 +1448,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Steve</p>
         </div>
-        <style>{`
-          @keyframes cloudFloat {
-            0% { opacity: 0; transform: translateY(-30px) scale(0.8); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-          }
-          @keyframes azurePulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-            50% { box-shadow: 0 0 20px 5px rgba(34, 197, 94, 0.2); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Helm Chart v1 - Infrastructure */}
@@ -2402,17 +1495,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Szymon</p>
         </div>
-        <style>{`
-          @keyframes helmSpin {
-            0% { opacity: 0; transform: rotateY(-90deg) scale(0.5); }
-            100% { opacity: 1; transform: rotateY(0) scale(1); }
-          }
-          @keyframes iconRotate {
-            0% { transform: rotate(-180deg) scale(0); }
-            60% { transform: rotate(20deg) scale(1.2); }
-            100% { transform: rotate(0) scale(1); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Observability - Infrastructure */}
@@ -2459,16 +1542,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Patrick • Steve</p>
         </div>
-        <style>{`
-          @keyframes dashboardReveal {
-            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-          }
-          @keyframes tagFadeIn {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Docker + Nx Release - CLI */}
@@ -2509,18 +1583,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Colum • James</p>
         </div>
-        <style>{`
-          @keyframes dockerSlide {
-            0% { opacity: 0; transform: translateX(-40px) rotate(-5deg); }
-            100% { opacity: 1; transform: translateX(0) rotate(0); }
-          }
-          @keyframes iconWobble {
-            0% { transform: scale(0) rotate(-20deg); }
-            50% { transform: scale(1.3) rotate(10deg); }
-            75% { transform: scale(0.9) rotate(-5deg); }
-            100% { transform: scale(1) rotate(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* GitHub Templates - CLI + Cloud */}
@@ -2574,20 +1637,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Jack • Nicole • Colum • Dillon</p>
         </div>
-        <style>{`
-          @keyframes panelSlideLeft {
-            0% { opacity: 0; transform: translateX(-50px); }
-            100% { opacity: 1; transform: translateX(0); }
-          }
-          @keyframes panelSlideRight {
-            0% { opacity: 0; transform: translateX(50px); }
-            100% { opacity: 1; transform: translateX(0); }
-          }
-          @keyframes typeIn {
-            0% { opacity: 0; transform: translateX(-10px); }
-            100% { opacity: 1; transform: translateX(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Node 24 - CLI */}
@@ -2628,19 +1678,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Jack</p>
         </div>
-        <style>{`
-          @keyframes nodePopIn {
-            0% { opacity: 0; transform: scale(0.5) translateY(20px); }
-            70% { transform: scale(1.05) translateY(-5px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-          }
-          @keyframes nodePulse {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.4); }
-            75% { transform: scale(0.9); }
-            100% { transform: scale(1); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Nx & Ocean CI Stability - Cloud/Infra */}
@@ -2687,18 +1725,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Rares</p>
         </div>
-        <style>{`
-          @keyframes stabilitySlide {
-            0% { opacity: 0; transform: translateY(30px) scale(0.9); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-          }
-          @keyframes shieldPulse {
-            0% { transform: scale(0) rotate(-10deg); }
-            50% { transform: scale(1.3) rotate(5deg); }
-            75% { transform: scale(0.95); }
-            100% { transform: scale(1) rotate(0); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Docs Migration to Astro Starlight - Docs */}
@@ -2777,19 +1804,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Colum • Leosvel</p>
         </div>
-        <style>{`
-          @keyframes gridItemPop {
-            0% { opacity: 0; transform: scale(0.5) translateY(20px); }
-            70% { transform: scale(1.05) translateY(-5px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-          }
-          @keyframes iconBounce {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.3); }
-            75% { transform: scale(0.9); }
-            100% { transform: scale(1); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Orca Highlights */}
@@ -2828,18 +1843,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Nicole • Chau • Louie • Dillon</p>
         </div>
-        <style>{`
-          @keyframes orcaGridPop {
-            0% { opacity: 0; transform: translateX(-30px) rotate(-5deg); }
-            100% { opacity: 1; transform: translateX(0) rotate(0); }
-          }
-          @keyframes orcaIconWiggle {
-            0% { transform: rotate(-15deg) scale(0); }
-            40% { transform: rotate(10deg) scale(1.2); }
-            70% { transform: rotate(-5deg) scale(1); }
-            100% { transform: rotate(0) scale(1); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Infrastructure Highlights */}
@@ -2878,17 +1882,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Steve • Patrick • Szymon</p>
         </div>
-        <style>{`
-          @keyframes infraSlideUp {
-            0% { opacity: 0; transform: translateY(40px) scale(0.8); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-          }
-          @keyframes infraIconGrow {
-            0% { transform: scale(0); opacity: 0; }
-            60% { transform: scale(1.3); }
-            100% { transform: scale(1); opacity: 1; }
-          }
-        `}</style>
+        
       </Section>
 
       {/* RedPanda Highlights */}
@@ -2927,16 +1921,7 @@ export default function EngWrapped() {
           </div>
           <p className="text-zinc-500 text-sm mt-6">Victor • Jon • James • Altan • Mark • Ben</p>
         </div>
-        <style>{`
-          @keyframes pandaFlipIn {
-            0% { opacity: 0; transform: perspective(400px) rotateY(-90deg); }
-            100% { opacity: 1; transform: perspective(400px) rotateY(0); }
-          }
-          @keyframes pandaIconSpin {
-            0% { transform: rotate(-180deg) scale(0); }
-            100% { transform: rotate(0) scale(1); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Stats Intro */}
@@ -3016,30 +2001,7 @@ export default function EngWrapped() {
             </div>
           </div>
         </div>
-        <style>{`
-          @keyframes titleDrop {
-            0% { opacity: 0; transform: translateY(-30px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes chartSpin {
-            0% { opacity: 0; transform: rotate(-180deg) scale(0.5); }
-            100% { opacity: 1; transform: rotate(0) scale(1); }
-          }
-          @keyframes legendSlide {
-            0% { opacity: 0; transform: translateX(30px); }
-            100% { opacity: 1; transform: translateX(0); }
-          }
-          @keyframes colorPop {
-            0% { transform: scale(0); }
-            70% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-          }
-          @keyframes numberBounce {
-            0% { opacity: 0; transform: scale(0); }
-            60% { transform: scale(1.2); }
-            100% { opacity: 1; transform: scale(1); }
-          }
-        `}</style>
+        
       </Section>
 
       {/* Top Contributors Chart */}
@@ -3173,34 +2135,7 @@ export default function EngWrapped() {
             ))}
           </div>
         </div>
-        <style>{`
-          @keyframes thankYouReveal {
-            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
-            50% { transform: scale(1.05) translateY(-5px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-          }
-          @keyframes photoWaveIn {
-            0% { opacity: 0; transform: translateY(30px) scale(0); }
-            70% { transform: translateY(-5px) scale(1.1); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-          }
-          @keyframes photoGlow {
-            0%, 100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
-            50% { box-shadow: 0 0 15px rgba(255,255,255,0.3); }
-          }
-          @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes barGrow {
-            0% { transform: scaleX(0); opacity: 0; }
-            100% { transform: scaleX(1); opacity: 1; }
-          }
-          @keyframes barPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-          }
-        `}</style>
+        
       </Section>
     </div>
   );
