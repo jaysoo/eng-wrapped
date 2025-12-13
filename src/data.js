@@ -12,7 +12,7 @@ export const commitData = [
   { name: 'Szymon', commits: 509, team: 'infrastructure' },
   { name: 'Louie W.', commits: 468, team: 'cloud' },
   { name: 'Altan S.', commits: 389, team: 'redpanda' },
-  { name: 'Max K.', commits: 380, team: 'cli' },
+  { name: 'Max K.', commits: 380, team: 'redpanda' },
   { name: 'Rares M.', commits: 353, team: 'cloud' },
   { name: 'Chau T.', commits: 348, team: 'cloud' },
   { name: 'Colum F.', commits: 347, team: 'cli' },
@@ -33,7 +33,7 @@ export const projectData = [
   { name: 'Infrastructure', value: 40, color: teamColors.infrastructure },
   { name: 'CLI', value: 19, color: teamColors.cli },
   { name: 'Orca', value: 17, color: teamColors.cloud },
-  { name: 'RedPanda', value: 4, color: teamColors.redpanda },
+  { name: 'Red Panda', value: 4, color: teamColors.redpanda },
 ];
 
 export const frameworkReleases = [
@@ -116,7 +116,7 @@ export const allProjects = [
   { name: 'Agent Pod Debugging', team: 'cloud' },
   { name: 'Artifact Downloads', team: 'cloud' },
   { name: 'EU Pro Support', team: 'cloud' },
-  // RedPanda
+  // Red Panda
   { name: 'Self-Healing CI', team: 'redpanda' },
   { name: 'GitHub Integration', team: 'redpanda' },
   { name: 'GitLab Integration', team: 'redpanda' },
@@ -131,7 +131,7 @@ export const slideDurations = [
   3800,  // 1: Big Numbers
   6000,  // 2: Projects Showcase (animated)
   3500,  // 3: Team Shakeup Intro
-  4000,  // 4: RedPanda Team Formation
+  4000,  // 4: Red Panda Team Formation
   3000,  // 5: Orca Introduction
   4300,  // 6: Meet the Teams
   3000,  // 7: Big Features Intro
@@ -157,7 +157,7 @@ export const slideDurations = [
   2600,  // 27: Framework Support
   2600,  // 28: Orca Highlights
   2600,  // 29: Infrastructure Highlights
-  2600,  // 30: RedPanda Highlights
+  2600,  // 30: Red Panda Highlights
   3000,  // 31: Stats Intro
   3000,  // 32: Projects Breakdown
   4000,  // 33: LOC Stats

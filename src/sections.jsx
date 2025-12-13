@@ -10,10 +10,11 @@ export function OrcaHighlights({ activeSection }) {
   return (
     <Section className="bg-zinc-900">
       <div className="text-center max-w-4xl">
-        <div className="flex items-center justify-center gap-2 mb-2">
+        <div className="flex items-center justify-center gap-2 mb-1">
           <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.cloud }} />
           <p className="text-zinc-300 uppercase tracking-wider text-sm">Orca</p>
         </div>
+        <p className="text-zinc-500 text-sm mb-6">Nicole • Chau • Louie • Dillon</p>
         <h2
           className="text-4xl font-bold mb-8 bg-clip-text text-transparent"
           style={{
@@ -41,7 +42,6 @@ export function OrcaHighlights({ activeSection }) {
             </div>
           ))}
         </div>
-        <p className="text-zinc-500 text-sm mt-6">Nicole • Chau • Louie • Dillon</p>
       </div>
     </Section>
   );
@@ -51,10 +51,11 @@ export function InfraHighlights({ activeSection }) {
   return (
     <Section className="bg-zinc-950">
       <div className="text-center max-w-4xl">
-        <div className="flex items-center justify-center gap-2 mb-2">
+        <div className="flex items-center justify-center gap-2 mb-1">
           <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.infrastructure }} />
           <p className="text-zinc-300 uppercase tracking-wider text-sm">Infrastructure</p>
         </div>
+        <p className="text-zinc-500 text-sm mb-6">Steve • Patrick • Szymon</p>
         <h2
           className="text-4xl font-bold mb-8 bg-clip-text text-transparent"
           style={{
@@ -82,7 +83,6 @@ export function InfraHighlights({ activeSection }) {
             </div>
           ))}
         </div>
-        <p className="text-zinc-500 text-sm mt-6">Steve • Patrick • Szymon</p>
       </div>
     </Section>
   );
@@ -92,10 +92,11 @@ export function RedPandaHighlights({ activeSection }) {
   return (
     <Section className="bg-zinc-900">
       <div className="text-center max-w-4xl">
-        <div className="flex items-center justify-center gap-2 mb-2">
+        <div className="flex items-center justify-center gap-2 mb-1">
           <div className="w-3 h-3 rounded-full" style={{ backgroundColor: teamColors.redpanda }} />
-          <p className="text-zinc-300 uppercase tracking-wider text-sm">RedPanda</p>
+          <p className="text-zinc-300 uppercase tracking-wider text-sm">Red Panda</p>
         </div>
+        <p className="text-zinc-500 text-sm mb-6">Victor • Jon • James • Altan • Mark • Ben • Max</p>
         <h2
           className="text-4xl font-bold mb-8 bg-clip-text text-transparent"
           style={{
@@ -123,7 +124,6 @@ export function RedPandaHighlights({ activeSection }) {
             </div>
           ))}
         </div>
-        <p className="text-zinc-500 text-sm mt-6">Victor • Jon • James • Altan • Mark • Ben</p>
       </div>
     </Section>
   );
@@ -147,33 +147,33 @@ export function LOCStats({ activeSection }) {
   return (
     <Section className="bg-zinc-900 relative overflow-hidden">
       <FlyingCode isActive={isActive} />
-      <div className="text-center max-w-3xl relative z-10">
-        <p className="text-zinc-400 text-sm uppercase tracking-wider mb-2" style={{ animation: isActive ? 'fadeInUp 0.4s ease-out both' : 'none' }}>Total Lines of Code Changed</p>
+      <div className="text-center max-w-3xl relative z-10 px-4">
+        <p className="text-zinc-400 text-xs sm:text-sm uppercase tracking-wider mb-2" style={{ animation: isActive ? 'fadeInUp 0.4s ease-out both' : 'none' }}>Total Lines of Code Changed</p>
         <div
-          className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-cyan-400 to-red-400 mb-8"
+          className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-cyan-400 to-red-400 mb-6 md:mb-8"
           style={{ animation: isActive ? 'elasticBounce 1s ease-out 0.2s both' : 'none' }}
         >
           <AnimatedNumber value={4454661} duration={2000} isActive={isActive} />
         </div>
 
-        <div className="flex justify-center gap-16 mb-8">
+        <div className="flex justify-center gap-8 md:gap-16 mb-6 md:mb-8">
           <div style={{ animation: isActive ? 'slideInLeft 0.5s ease-out 0.3s both' : 'none' }}>
             <p
-              className="text-green-400 text-4xl font-bold"
+              className="text-green-400 text-2xl sm:text-3xl md:text-4xl font-bold"
               style={{ textShadow: isActive ? '0 0 20px rgba(74, 222, 128, 0.5)' : 'none' }}
             >
               +<AnimatedNumber value={2771234} duration={2000} isActive={isActive} />
             </p>
-            <p className="text-zinc-500 text-sm">insertions</p>
+            <p className="text-zinc-500 text-xs sm:text-sm">insertions</p>
           </div>
           <div style={{ animation: isActive ? 'slideInRight 0.5s ease-out 0.3s both' : 'none' }}>
             <p
-              className="text-red-400 text-4xl font-bold"
+              className="text-red-400 text-2xl sm:text-3xl md:text-4xl font-bold"
               style={{ textShadow: isActive ? '0 0 20px rgba(248, 113, 113, 0.5)' : 'none' }}
             >
               -<AnimatedNumber value={1683427} duration={2000} isActive={isActive} />
             </p>
-            <p className="text-zinc-500 text-sm">deletions</p>
+            <p className="text-zinc-500 text-xs sm:text-sm">deletions</p>
           </div>
         </div>
 
@@ -214,29 +214,28 @@ export function ProjectsShowcaseSection({ activeSection }) {
 export function ProjectsBreakdown({ activeSection }) {
   return (
     <Section className="bg-zinc-950">
-      <div className="max-w-4xl w-full">
+      <div className="max-w-4xl w-full px-4">
         <h2
-          className="text-4xl font-bold mb-8 text-center"
+          className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-center"
           style={{ animation: activeSection === 32 ? 'titleDrop 0.5s ease-out both' : 'none' }}
         >Projects by Team</h2>
-        <div className="flex items-center justify-center gap-12">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12">
           <div
+            className="w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] md:w-[250px] md:h-[250px]"
             style={{
-              width: 250,
-              height: 250,
               animation: activeSection === 32 ? 'chartSpin 0.8s ease-out both' : 'none',
             }}
           >
             {activeSection === 32 && (
-              <ResponsiveContainer width={250} height={250}>
+              <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={projectData}
                     dataKey="value"
                     cx="50%"
                     cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
+                    innerRadius="40%"
+                    outerRadius="70%"
                     paddingAngle={2}
                     isAnimationActive={true}
                     animationBegin={0}
@@ -304,7 +303,7 @@ export function TopContributors({ activeSection }) {
           {Object.entries(teamColors).filter(([team]) => team !== 'docs').map(([team, color]) => (
             <div key={team} className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-              <span className="text-zinc-400 text-sm capitalize">{team === 'redpanda' ? 'RedPanda' : team === 'cli' ? 'CLI' : team === 'cloud' ? 'Orca' : 'Infra'}</span>
+              <span className="text-zinc-400 text-sm capitalize">{team === 'redpanda' ? 'Red Panda' : team === 'cli' ? 'CLI' : team === 'cloud' ? 'Orca' : 'Infra'}</span>
             </div>
           ))}
         </div>
