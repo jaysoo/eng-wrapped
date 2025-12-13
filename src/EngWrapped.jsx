@@ -1837,31 +1837,31 @@ export default function EngWrapped() {
               src="https://img.youtube.com/vi/AD51BKJtDBk/maxresdefault.jpg"
               alt="Continuous Tasks in Nx 21"
               className="w-1/2 rounded-xl border border-zinc-800"
-              style={{ animation: activeSection === 12 ? 'contVideoSlide 0.5s ease-out 0.1s both' : 'none' }}
+              style={{ animation: activeSection === 11 ? 'contVideoSlide 0.5s ease-out 0.1s both' : 'none' }}
             />
             <div
               className="w-1/2 bg-zinc-900 rounded-xl p-5 border border-zinc-800 text-left font-mono text-sm"
-              style={{ animation: activeSection === 12 ? 'contCodeSlide 0.5s ease-out 0.3s both' : 'none' }}
+              style={{ animation: activeSection === 11 ? 'contCodeSlide 0.5s ease-out 0.3s both' : 'none' }}
             >
-              <div className="text-zinc-500 mb-2" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 0.5s both' : 'none' }}>// e2e → frontend → backend</div>
-              <div className="text-zinc-300" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 0.6s both' : 'none' }}>{`"backend": { `}<span className="text-green-400">"continuous": true</span>{` },`}</div>
-              <div className="text-zinc-300 mt-2" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 0.7s both' : 'none' }}>{`"frontend": {`}</div>
-              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 0.8s both' : 'none' }}><span className="text-green-400">"continuous": true</span>,</div>
-              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 0.9s both' : 'none' }}>{`"dependsOn": [`}<span className="text-cyan-400">"backend"</span>{`]`}</div>
-              <div className="text-zinc-300" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 1.0s both' : 'none' }}>{`},`}</div>
-              <div className="text-zinc-300 mt-2" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 1.1s both' : 'none' }}>{`"e2e": {`}</div>
-              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 1.2s both' : 'none' }}>{`"dependsOn": [`}<span className="text-cyan-400">"frontend"</span>{`]`}</div>
-              <div className="text-zinc-300" style={{ animation: activeSection === 12 ? 'contCodeLine 0.3s ease-out 1.3s both' : 'none' }}>{`}`}</div>
+              <div className="text-zinc-500 mb-2" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 0.5s both' : 'none' }}>// e2e → frontend → backend</div>
+              <div className="text-zinc-300" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 0.6s both' : 'none' }}>{`"backend": { `}<span className="text-green-400">"continuous": true</span>{` },`}</div>
+              <div className="text-zinc-300 mt-2" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 0.7s both' : 'none' }}>{`"frontend": {`}</div>
+              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 0.8s both' : 'none' }}><span className="text-green-400">"continuous": true</span>,</div>
+              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 0.9s both' : 'none' }}>{`"dependsOn": [`}<span className="text-cyan-400">"backend"</span>{`]`}</div>
+              <div className="text-zinc-300" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 1.0s both' : 'none' }}>{`},`}</div>
+              <div className="text-zinc-300 mt-2" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 1.1s both' : 'none' }}>{`"e2e": {`}</div>
+              <div className="text-zinc-300 pl-4" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 1.2s both' : 'none' }}>{`"dependsOn": [`}<span className="text-cyan-400">"frontend"</span>{`]`}</div>
+              <div className="text-zinc-300" style={{ animation: activeSection === 11 ? 'contCodeLine 0.3s ease-out 1.3s both' : 'none' }}>{`}`}</div>
             </div>
           </div>
           <div className="flex justify-center gap-8 text-sm">
-            <div className="text-zinc-400" style={{ animation: activeSection === 12 ? 'contBadge 0.3s ease-out 0.6s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'contBadge 0.3s ease-out 0.6s both' : 'none' }}>
               <span className="text-green-400 font-bold">Chains</span> of dependencies
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 12 ? 'contBadge 0.3s ease-out 0.7s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'contBadge 0.3s ease-out 0.7s both' : 'none' }}>
               <span className="text-blue-400 font-bold">Waits</span> for ready signal
             </div>
-            <div className="text-zinc-400" style={{ animation: activeSection === 12 ? 'contBadge 0.3s ease-out 0.8s both' : 'none' }}>
+            <div className="text-zinc-400" style={{ animation: activeSection === 11 ? 'contBadge 0.3s ease-out 0.8s both' : 'none' }}>
               <span className="text-purple-400 font-bold">Cleans up</span> on completion
             </div>
           </div>
