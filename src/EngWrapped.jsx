@@ -482,41 +482,25 @@ const AnimatedNumber = ({ value, duration = 2000, isActive }) => {
 };
 
 const AnimatedTeamCount = ({ isActive }) => {
-  const [current, setCurrent] = useState(0);
   const [showHalf, setShowHalf] = useState(false);
 
   useEffect(() => {
     if (!isActive) {
-      setCurrent(0);
       setShowHalf(false);
       return;
     }
-
-    // Count from 0 to 4 over 2 seconds
-    const steps = 60;
-    const increment = 4 / steps;
-    let step = 0;
-
-    const timer = setInterval(() => {
-      step++;
-      setCurrent(Math.min(Math.floor(increment * step), 4));
-      if (step >= steps) clearInterval(timer);
-    }, 2000 / steps);
 
     // At 3500ms, add the 0.5 for docs
     const halfTimer = setTimeout(() => {
       setShowHalf(true);
     }, 3500);
 
-    return () => {
-      clearInterval(timer);
-      clearTimeout(halfTimer);
-    };
+    return () => clearTimeout(halfTimer);
   }, [isActive]);
 
   return (
     <span style={{ display: 'inline-flex', alignItems: 'baseline' }}>
-      {current}
+      4
       <span
         style={{
           opacity: showHalf ? 1 : 0,
