@@ -2,11 +2,11 @@
 
 body {
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 h1, h2, h3, .font-title {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Audiowide', sans-serif;
 }
 
 @keyframes pulse-glow {
