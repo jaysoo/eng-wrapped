@@ -455,7 +455,7 @@ export default function EngWrapped() {
             Nx Engineering
           </p>
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 bg-clip-text text-transparent relative"
+            className="font-monoton text-4xl sm:text-5xl md:text-6xl font-black mb-4 bg-clip-text text-transparent relative"
             style={{
               backgroundImage:
                 "linear-gradient(90deg, #22c55e, #3b82f6, #a855f7, #22c55e)",

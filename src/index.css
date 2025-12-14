@@ -6,6 +6,10 @@ body {
 }
 
 h1, h2, h3, .font-title {
+  font-family: 'Audiowide', sans-serif;
+}
+
+.font-monoton {
   font-family: 'Monoton', cursive;
 }
 
