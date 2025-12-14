@@ -2,7 +2,11 @@
 
 body {
   margin: 0;
-  font-family: 'Righteous', cursive;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h1, h2, h3, .font-title {
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 @keyframes pulse-glow {
