@@ -127,42 +127,42 @@ export const allProjects = [
 
 // Slide durations in ms
 export const slideDurations = [
-  2400,  // 0: Hero
-  3300,  // 1: Big Numbers
-  5100,  // 2: Projects Showcase (animated)
-  3000,  // 3: Team Shakeup Intro
-  3400,  // 4: Red Panda Team Formation
-  2600,  // 5: Orca Introduction
-  3700,  // 6: Meet the Teams
-  2600,  // 7: Big Features Intro
-  2200,  // 8: Self-Healing CI
-  2200,  // 9: Terminal UI
-  2200,  // 10: Migrate UI
-  2200,  // 11: Improved Nx Graph
-  2200,  // 12: Continuous Tasks
-  2200,  // 13: .NET + Maven
-  2200,  // 14: AI Code Generation
-  2200,  // 15: CPU/Memory Tracking
-  2200,  // 16: Flaky Task Analytics
-  2200,  // 17: Onboarding Flow
-  2200,  // 18: Enterprise Usage UI
-  2200,  // 19: Azure Single Tenant
-  2200,  // 20: Helm Chart
-  2200,  // 21: Observability
-  2200,  // 22: Docker + Nx Release
-  2200,  // 23: GitHub Templates
-  2200,  // 24: Node 24
-  2200,  // 25: Nx & Ocean CI Stability
-  2200,  // 26: Docs Migration to Astro Starlight
-  2200,  // 27: Framework Support
-  2200,  // 28: Orca Highlights
-  2200,  // 29: Infrastructure Highlights
-  2200,  // 30: Red Panda Highlights
-  2600,  // 31: Stats Intro
-  2600,  // 32: Projects Breakdown
-  3400,  // 33: LOC Stats
-  3400,  // 34: Top Contributors Chart
-  2600,  // 35: Closing
+  2600,  // 0: Hero
+  3600,  // 1: Big Numbers
+  5600,  // 2: Projects Showcase (animated)
+  3300,  // 3: Team Shakeup Intro
+  3700,  // 4: Red Panda Team Formation
+  2900,  // 5: Orca Introduction
+  4100,  // 6: Meet the Teams
+  2900,  // 7: Big Features Intro
+  2400,  // 8: Self-Healing CI
+  2400,  // 9: Terminal UI
+  2400,  // 10: Migrate UI
+  2400,  // 11: Improved Nx Graph
+  2400,  // 12: Continuous Tasks
+  2400,  // 13: .NET + Maven
+  2400,  // 14: AI Code Generation
+  2400,  // 15: CPU/Memory Tracking
+  2400,  // 16: Flaky Task Analytics
+  2400,  // 17: Onboarding Flow
+  2400,  // 18: Enterprise Usage UI
+  2400,  // 19: Azure Single Tenant
+  2400,  // 20: Helm Chart
+  2400,  // 21: Observability
+  2400,  // 22: Docker + Nx Release
+  2400,  // 23: GitHub Templates
+  2400,  // 24: Node 24
+  2400,  // 25: Nx & Ocean CI Stability
+  2400,  // 26: Docs Migration to Astro Starlight
+  2400,  // 27: Framework Support
+  2400,  // 28: Orca Highlights
+  2400,  // 29: Infrastructure Highlights
+  2400,  // 30: Red Panda Highlights
+  2900,  // 31: Stats Intro
+  2900,  // 32: Projects Breakdown
+  3700,  // 33: LOC Stats
+  3700,  // 34: Top Contributors Chart
+  2900,  // 35: Closing
 ];
 
 export const sectionCount = slideDurations.length;
